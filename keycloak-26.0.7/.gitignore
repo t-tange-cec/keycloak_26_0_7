@@ -65,8 +65,6 @@ nbproject
 # Maven #
 #########
 target
-!/integration/client-cli/admin-cli/src/main/bin/*.sh
-!/integration/client-cli/admin-cli/src/main/bin/*.bat
 bin
 
 # Maven shade
