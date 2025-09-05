@@ -4,7 +4,7 @@
 
 # Intellij
 ###################
-.idea
+#.idea
 *.iml
 !.idea/icon.png
 
@@ -65,6 +65,7 @@ nbproject
 # Maven #
 #########
 target
+!integration/client-cli/admin-cli/src/main/bin
 bin
 
 # Maven shade
