@@ -382,7 +382,7 @@ export const RealmSettingsTabs = () => {
 		    data-testid="rs-privateinfo-tab"
 		    {...privateinfoTab}
 		  >
-		    <PrivateInfoTab />
+		    <PrivateinfoTab />
 		  </Tab>
           {canViewOrManageEvents && (
             <Tab
