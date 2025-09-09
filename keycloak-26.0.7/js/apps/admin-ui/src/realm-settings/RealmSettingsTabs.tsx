@@ -49,6 +49,8 @@ import { RealmSettingsTokensTab } from "./TokensTab";
 import { UserRegistration } from "./UserRegistration";
 import { EventsTab } from "./event-config/EventsTab";
 import { KeysTab } from "./keys/KeysTab";
+import { RiskbaseTab } from "./RiskbaseTab";
+import { PrivateinfoTab } from "./PrivateinfoTab";
 import { LocalizationTab } from "./localization/LocalizationTab";
 import { ClientPoliciesTab, toClientPolicies } from "./routes/ClientPolicies";
 import { RealmSettingsTab, toRealmSettings } from "./routes/RealmSettings";
@@ -280,6 +282,8 @@ export const RealmSettingsTabs = () => {
   const emailTab = useTab("email");
   const themesTab = useTab("themes");
   const keysTab = useTab("keys");
+  const riskbaseTab = useTab("riskbase");
+  const privateinfosTab = useTab("privateinfo");
   const eventsTab = useTab("events");
   const localizationTab = useTab("localization");
   const securityDefensesTab = useTab("security-defenses");
@@ -359,13 +363,27 @@ export const RealmSettingsTabs = () => {
           >
             <RealmSettingsThemesTab realm={realm!} save={save} />
           </Tab>
-          <Tab
-            title={<TabTitleText>{t("keys")}</TabTitleText>}
-            data-testid="rs-keys-tab"
-            {...keysTab}
-          >
-            <KeysTab />
-          </Tab>
+		  <Tab
+		    title={<TabTitleText>{t("keys")}</TabTitleText>}
+		    data-testid="rs-keys-tab"
+		    {...keysTab}
+		  >
+		    <KeysTab />
+		  </Tab>
+		  <Tab
+		    title={<TabTitleText>{t("riskbase")}</TabTitleText>}
+		    data-testid="rs-riskbase-tab"
+		    {...riskbaseTab}
+		  >
+		    <RiskbaseTab />
+		  </Tab>
+		  <Tab
+		    title={<TabTitleText>{t("privateinfo")}</TabTitleText>}
+		    data-testid="rs-privateinfo-tab"
+		    {...privateinfoTab}
+		  >
+		    <PrivateInfoTab />
+		  </Tab>
           {canViewOrManageEvents && (
             <Tab
               title={<TabTitleText>{t("events")}</TabTitleText>}
