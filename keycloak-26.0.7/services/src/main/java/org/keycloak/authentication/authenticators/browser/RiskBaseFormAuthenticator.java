@@ -51,7 +51,7 @@ import java.util.List;
 public class RiskBaseFormAuthenticator extends AbstractUsernameFormAuthenticator implements Authenticator, CredentialValidator<SecretQuestionCredentialProvider> {
 
     // Freemarker attribute where selected SecretQuestionC credential will be stored
-    public static final String SELECTED_SECRETQUESTION_CREDENTIAL_ID = "selectedSecretQuestionCredentialId";
+    public static final String SELECTED_SECRET_QUESTION_CREDENTIAL_ID = "selectedSecretQuestionCredentialId";
 
     // Label to be shown in the UI for the "unnamed" OTP credential, which doesn't have userLabel
     public static final String UNNAMED = "unnamed";
