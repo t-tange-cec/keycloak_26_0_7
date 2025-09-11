@@ -51,7 +51,7 @@ public class SecretQuestionCredentialModel extends CredentialModel {
             SecretQuestionCredentialData credentialData = JsonSerialization.readValue(credentialModel.getCredentialData(),
                     SecretQuestionCredentialData.class);
             SecretQuestionSecretData secretData = JsonSerialization.readValue(credentialModel.getSecretData(), SecretQuestionSecretData.class);
-            secretQuestionCredentialModel secretQuestionCredentialModel = new SecretQuestionCredentialModel(credentialData, secretData);
+            SecretQuestionCredentialModel secretQuestionCredentialModel = new SecretQuestionCredentialModel(credentialData, secretData);
             secretQuestionCredentialModel.setCreatedDate(credentialModel.getCreatedDate());
             secretQuestionCredentialModel.setCredentialData(credentialModel.getCredentialData());
             secretQuestionCredentialModel.setId(credentialModel.getId());
