@@ -108,11 +108,11 @@ public class RiskBaseFormAuthenticator extends AbstractUsernameFormAuthenticator
             context.challenge(challengeResponse);
             return;
         }
-        boolean valid = context.getUser().credentialManager().isValid(new UserCredentialModel(credentialId, getCredentialProvider(context.getSession()).getType(), otp));
+        boolean valid = context.getUser().credentialManager().isValid(new UserCredentialModel(credentialId, getCredentialProvider(context.getSession()).getType(), secretQuestion));
         if (!valid) {
             context.getEvent().user(userModel)
                     .error(Errors.INVALID_USER_CREDENTIALS);
-            Response challengeResponse = challenge(context, Messages.INVALID_TOTP, Validation.FIELD_OTP_CODE);
+            Response challengeResponse = challenge(context, Messages.INVALID_TOTP, Validation.FIELD_SECRET_QUESTION);
             context.failureChallenge(AuthenticationFlowError.INVALID_CREDENTIALS, challengeResponse);
             return;
         }
