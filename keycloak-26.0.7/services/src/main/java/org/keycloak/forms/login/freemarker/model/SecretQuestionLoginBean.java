@@ -43,7 +43,7 @@ public class SecretQuestionLoginBean {
 
     public SecretQuestionLoginBean(KeycloakSession session, RealmModel realm, UserModel user, String selectedCredentialId) {
 
-        this.userOtpCredentials = user.credentialManager().getStoredCredentialsByTypeStream(SecretQuestionCredentialModel.TYPE)
+        this.userSecretQuestionCredentials = user.credentialManager().getStoredCredentialsByTypeStream(SecretQuestionCredentialModel.TYPE)
                 .map(SecretQuestionCredential::new)
                 .collect(Collectors.toList());
 
