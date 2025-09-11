@@ -8,6 +8,8 @@ export type RealmSettingsTab =
   | "login"
   | "email"
   | "themes"
+  | "secret-question"
+  | "riskbase"
   | "keys"
   | "events"
   | "localization"
