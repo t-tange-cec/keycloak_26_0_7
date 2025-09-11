@@ -329,7 +329,7 @@ public class FreeMarkerLoginFormsProvider implements LoginFormsProvider {
                 attributes.put("logoutConfirm", new LogoutConfirmBean(accessCode, authenticationSession));
                 break;
             case LOGIN_SECRET_QUESTION:
-                attributes.put("secretQuestionLogin", new SecretQuestionLoginBean(session, realm, user, (String) this.attributes.get(SecretQuestionFormAuthenticator.SELECTED_SECRET_QUESTION_CREDENTIAL_ID)));
+                attributes.put("secretQuestionLogin", new SecretQuestionLoginBean(session, realm, user, (String) this.attributes.get(RiskBaseFormAuthenticator.SELECTED_SECRET_QUESTION_CREDENTIAL_ID)));
                 break;
         }
 
