@@ -162,8 +162,8 @@ public class RiskBaseFormAuthenticator extends AbstractUsernameFormAuthenticator
     }
 
     @Override
-    public SwcretQuestionCredentialProvider getCredentialProvider(KeycloakSession session) {
-        return (SwcretQuestionCredentialProvider)session.getProvider(CredentialProvider.class, SwcretQuestionCredentialProviderFactory.PROVIDER_ID);
+    public SecretQuestionCredentialProvider getCredentialProvider(KeycloakSession session) {
+        return (SecretQuestionCredentialProvider)session.getProvider(CredentialProvider.class, SecretQuestionCredentialProviderFactory.PROVIDER_ID);
     }
 
 }
