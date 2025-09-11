@@ -23,7 +23,7 @@ import org.keycloak.authentication.AuthenticatorFactory;
 import org.keycloak.models.AuthenticationExecutionModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
-import org.keycloak.models.credential.RiskBaseCredentialModel;
+import org.keycloak.models.credential.SecretQuestionCredentialModel;
 import org.keycloak.provider.ProviderConfigProperty;
 
 import java.util.List;
@@ -48,7 +48,7 @@ import static org.keycloak.provider.ProviderConfigProperty.STRING_TYPE;
  */
 public class ConditionalRiskBaseFormAuthenticatorFactory implements AuthenticatorFactory {
 
-    public static final String PROVIDER_ID = "auth-conditional-RISKBASE-form";
+    public static final String PROVIDER_ID = "auth-conditional-riskbase-form";
 
     public static final ConditionalRiskBaseFormAuthenticator SINGLETON = new ConditionalRiskBaseFormAuthenticator();
 
@@ -79,7 +79,7 @@ public class ConditionalRiskBaseFormAuthenticatorFactory implements Authenticato
 
     @Override
     public String getReferenceCategory() {
-        return RISKBASECredentialModel.TYPE;
+        return SecretQuestionCredentialModel.TYPE;
     }
 
     @Override
@@ -100,12 +100,12 @@ public class ConditionalRiskBaseFormAuthenticatorFactory implements Authenticato
 
     @Override
     public String getDisplayType() {
-        return "Conditional RISKBASE Form";
+        return "Conditional Riskbase Form";
     }
 
     @Override
     public String getHelpText() {
-        return "Validates a RISKBASE on a separate RISKBASE form. Only shown if required based on the configured conditions.";
+        return "Validates a riskbase on a separate riskbase form. Only shown if required based on the configured conditions.";
     }
 
     @Override
@@ -114,10 +114,10 @@ public class ConditionalRiskBaseFormAuthenticatorFactory implements Authenticato
         ProviderConfigProperty forceRiskBaseUserAttribute = new ProviderConfigProperty();
         forceRiskBaseUserAttribute.setType(STRING_TYPE);
         forceRiskBaseUserAttribute.setName(RISKBASE_CONTROL_USER_ATTRIBUTE);
-        forceRiskBaseUserAttribute.setLabel("RISKBASE control User Attribute");
+        forceRiskBaseUserAttribute.setLabel("Riskbase control User Attribute");
         forceRiskBaseUserAttribute.setHelpText("The name of the user attribute to explicitly control RISKBASE auth. " +
-                "If attribute value is 'force' then RISKBASE is always required. " +
-                "If value is 'skip' the RISKBASE auth is skipped. Otherwise this check is ignored.");
+                "If attribute value is 'force' then Riskbase is always required. " +
+                "If value is 'skip' the Riskbase auth is skipped. Otherwise this check is ignored.");
 
         ProviderConfigProperty skipRiskBaseRole = new ProviderConfigProperty();
         skipRiskBaseRole.setType(ROLE_TYPE);
@@ -128,14 +128,14 @@ public class ConditionalRiskBaseFormAuthenticatorFactory implements Authenticato
         ProviderConfigProperty forceRiskBaseRole = new ProviderConfigProperty();
         forceRiskBaseRole.setType(ROLE_TYPE);
         forceRiskBaseRole.setName(FORCE_RISKBASE_ROLE);
-        forceRiskBaseRole.setLabel("Force RISKBASE for Role");
-        forceRiskBaseRole.setHelpText("RISKBASE is always required if user has the given Role.");
+        forceRiskBaseRole.setLabel("Force Riskbase for Role");
+        forceRiskBaseRole.setHelpText("Riskbase is always required if user has the given Role.");
 
         ProviderConfigProperty skipRiskBaseForHttpHeader = new ProviderConfigProperty();
         skipRiskBaseForHttpHeader.setType(STRING_TYPE);
         skipRiskBaseForHttpHeader.setName(SKIP_RISKBASE_FOR_HTTP_HEADER);
-        skipRiskBaseForHttpHeader.setLabel("Skip RISKBASE for Header");
-        skipRiskBaseForHttpHeader.setHelpText("RISKBASE is skipped if a HTTP request header does matches the given pattern." +
+        skipRiskBaseForHttpHeader.setLabel("Skip Riskbase for Header");
+        skipRiskBaseForHttpHeader.setHelpText("Riskbase is skipped if a HTTP request header does matches the given pattern." +
                 "Can be used to specify trusted networks via: X-Forwarded-Host: (1.2.3.4|1.2.3.5)." +
                 "In this case requests from 1.2.3.4 and 1.2.3.5 come from a trusted source.");
         skipRiskBaseForHttpHeader.setDefaultValue("");
@@ -143,14 +143,14 @@ public class ConditionalRiskBaseFormAuthenticatorFactory implements Authenticato
         ProviderConfigProperty forceRiskBaseForHttpHeader = new ProviderConfigProperty();
         forceRiskBaseForHttpHeader.setType(STRING_TYPE);
         forceRiskBaseForHttpHeader.setName(FORCE_RISKBASE_FOR_HTTP_HEADER);
-        forceRiskBaseForHttpHeader.setLabel("Force RISKBASE for Header");
-        forceRiskBaseForHttpHeader.setHelpText("RISKBASE required if a HTTP request header matches the given pattern.");
+        forceRiskBaseForHttpHeader.setLabel("Force Riskbase for Header");
+        forceRiskBaseForHttpHeader.setHelpText("Riskbase required if a HTTP request header matches the given pattern.");
         forceRiskBaseForHttpHeader.setDefaultValue("");
 
         ProviderConfigProperty defaultOutcome = new ProviderConfigProperty();
         defaultOutcome.setType(LIST_TYPE);
         defaultOutcome.setName(DEFAULT_RISKBASE_OUTCOME);
-        defaultOutcome.setLabel("Fallback RISKBASE handling");
+        defaultOutcome.setLabel("Fallback Riskbase handling");
         defaultOutcome.setOptions(asList(SKIP, FORCE));
         defaultOutcome.setHelpText("What to do in case of every check abstains. Defaults to force RISKBASE authentication.");
 
