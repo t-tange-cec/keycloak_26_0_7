@@ -107,6 +107,8 @@ public interface LoginFormsProvider extends Provider {
     Response createFrontChannelLogoutPage();
 
     Response createLogoutConfirmPage();
+    
+    Response createLoginSecretQuestion();
 
     LoginFormsProvider setAuthenticationSession(AuthenticationSessionModel authenticationSession);
 
