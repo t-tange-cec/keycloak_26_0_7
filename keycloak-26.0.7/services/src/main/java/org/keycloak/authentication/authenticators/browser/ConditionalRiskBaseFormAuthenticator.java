@@ -276,9 +276,9 @@ public class ConditionalRiskBaseFormAuthenticator extends RiskBaseFormAuthentica
     @Override
     public void setRequiredActions(KeycloakSession session, RealmModel realm, UserModel user) {
         if (!isRiskBaseRequired(session, realm, user)) {
-            user.removeRequiredAction(UserModel.RequiredAction.CONFIGURE_RISKBASE);
-        } else if (user.getRequiredActionsStream().noneMatch(UserModel.RequiredAction.CONFIGURE_RISKBASE.name()::equals)) {
-            user.addRequiredAction(UserModel.RequiredAction.CONFIGURE_RISKBASE.name());
+            user.removeRequiredAction(UserModel.RequiredAction.CONFIGURE_SECRET_QUESTION);
+        } else if (user.getRequiredActionsStream().noneMatch(UserModel.RequiredAction.CONFIGURE_SECRET_QUESTION.name()::equals)) {
+            user.addRequiredAction(UserModel.RequiredAction.CONFIGURE_SECRET_QUESTION.name());
         }
     }
 }
