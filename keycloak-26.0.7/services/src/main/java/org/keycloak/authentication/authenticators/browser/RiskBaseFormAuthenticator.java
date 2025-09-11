@@ -84,7 +84,7 @@ public class RiskBaseFormAuthenticator extends AbstractUsernameFormAuthenticator
         }
         context.getEvent().detail(Details.SELECTED_CREDENTIAL_ID, credentialId);
 
-        context.form().setAttribute(SELECTED_SECRETQUESTION_CREDENTIAL_ID, credentialId);
+        context.form().setAttribute(SELECTED_SECRET_QUESTION_CREDENTIAL_ID, credentialId);
 
         UserModel userModel = context.getUser();
         boolean userEnabled = enabledUser(context, userModel);
@@ -147,13 +147,13 @@ public class RiskBaseFormAuthenticator extends AbstractUsernameFormAuthenticator
     @Override
     public void setRequiredActions(KeycloakSession session, RealmModel realm, UserModel user) {
         AuthenticationSessionModel authenticationSession = session.getContext().getAuthenticationSession();
-        if (!authenticationSession.getRequiredActions().contains(UserModel.RequiredAction.CONFIGURE_TOTP.name())) {
-            authenticationSession.addRequiredAction(UserModel.RequiredAction.CONFIGURE_TOTP);
+        if (!authenticationSession.getRequiredActions().contains(UserModel.RequiredAction.CONFIGURE_SECRET_QUESTION.name())) {
+            authenticationSession.addRequiredAction(UserModel.RequiredAction.CONFIGURE_SECRET_QUESTION);
         }
     }
 
     public List<RequiredActionFactory> getRequiredActions(KeycloakSession session) {
-        return Collections.singletonList((UpdateTotp)session.getKeycloakSessionFactory().getProviderFactory(RequiredActionProvider.class, UserModel.RequiredAction.CONFIGURE_TOTP.name()));
+        return Collections.singletonList((UpdateSecretQuestion)session.getKeycloakSessionFactory().getProviderFactory(RequiredActionProvider.class, UserModel.RequiredAction.CONFIGURE_SWCRET_QUESTION.name()));
     }
 
     @Override
