@@ -93,7 +93,7 @@ public class SecretQuestionCredentialProvider implements CredentialProvider<Secr
         CredentialModel credential = user.credentialManager().getStoredCredentialById(credentialInput.getCredentialId());
         SecretQuestionCredentialModel secretQuestionCredentialModel = SecretQuestionCredentialModel.createFromCredentialModel(credential);
         SecretQuestionSecretData secretData = secretQuestionCredentialModel.getSecretQuestionSecretData();
-        SecretQuestionCredentialData credentialData = otpCredentialModel.getSecretQuestionCredentialData();
+        SecretQuestionCredentialData credentialData = secretQuestionCredentialModel.getSecretQuestionCredentialData();
         return true;
     }
 
@@ -107,10 +107,10 @@ public class SecretQuestionCredentialProvider implements CredentialProvider<Secr
         return CredentialTypeMetadata.builder()
                 .type(getType())
                 .category(CredentialTypeMetadata.Category.TWO_FACTOR)
-                .displayName("aecret-question-display-name")
-                .helpText("aecret-question-help-text")
+                .displayName("secret-question-display-name")
+                .helpText("secret-question-help-text")
                 .iconCssClass("kcAuthenticatorSecretQuestionClass")
-                .createAction(UserModel.RequiredAction.CONFIGURE_TOTP.toString())
+                .createAction(UserModel.RequiredAction.CONFIGURE_SECRET_QUESTION.toString())
                 .removeable(true)
                 .build(session);
     }
