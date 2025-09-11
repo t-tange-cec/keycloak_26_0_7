@@ -21,7 +21,7 @@ package org.keycloak.forms.login.freemarker.model;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.keycloak.authentication.authenticators.browser.SecretQuestionFormAuthenticator;
+import org.keycloak.authentication.authenticators.browser.RiskBaseFormAuthenticator;
 import org.keycloak.credential.CredentialModel;
 import org.keycloak.credential.CredentialProvider;
 import org.keycloak.credential.SecretQuestionCredentialProvider;
@@ -77,7 +77,7 @@ public class SecretQuestionLoginBean {
         public SecretQuestionCredential(CredentialModel credentialModel) {
             this.id = credentialModel.getId();
             // TODO: "Unnamed" OTP credentials should be displayed in the UI in gray
-            this.userLabel = credentialModel.getUserLabel() == null || credentialModel.getUserLabel().isEmpty() ? SecretQuestionFormAuthenticator.UNNAMED : credentialModel.getUserLabel();
+            this.userLabel = credentialModel.getUserLabel() == null || credentialModel.getUserLabel().isEmpty() ? RiskBaseFormAuthenticator.UNNAMED : credentialModel.getUserLabel();
         }
 
         public String getId() {
