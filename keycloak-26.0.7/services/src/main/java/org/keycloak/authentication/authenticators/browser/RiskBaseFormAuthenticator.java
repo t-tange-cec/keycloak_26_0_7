@@ -153,7 +153,7 @@ public class RiskBaseFormAuthenticator extends AbstractUsernameFormAuthenticator
     }
 
     public List<RequiredActionFactory> getRequiredActions(KeycloakSession session) {
-        return Collections.singletonList((UpdateSecretQuestion)session.getKeycloakSessionFactory().getProviderFactory(RequiredActionProvider.class, UserModel.RequiredAction.CONFIGURE_SWCRET_QUESTION.name()));
+        return Collections.singletonList((UpdateSecretQuestion)session.getKeycloakSessionFactory().getProviderFactory(RequiredActionProvider.class, UserModel.RequiredAction.CONFIGURE_SECRET_QUESTION.name()));
     }
 
     @Override
