@@ -708,6 +708,11 @@ public class FreeMarkerLoginFormsProvider implements LoginFormsProvider {
     }
 
     @Override
+    public Response createLoginSecretQuestion() {
+        return createResponse(LoginFormsPages.LOGIN_SECRET_QUESTION);
+    }
+
+    @Override
     public Response createIdpLinkEmailPage() {
         BrokeredIdentityContext brokerContext = (BrokeredIdentityContext) this.attributes.get(IDENTITY_PROVIDER_BROKER_CONTEXT);
         String idpAlias = brokerContext.getIdpConfig().getAlias();
