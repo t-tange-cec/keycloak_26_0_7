@@ -89,12 +89,6 @@ public class UpdateSecretQuestion implements RequiredActionProvider, RequiredAct
                     .createResponse(UserModel.RequiredAction.CONFIGURE_SECRET_QUESTION);
             context.challenge(challenge);
             return;
-        } else if (!validateSecretQuestionCredential(context, challengeResponse, credentialModel)) {
-            Response challenge = context.form()
-                    .setAttribute("mode", mode)
-                    .addError(new FormMessage(Validation.FIELD_SECRET_QUESTION, Messages.INVALID_TOTP));
-            context.challenge(challenge);
-            return;
         }
         SecretQuestionCredentialProvider secretQuestionCredentialProvider = (SecretQuestionCredentialProvider) context.getSession().getProvider(CredentialProvider.class, "keycloak-secret-question");
         final Stream<CredentialModel> secretQuestionCredentials  = (secretQuestionCredentialProvider.isConfiguredFor(context.getRealm(), context.getUser()))
