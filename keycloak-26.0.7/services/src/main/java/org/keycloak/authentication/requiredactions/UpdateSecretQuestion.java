@@ -128,8 +128,8 @@ public class UpdateSecretQuestion implements RequiredActionProvider, RequiredAct
 
 
     // Use separate method, so it's possible to override in the custom provider
-    protected boolean validateOTPCredential(RequiredActionContext context, String token, OTPCredentialModel credentialModel, OTPPolicy policy) {
-        return CredentialValidation.validScretQuestion(token, credentialModel, policy.getLookAheadWindow());
+    protected boolean validateSequetQuestionCredential(RequiredActionContext context, String token, SecretQuestionCredentialModel credentialModel) {
+        return CredentialValidation.validScretQuestion(token, credentialModel);
     }
 
 
