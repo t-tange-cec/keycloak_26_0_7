@@ -21,7 +21,7 @@ public class SecretQuestionCredentialModel extends CredentialModel {
     public static SecretQuestionCredentialModel createFromPolicy(RealmModel realm, String secretValue, String userLabel) {
 
     	SecretQuestionSecretData secretData = new  SecretQuestionSecretData(secretValue,null);
-    	SecretQuestionCredentialModel credentialModel = new SecretQuestionCredentialModel(secretData);
+    	SecretQuestionCredentialModel credentialModel = new SecretQuestionCredentialModel(null,secretData);
         //credentialModel.fillCredentialModelFields();
         credentialModel.setUserLabel(userLabel);
         return credentialModel;
