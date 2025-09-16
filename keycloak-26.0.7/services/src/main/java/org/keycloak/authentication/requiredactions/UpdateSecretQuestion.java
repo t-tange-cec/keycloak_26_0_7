@@ -85,7 +85,7 @@ public class UpdateSecretQuestion implements RequiredActionProvider, RequiredAct
         if (Validation.isBlank(challengeResponse)) {
             Response challenge = context.form()
                     .setAttribute("mode", mode)
-                    .addError(new FormMessage(Validation.FIELD_SECRET_QUESTION), Messages.MISSING_SECRET_QUESTION)))
+                    .addError(new FormMessage(Validation.FIELD_SECRET_QUESTION), Messages.MISSING_SECRET_QUESTION)
                     .createResponse(UserModel.RequiredAction.CONFIGURE_SECRET_QUESTION);
             context.challenge(challenge);
             return;
