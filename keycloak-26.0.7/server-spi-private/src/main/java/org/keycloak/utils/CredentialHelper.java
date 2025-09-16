@@ -34,6 +34,8 @@ import org.keycloak.models.UserCredentialModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.models.credential.OTPCredentialModel;
 import org.keycloak.representations.idm.CredentialRepresentation;
+import org.keycloak.models.credential.SecretQuestionCredentialModel;
+
 
 import java.util.Objects;
 
