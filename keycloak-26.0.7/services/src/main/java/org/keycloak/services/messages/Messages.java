@@ -328,5 +328,6 @@ public class Messages {
 
     public static final String MISSING_SECRET_QUESTION = "missingSecretQuestion";
     public static final String CONFIGURE_SECRET_QUESTION = "configureSecretQuestionMessage";
+    public static final String UPDATE_SECRET_QUESTION  = "updateSecretQuestionMessage";
     
 }

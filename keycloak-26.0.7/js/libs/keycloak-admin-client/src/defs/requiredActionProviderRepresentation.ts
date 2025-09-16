@@ -9,6 +9,7 @@ export enum RequiredActionAlias {
   UPDATE_PASSWORD = "UPDATE_PASSWORD",
   TERMS_AND_CONDITIONS = "TERMS_AND_CONDITIONS",
   CONFIGURE_SECRET_QUESTION = "CONFIGURE_SECRET_QUESTION",
+  UPDATE_SECRET_QUESTION = "UPDATE_SECRET_QUESTION",
 }
 
 export default interface RequiredActionProviderRepresentation {
