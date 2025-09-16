@@ -187,6 +187,9 @@ public enum EventType implements EnumWithStableIndex {
     INVITE_ORG(60, true),
     INVITE_ORG_ERROR(0x10000 + INVITE_ORG.getStableIndex(), true);
 
+    UPDATE_SECRET_QUESTION(61, true),
+    UPDATE_SECRET_QUESTION_ERROR(0x10000 + UPDATE_SECRET_QUESTION.getStableIndex(), true),
+
     private final int stableIndex;
     private final boolean saveByDefault;
     private static final Map<Integer, EventType> BY_ID = EnumWithStableIndex.getReverseIndex(values());
