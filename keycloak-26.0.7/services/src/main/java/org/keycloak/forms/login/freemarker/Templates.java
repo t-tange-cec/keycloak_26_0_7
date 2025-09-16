@@ -88,7 +88,9 @@ public class Templates {
                 return "frontchannel-logout.ftl";
             case LOGOUT_CONFIRM:
                 return "logout-confirm.ftl";
-            default:
+            case LOGIN_SECRET_QUESTION:
+                return "login-secret-question.ftl";
+           default:
                 throw new IllegalArgumentException();
         }
     }
