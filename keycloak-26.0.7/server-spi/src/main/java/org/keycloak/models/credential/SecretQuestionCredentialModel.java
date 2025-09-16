@@ -17,6 +17,14 @@ public class SecretQuestionCredentialModel extends CredentialModel {
     private final SecretQuestionCredentialData credentialData;
     private final SecretQuestionSecretData secretData;
 
+    public static SecretQuestionCredentialModel createFromPolicy(RealmModel realm, String secretValue, String userLabel) {
+
+    	SecretQuestionCredentialModel credentialModel = new SecretQuestionCredentialModel(secretValue);
+        credentialModel.fillCredentialModelFields();
+        credentialModel.setUserLabel(userLabel);
+        return credentialModel;
+    }
+
     private SecretQuestionCredentialModel(SecretQuestionCredentialData credentialData, SecretQuestionSecretData secretData) {
         this.credentialData = credentialData;
         this.secretData = secretData;
