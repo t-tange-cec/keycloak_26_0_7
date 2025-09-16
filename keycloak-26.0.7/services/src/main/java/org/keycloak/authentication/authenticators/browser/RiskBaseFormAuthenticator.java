@@ -23,7 +23,7 @@ import org.keycloak.authentication.Authenticator;
 import org.keycloak.authentication.CredentialValidator;
 import org.keycloak.authentication.RequiredActionFactory;
 import org.keycloak.authentication.RequiredActionProvider;
-import org.keycloak.authentication.requiredactions.UpdateTotp;
+import org.keycloak.authentication.requiredactions.UpdateSecretQuestion;
 import org.keycloak.credential.CredentialProvider;
 import org.keycloak.credential.SecretQuestionCredentialProvider;
 import org.keycloak.credential.SecretQuestionCredentialProviderFactory;
