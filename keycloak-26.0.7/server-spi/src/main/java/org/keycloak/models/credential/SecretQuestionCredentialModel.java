@@ -22,7 +22,7 @@ public class SecretQuestionCredentialModel extends CredentialModel {
 
     	SecretQuestionSecretData secretData = new  SecretQuestionSecretData(secretValue,null);
     	SecretQuestionCredentialModel credentialModel = new SecretQuestionCredentialModel(secretData);
-        credentialModel.fillCredentialModelFields();
+        //credentialModel.fillCredentialModelFields();
         credentialModel.setUserLabel(userLabel);
         return credentialModel;
     }
