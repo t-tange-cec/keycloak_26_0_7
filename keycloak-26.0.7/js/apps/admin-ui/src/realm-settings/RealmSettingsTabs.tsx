@@ -283,7 +283,7 @@ export const RealmSettingsTabs = () => {
   const themesTab = useTab("themes");
   const keysTab = useTab("keys");
   const riskbaseTab = useTab("riskbase");
-  const privateinfosTab = useTab("privateinfo");
+  const privateinfoTab = useTab("privateinfo");
   const eventsTab = useTab("events");
   const localizationTab = useTab("localization");
   const securityDefensesTab = useTab("security-defenses");
