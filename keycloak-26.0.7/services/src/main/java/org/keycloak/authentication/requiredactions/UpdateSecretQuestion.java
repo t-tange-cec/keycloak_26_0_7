@@ -89,7 +89,7 @@ public class UpdateSecretQuestion implements RequiredActionProvider, RequiredAct
                     .createResponse(UserModel.RequiredAction.CONFIGURE_SECRET_QUESTION);
             context.challenge(challenge);
             return;
-        } else if (!validateSecretQuestionCredential(context, challengeResponse, credentialModel, policy)) {
+        } else if (!validateSecretQuestionCredential(context, challengeResponse, credentialModel)) {
             Response challenge = context.form()
                     .setAttribute("mode", mode)
                     .addError(new FormMessage(Validation.FIELD_SECRET_QUESTION, Messages.INVALID_TOTP));
