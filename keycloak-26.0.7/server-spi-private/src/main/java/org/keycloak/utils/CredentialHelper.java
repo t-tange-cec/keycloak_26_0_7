@@ -121,9 +121,29 @@ public class CredentialHelper {
 
         // This can usually happened when credential is stored in the userStorage. Propagate to "disable" credential in the userStorage
         if (!removed) {
-            logger.debug("Removing OTP credential from userStorage");
-            user.credentialManager().disableCredentialType(OTPCredentialModel.TYPE);
+            logger.debug("Removing Secret Question credential from userStorage");
+            user.credentialManager().disableCredentialType(SecretQuestionCredentialModel.TYPE);
         }
+    }
+    
+    public static boolean createSecretQuestionCredential(KeycloakSession session, RealmModel realm, UserModel user, String answer, SecretQuestionCredentialModel credentialModel) {
+        CredentialProvider secretQuestionCredentialProvider = session.getProvider(CredentialProvider.class, "keycloak-secret-question");
+        String totpSecret = credentialModel.getSecretQuestionSecretData().getValue();
+
+        UserCredentialModel otpUserCredential = new UserCredentialModel("", realm.getOTPPolicy().getType(), answer);
+        boolean userStorageCreated = user.credentialManager().updateCredential(otpUserCredential);
+
+        String credentialId = null;
+        if (userStorageCreated) {
+            logger.debugf("Created OTP credential for user '%s' in the user storage", user.getUsername());
+        } else {
+            CredentialModel createdCredential = secretQuestionCredentialProvider.createCredential(realm, user, credentialModel);
+            credentialId = createdCredential.getId();
+        }
+
+        //If the type is HOTP, call verify once to consume the OTP used for registration and increase the counter.
+        UserCredentialModel credential = new UserCredentialModel(credentialId, otpCredentialProvider.getType(), answer);
+        return user.credentialManager().isValid(credential);
     }
 
     /**
