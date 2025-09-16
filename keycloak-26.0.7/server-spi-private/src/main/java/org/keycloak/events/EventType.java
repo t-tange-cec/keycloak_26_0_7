@@ -185,10 +185,10 @@ public enum EventType implements EnumWithStableIndex {
     REMOVE_CREDENTIAL_ERROR(0x10000 + REMOVE_CREDENTIAL.getStableIndex(), true),
 
     INVITE_ORG(60, true),
-    INVITE_ORG_ERROR(0x10000 + INVITE_ORG.getStableIndex(), true);
+    INVITE_ORG_ERROR(0x10000 + INVITE_ORG.getStableIndex(), true),
 
     UPDATE_SECRET_QUESTION(61, true),
-    UPDATE_SECRET_QUESTION_ERROR(0x10000 + UPDATE_SECRET_QUESTION.getStableIndex(), true),
+    UPDATE_SECRET_QUESTION_ERROR(0x10000 + UPDATE_SECRET_QUESTION.getStableIndex(), true);
 
     private final int stableIndex;
     private final boolean saveByDefault;
