@@ -50,7 +50,7 @@ import { UserRegistration } from "./UserRegistration";
 import { EventsTab } from "./event-config/EventsTab";
 import { KeysTab } from "./keys/KeysTab";
 import { RiskbaseTab } from "./RiskbaseTab";
-import { PrivateinfoTab } from "./PrivateinfoTab";
+import { SecretquestionTab } from "./SecretquestionTab";
 import { LocalizationTab } from "./localization/LocalizationTab";
 import { ClientPoliciesTab, toClientPolicies } from "./routes/ClientPolicies";
 import { RealmSettingsTab, toRealmSettings } from "./routes/RealmSettings";
