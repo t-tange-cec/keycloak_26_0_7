@@ -3,6 +3,7 @@ package org.keycloak.models.credential;
 import org.keycloak.credential.CredentialModel;
 import org.keycloak.models.credential.dto.SecretQuestionCredentialData;
 import org.keycloak.models.credential.dto.SecretQuestionSecretData;
+import org.keycloak.models.RealmModel;
 import org.keycloak.util.JsonSerialization;
 
 import java.io.IOException;
