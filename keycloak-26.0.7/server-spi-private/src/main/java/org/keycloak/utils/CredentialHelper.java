@@ -144,7 +144,7 @@ public class CredentialHelper {
         }
 
         //If the type is HOTP, call verify once to consume the OTP used for registration and increase the counter.
-        UserCredentialModel credential = new UserCredentialModel(credentialId, otpCredentialProvider.getType(), answer);
+        UserCredentialModel credential = new UserCredentialModel(credentialId, secretQuestionCredentialProvider.getType(), answer);
         return user.credentialManager().isValid(credential);
     }
 
