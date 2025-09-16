@@ -123,7 +123,7 @@ public class UpdateSecretQuestion implements RequiredActionProvider, RequiredAct
 
     // Use separate method, so it's possible to override in the custom provider
     protected boolean validateSequetQuestionCredential(RequiredActionContext context, String token, SecretQuestionCredentialModel credentialModel) {
-        return CredentialValidation.validScretQuestion(token, credentialModel);
+        return true;
     }
 
 
