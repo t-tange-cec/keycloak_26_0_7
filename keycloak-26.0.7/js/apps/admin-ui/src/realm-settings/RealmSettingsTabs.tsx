@@ -283,7 +283,7 @@ export const RealmSettingsTabs = () => {
   const themesTab = useTab("themes");
   const keysTab = useTab("keys");
   const riskbaseTab = useTab("riskbase");
-  const secretquestionTab = useTab("secret");
+  const secretquestionTab = useTab("secretquestion");
   const eventsTab = useTab("events");
   const localizationTab = useTab("localization");
   const securityDefensesTab = useTab("security-defenses");
@@ -378,8 +378,8 @@ export const RealmSettingsTabs = () => {
 		    <RiskbaseTab />
 		  </Tab>
 		  <Tab
-		    title={<TabTitleText>{t("secret")}</TabTitleText>}
-		    data-testid="rs-secret-tab"
+		    title={<TabTitleText>{t("secretquestion")}</TabTitleText>}
+		    data-testid="rs-secretquestion-tab"
 		    {...secretquestionTab}
 		  >
 		    <SecretquestionTab />
