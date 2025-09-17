@@ -18,6 +18,8 @@ export default class RealmSettingsPage extends CommonPage {
   loginTab = "rs-login-tab";
   emailTab = "rs-email-tab";
   themesTab = "rs-themes-tab";
+  riskbaseTab = "rs-riskbase-tab";
+  secretTab = "rs-secret-tab";
   localizationTab = "rs-localization-tab";
   securityDefensesTab = "rs-security-defenses-tab";
   sessionsTab = "rs-sessions-tab";
