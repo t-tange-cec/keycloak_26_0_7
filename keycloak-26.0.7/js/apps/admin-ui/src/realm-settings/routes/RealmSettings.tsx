@@ -10,6 +10,7 @@ export type RealmSettingsTab =
   | "themes"
   | "secret-question"
   | "riskbase"
+  | "secret"
   | "keys"
   | "events"
   | "localization"
