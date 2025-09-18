@@ -4,7 +4,7 @@
 
 # Intellij
 ###################
-#.idea
+.idea
 *.iml
 !.idea/icon.png
 
