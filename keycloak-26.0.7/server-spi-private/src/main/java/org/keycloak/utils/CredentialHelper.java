@@ -123,8 +123,8 @@ public class CredentialHelper {
 
         // This can usually happened when credential is stored in the userStorage. Propagate to "disable" credential in the userStorage
         if (!removed) {
-            logger.debug("Removing Secret Question credential from userStorage");
-            user.credentialManager().disableCredentialType(SecretQuestionCredentialModel.TYPE);
+            logger.debug("Removing OTP credential from userStorage");
+            user.credentialManager().disableCredentialType(OTPCredentialModel.TYPE);
         }
     }
     
@@ -137,13 +137,13 @@ public class CredentialHelper {
 
         String credentialId = null;
         if (userStorageCreated) {
-            logger.debugf("Created OTP credential for user '%s' in the user storage", user.getUsername());
+            logger.debugf("Created Secret Question credential for user '%s' in the user storage", user.getUsername());
         } else {
             CredentialModel createdCredential = secretQuestionCredentialProvider.createCredential(realm, user, credentialModel);
             credentialId = createdCredential.getId();
         }
 
-        //If the type is HOTP, call verify once to consume the OTP used for registration and increase the counter.
+        //If the type is HOTP, call verify once to consume the Secret Question used for registration and increase the counter.
         UserCredentialModel credential = new UserCredentialModel(credentialId, secretQuestionCredentialProvider.getType(), answer);
         return user.credentialManager().isValid(credential);
     }
