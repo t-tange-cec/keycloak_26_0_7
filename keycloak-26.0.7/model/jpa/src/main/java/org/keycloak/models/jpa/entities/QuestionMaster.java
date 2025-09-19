@@ -54,7 +54,7 @@ public class QuestionMaster {
     @Id
     @Column(name="ID", length = 36)
     @Access(AccessType.PROPERTY)
-    protected String id;
+    private String id;
 
 	/*
 	 * レルムID
@@ -62,20 +62,52 @@ public class QuestionMaster {
     @Id
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "REALM_ID")
-    protected RealmEntity realm;
+    private RealmEntity realm;
    
 	/*
 	 * 質問ID
 	 */
     @Id
     @Column(name = "QID")
-    protected String qid;
+    private String qid;
 
 	/*
 	 * 質問
 	 */
     @Nationalized
     @Column(name = "CONTENT")
-    protected String content;
+    private String content;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public RealmEntity getRealm() {
+        return realm;
+    }
+
+    public void setRealm(RealmEntity realm) {
+        this.realm = realm;
+    }
+
+    public String getQid() {
+        return qid;
+    }
+
+    public void setQid(String qid) {
+        this.qid = qid;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
 }

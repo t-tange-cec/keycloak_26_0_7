@@ -27,6 +27,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapKey;
 import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.NamedQueries;
@@ -40,6 +41,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.hibernate.annotations.Nationalized;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
@@ -55,7 +58,7 @@ public class RealmRiskBase {
     @Id
     @Column(name="ID", length = 36)
     @Access(AccessType.PROPERTY)
-    protected String id;
+    private String id;
 
 	/*
 	 * レルムID
@@ -63,27 +66,67 @@ public class RealmRiskBase {
     @Id
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "REALM_ID")
-    protected RealmEntity realm;
+    private RealmEntity realm;
 
 	/*
 	 * チェックID
 	 */
     @Id
     @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name = "CHECK_ID")
-    protected CheckItemEntity checkItem;
+    @JoinColumn(name = "CHECKID")
+    private CheckItemEntity checkItem;
 
 	/*
 	 * スコア
 	 */
     @Nationalized
     @Column(name = "VALUE")
-    protected String value;
+    private String value;
     
 	/*
 	 * 有効フラグ
 	 */
     @Column(name = "ENABLED")
-    protected boolean enabled;
+    private boolean enabled;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public RealmEntity getRealm() {
+        return realm;
+    }
+
+    public void setRealm(RealmEntity realm) {
+        this.realm = realm;
+    }
+
+    public CheckItemEntity getCheckItem() {
+        return checkItem;
+    }
+
+    public void setCheckItem(CheckItemEntity checkItem) {
+        this.checkItem = checkItem;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
  
 }

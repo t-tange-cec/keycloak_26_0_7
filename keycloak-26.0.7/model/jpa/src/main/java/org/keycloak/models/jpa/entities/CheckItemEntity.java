@@ -55,23 +55,59 @@ public class CheckItemEntity {
     @Id
     @Column(name="ID", length = 36)
     @Access(AccessType.PROPERTY)
-    protected String id;
+    private String id;
 
+	/*
+	 * チェックID
+	 */
     @Id
     @Column(name = "CHECKID")
-    protected String checkid;
+    private String checkid;
 
-    @Id
-    @Column(name = "CHECKID")
-    protected String checkid;
-
+	/*
+	 * 言語ロケール
+	 */
     @Id
     @Column(name = "LOCALE")
-    protected String locale;
+    private String locale;
     
     
+	/*
+	 * 内容
+	 */
     @Nationalized
     @Column(name = "CONTENT")
-    protected String content;
+    private String content;
     
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCheckid() {
+        return checkid;
+    }
+
+    public void setCheckid(String checkid) {
+        this.checkid = checkid;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
 }
