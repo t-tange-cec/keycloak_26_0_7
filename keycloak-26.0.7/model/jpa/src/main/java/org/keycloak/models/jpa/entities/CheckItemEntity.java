@@ -40,6 +40,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.hibernate.annotations.Nationalized;
+
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
  * @version $Revision: 1 $
@@ -61,7 +63,7 @@ public class CheckItemEntity {
 	 * チェックID
 	 */
     @Id
-    @Column(name = "CHECKID")
+    @Column(name = "CHECK_ID")
     private String checkid;
 
 	/*

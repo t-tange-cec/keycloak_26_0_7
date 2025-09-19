@@ -73,7 +73,7 @@ public class RealmRiskBase {
 	 */
     @Id
     @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name = "CHECKID")
+    @JoinColumn(name = "CHECK_ID")
     private CheckItemEntity checkItem;
 
 	/*
