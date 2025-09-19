@@ -48,7 +48,7 @@ import org.hibernate.annotations.Nationalized;
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
  * @version $Revision: 1 $
  */
-@Table(name="REALM_RISKBASE", uniqueConstraints = {@UniqueConstraint(columnNames = {"REALM_ID", "CHECK_ID"}))
+@Table(name="REALM_RISKBASE", uniqueConstraints = {@UniqueConstraint(columnNames = {"REALM_ID", "CHECK_ID"})})
 @Entity
 
 public class RealmRiskBase {
