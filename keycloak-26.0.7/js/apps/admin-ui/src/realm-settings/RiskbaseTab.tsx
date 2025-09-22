@@ -11,15 +11,32 @@ import {
   PageSection,
   SelectOption,
 } from "@patternfly/react-core";
+import { useEffect, useState } from "react";
+import { FormAccess } from "../components/form/FormAccess";
 import { useTranslation } from "react-i18next";
+import { convertToFormValues } from "../util";
 
 import { useConfirmDialog } from "../components/confirm-dialog/ConfirmDialog";
 
-export const RiskbaseTab = () => {
-	const { t } = useTranslation();
+type RealmSettingsThemesTabProps = {
+  realm: RealmRepresentation;
+  save: (realm: RealmRepresentation) => void;
+};
+
+
+export const RiskbaseTab = ({
+	  realm,
+	  save,
+	}: RealmSettingsThemesTabProps) => {
+  const { t } = useTranslation();
   const save = async () => {
 	    return 0;
 	};
+	const setupForm = () => {
+	  convertToFormValues(realm, setValue);
+	};
+	useEffect(setupForm, []);
+
 	return (
 		<PageSection variant="light">
 		<FormAccess
@@ -39,7 +56,7 @@ export const RiskbaseTab = () => {
 		    />
 		  }
 		>
-		</FormGroup>		
+		</FormGroup>
 		<ActionGroup>
 		  <Button variant="primary" type="submit" data-testid="riskbase-tab-save">
 		    {t("save")}
