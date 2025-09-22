@@ -22,7 +22,6 @@ import { convertToFormValues } from "../util";
 import { useConfirmDialog } from "../components/confirm-dialog/ConfirmDialog";
 
 type RealmSettingsThemesTabProps = {
-  riskbaseEnabled: boolean;
   realm: RealmRepresentation;
   save: (realm: RealmRepresentation) => void;
 };
