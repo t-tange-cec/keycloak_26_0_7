@@ -17,12 +17,38 @@ import { useConfirmDialog } from "../components/confirm-dialog/ConfirmDialog";
 
 export const RiskbaseTab = () => {
 	const { t } = useTranslation();
-	const save = async () => {
-	    return;
+  const save = async () => {
+	    return 0;
 	};
 	return (
 		<PageSection variant="light">
-		<div>This is RiskbaseTab</div>
-		</PageSection>		
+		<FormAccess
+		  isHorizontal
+		  role="manage-realm"
+		  className="pf-v5-u-mt-lg"
+		  onSubmit={handleSubmit(save)}
+		>
+		
+		<FormGroup
+		  label={t("riskbase")}
+		  fieldId="kc-riskbase"
+		  labelIcon={
+		    <HelpItem
+		      helpText={t("riskbaseHelp")}
+		      fieldLabelId="riskbaseLabel"
+		    />
+		  }
+		>
+		</FormGroup>		
+		<ActionGroup>
+		  <Button variant="primary" type="submit" data-testid="riskbase-tab-save">
+		    {t("save")}
+		  </Button>
+		  <Button variant="link" onClick={setupForm}>
+		    {t("revert")}
+		  </Button>
+		</ActionGroup>
+		</FormAccess>
+		</PageSection>
 	);
 };
