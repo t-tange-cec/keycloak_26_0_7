@@ -34,6 +34,8 @@ import org.keycloak.models.UserCredentialModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.models.credential.OTPCredentialModel;
 import org.keycloak.representations.idm.CredentialRepresentation;
+import org.keycloak.models.credential.SecretQuestionCredentialModel;
+
 
 import java.util.Objects;
 
@@ -124,6 +126,26 @@ public class CredentialHelper {
             logger.debug("Removing OTP credential from userStorage");
             user.credentialManager().disableCredentialType(OTPCredentialModel.TYPE);
         }
+    }
+    
+    public static boolean createSecretQuestionCredential(KeycloakSession session, RealmModel realm, UserModel user, String answer, SecretQuestionCredentialModel credentialModel) {
+        CredentialProvider secretQuestionCredentialProvider = session.getProvider(CredentialProvider.class, "keycloak-secret-question");
+        String totpSecret = credentialModel.getSecretQuestionSecretData().getValue();
+
+        UserCredentialModel otpUserCredential = new UserCredentialModel("", realm.getOTPPolicy().getType(), answer);
+        boolean userStorageCreated = user.credentialManager().updateCredential(otpUserCredential);
+
+        String credentialId = null;
+        if (userStorageCreated) {
+            logger.debugf("Created Secret Question credential for user '%s' in the user storage", user.getUsername());
+        } else {
+            CredentialModel createdCredential = secretQuestionCredentialProvider.createCredential(realm, user, credentialModel);
+            credentialId = createdCredential.getId();
+        }
+
+        //If the type is HOTP, call verify once to consume the Secret Question used for registration and increase the counter.
+        UserCredentialModel credential = new UserCredentialModel(credentialId, secretQuestionCredentialProvider.getType(), answer);
+        return user.credentialManager().isValid(credential);
     }
 
     /**
