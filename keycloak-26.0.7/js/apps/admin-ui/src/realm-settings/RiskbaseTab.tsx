@@ -33,6 +33,7 @@ export const RiskbaseTab = ({
 	  save,
 	}: RealmSettingsThemesTabProps) => {
 	const { t } = useTranslation();
+	const form = useForm();
 	const { control, handleSubmit, setValue } = useForm<RealmRepresentation>();
 	const setupForm = () => {
 	  convertToFormValues(realm, setValue);
