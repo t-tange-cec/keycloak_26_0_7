@@ -68,6 +68,7 @@ export default interface RealmRepresentation {
   identityProviderMappers?: any[];
   identityProviders?: IdentityProviderRepresentation[];
   internationalizationEnabled?: boolean;
+  riskbaseEnabled?: boolean;
   keycloakVersion?: string;
   loginTheme?: string;
   loginWithEmailAllowed?: boolean;
