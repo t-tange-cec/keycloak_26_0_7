@@ -13,7 +13,7 @@ import {
   SelectOption,
 } from "@patternfly/react-core";
 import { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, FormProvider, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormAccess } from "../components/form/FormAccess";
 import { useServerInfo } from "../context/server-info/ServerInfoProvider";
