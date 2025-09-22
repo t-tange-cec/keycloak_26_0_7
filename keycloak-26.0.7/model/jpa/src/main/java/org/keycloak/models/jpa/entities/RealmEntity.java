@@ -221,6 +221,9 @@ public class RealmEntity {
     @Column(name="INTERNATIONALIZATION_ENABLED")
     protected boolean internationalizationEnabled;
 
+    @Column(name="RISKBASE_ENABLED")
+    protected boolean riskbaseEnabled;
+
     @ElementCollection
     @Column(name="VALUE")
     @CollectionTable(name="REALM_SUPPORTED_LOCALES", joinColumns={ @JoinColumn(name="REALM_ID") })
@@ -618,6 +621,14 @@ public class RealmEntity {
         this.internationalizationEnabled = internationalizationEnabled;
     }
 
+    public boolean isRiskbaseEnabled() {
+        return riskbaseEnabled;
+    }
+
+    public void setRiskbaseEnabled(boolean riskbaseEnabled) {
+        this.riskbaseEnabled = riskbaseEnabled;
+    }
+    
     public Set<String> getSupportedLocales() {
         if (supportedLocales == null) {
             supportedLocales = new HashSet<>();
