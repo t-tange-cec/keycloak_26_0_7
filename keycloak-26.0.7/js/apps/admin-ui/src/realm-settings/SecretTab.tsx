@@ -37,7 +37,32 @@ export const SecretTab = ({
 	useEffect(setupForm, []);
 	return (
 		<PageSection variant="light">
-		<div>This is SecretTab</div>
-		</PageSection>		
+		<FormAccess
+		  isHorizontal
+		  role="manage-realm"
+		  className="pf-v5-u-mt-lg"
+		  onSubmit={handleSubmit(save)}
+		>
+		<FormGroup
+		  label={t("secret")}
+		  fieldId="kc-secret"
+		  labelIcon={
+		    <HelpItem
+		      helpText={t("secretHelp")}
+		      fieldLabelId="secretLabel"
+		    />
+		  }
+		>
+		</FormGroup>
+		<ActionGroup>
+		  <Button variant="primary" type="submit" data-testid="secret-tab-save">
+		    {t("save")}
+		  </Button>
+		  <Button variant="link" onClick={setupForm}>
+		    {t("revert")}
+		  </Button>
+		</ActionGroup>
+		</FormAccess>
+		</PageSection>
 	);
 };

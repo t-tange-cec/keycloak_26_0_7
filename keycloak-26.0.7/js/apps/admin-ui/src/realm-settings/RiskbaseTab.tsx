@@ -3,6 +3,7 @@ import {
   HelpItem,
   KeycloakSelect,
   SelectVariant,
+  SwitchControl,
 } from "@keycloak/keycloak-ui-shared";
 import {
   ActionGroup,
@@ -36,6 +37,11 @@ export const RiskbaseTab = ({
 	  convertToFormValues(realm, setValue);
 	};
 	useEffect(setupForm, []);
+	const riskbaseEnabled = useWatch({
+	  control,
+	  name: "riskbaseEnabled",
+	  defaultValue: realm.riskbaseEnabled,
+	});
 
 	return (
 		<PageSection variant="light">
@@ -46,17 +52,16 @@ export const RiskbaseTab = ({
 		  onSubmit={handleSubmit(save)}
 		>
 		
-		<FormGroup
-		  label={t("riskbase")}
-		  fieldId="kc-riskbase"
-		  labelIcon={
-		    <HelpItem
-		      helpText={t("riskbaseHelp")}
-		      fieldLabelId="riskbaseLabel"
-		    />
-		  }
-		>
-		</FormGroup>
+		<FormProvider {...form}>
+		  <SwitchControl
+		    name="riskbaseEnabled"
+		    label={t("riskbase")}
+		    labelIcon={t("riskbaseHelp")}
+		    labelOn={t("enabled")}
+		    labelOff={t("disabled")}
+		    aria-label={t("riskbase")}
+		  />
+		</FormProvider>
 		<ActionGroup>
 		  <Button variant="primary" type="submit" data-testid="riskbase-tab-save">
 		    {t("save")}
