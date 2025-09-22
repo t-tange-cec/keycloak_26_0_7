@@ -375,14 +375,14 @@ export const RealmSettingsTabs = () => {
 		    data-testid="rs-riskbase-tab"
 		    {...riskbaseTab}
 		  >
-		    <RiskbaseTab />
+		    <RiskbaseTab realm={realm!} save={save} />
 		  </Tab>
 		  <Tab
 		    title={<TabTitleText>{t("secret")}</TabTitleText>}
 		    data-testid="rs-secret-tab"
 		    {...secretTab}
 		  >
-		    <SecretTab />
+		    <SecretTab realm={realm!} save={save} />
 		  </Tab>
           {canViewOrManageEvents && (
             <Tab
