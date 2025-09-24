@@ -5,9 +5,9 @@ import { TypeaheadSelect } from "./TypeaheadSelect";
 export type Variant = `${SelectVariant}`;
 
 export enum SelectVariant {
-  single = "single",
-  typeahead = "typeahead",
-  typeaheadMulti = "typeaheadMulti",
+  single,
+  typeahead,
+  typeaheadMulti,
 }
 
 export const propertyToString = (prop: string | number | undefined) =>
