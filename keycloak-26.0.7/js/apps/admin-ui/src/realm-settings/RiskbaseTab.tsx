@@ -50,7 +50,8 @@ export const RiskbaseTab = ({
 	  defaultValue: false,
 	});
 	const handleSave = async () => {
-	  await updateRealmAttributes(realm, { threshhold: threshhold_value });
+		await updateRealmAttributes(realm, { riskbaseEnabled: riskbaseEnabled });
+		await updateRealmAttributes(realm, { threshhold: threshhold });
 	  alert('‘®«‚ğXV‚µ‚Ü‚µ‚½');
 	};
 
