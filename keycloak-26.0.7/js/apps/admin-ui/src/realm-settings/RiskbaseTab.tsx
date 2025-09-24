@@ -31,9 +31,15 @@ export const RiskbaseTab = ({
 	  realm,
 	  save,
 	}: RealmSettingsThemesTabProps) => {
-	const { t } = useTranslation();
 	const form = useForm();
-	const { control, handleSubmit, setValue } = useForm<RealmRepresentation>();
+	const { t } = useTranslation();
+	const [threshhold_value, setValue] = useState('50');
+	const threshhold = useWatch({
+	  control,
+	  name: "threshhold",
+	  defaultValue: threshhold_value,
+	});
+	const { control, handleSubmit, setValue } = form;
 	const setupForm = () => {
 	  convertToFormValues(realm, setValue);
 	};
@@ -41,8 +47,12 @@ export const RiskbaseTab = ({
 	const riskbaseEnabled = useWatch({
 	  control,
 	  name: "riskbaseEnabled",
-	  defaultValue: realm.riskbaseEnabled,
+	  defaultValue: false,
 	});
+	const handleSave = async () => {
+	  await updateRealmAttributes(realm, { threshhold: threshhold_value });
+	  alert('属性を更新しました');
+	};
 
 	return (
 		<PageSection variant="light">
@@ -63,6 +73,14 @@ export const RiskbaseTab = ({
 		    aria-label={t("riskbase")}
 		  />
 		</FormProvider>
+		<h2>スレッシュホールド</h2>
+		<input
+		  type="text"
+		  value={value}
+		  onChange={(e) => setValue(e.target.value)}
+		  placeholder="threshhold を入力"
+		/>
+		
 		<ActionGroup>
 		  <Button variant="primary" type="submit" data-testid="riskbase-tab-save">
 		    {t("save")}
