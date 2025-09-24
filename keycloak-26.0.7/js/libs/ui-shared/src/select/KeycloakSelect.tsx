@@ -3,11 +3,10 @@ import { SingleSelect } from "./SingleSelect";
 import { TypeaheadSelect } from "./TypeaheadSelect";
 
 export type Variant = `${SelectVariant}`;
-
 export enum SelectVariant {
-  single,
-  typeahead,
-  typeaheadMulti,
+  single = "single",
+  typeahead = "typeahead",
+  typeaheadMulti = "typeaheadMulti",
 }
 
 export const propertyToString = (prop: string | number | undefined) =>
