@@ -36,7 +36,7 @@ export const RiskbaseTab = ({
 	const { t } = useTranslation();
 	const threshhold_value = useState('50');
 	const threshhold = useWatch({
-	  control,
+	  control0,
 	  name: "threshhold",
 	  defaultValue: threshhold_value,
 	});
@@ -46,7 +46,7 @@ export const RiskbaseTab = ({
 	};
 	useEffect(setupForm, []);
 	const riskbaseEnabled = useWatch({
-	  control,
+	  control1,
 	  name: "riskbaseEnabled",
 	  defaultValue: false,
 	});
