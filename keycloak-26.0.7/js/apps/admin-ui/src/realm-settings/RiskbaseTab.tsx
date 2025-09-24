@@ -12,6 +12,7 @@ import {
   PageSection,
   SelectOption,
 } from "@patternfly/react-core";
+import { updateRealmAttributes } from '../api/keycloak';
 import { useEffect, useState } from "react";
 import { Controller, FormProvider, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -77,7 +78,7 @@ export const RiskbaseTab = ({
 		<h2>スレッシュホールド</h2>
 		<input
 		  type="text"
-		  value={value}
+		  value={threshhold}
 		  onChange={(e) => setValue(e.target.value)}
 		  placeholder="threshhold を入力"
 		/>
