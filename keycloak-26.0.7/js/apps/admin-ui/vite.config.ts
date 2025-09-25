@@ -8,7 +8,7 @@ import dts from "vite-plugin-dts";
 export default defineConfig(({ mode }) => {
   optimizeDeps: {
     include: ['axios'],
-  }
+  };
   const env = loadEnv(mode, process.cwd(), "");
   const external = ["react", "react/jsx-runtime", "react-dom"];
   const plugins = [react(), checker({ typescript: true })];
