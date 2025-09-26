@@ -610,10 +610,6 @@ public class FreeMarkerLoginFormsProvider implements LoginFormsProvider {
         return createResponse(LoginFormsPages.LOGIN_PASSWORD);
     }
 
-    public Response createLoginSecretQuestion() {
-        return createResponse(LoginFormsPages.LOGIN_SECRET_QUESTION);
-    }
-
     @Override
     public Response createPasswordReset() {
         String loginHint = authenticationSession.getClientNote(OIDCLoginProtocol.LOGIN_HINT_PARAM);
