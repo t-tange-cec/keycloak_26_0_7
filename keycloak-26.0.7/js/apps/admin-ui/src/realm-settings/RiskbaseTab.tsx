@@ -72,11 +72,10 @@ export const RiskbaseTab = ({
 		    aria-label={t("riskbase")}
 		  />
 		</FormProvider>
-		<h2>スレッシュホールド</h2>
+		<h2>t("threshhold")</h2>
 		<input
 		  type="text"
 		  value={threshhold}
-		  onChange={(e) => setValue(e.target.value)}
 		  placeholder="threshhold を入力"
 		/>
 		
