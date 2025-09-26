@@ -620,6 +620,11 @@ public class FreeMarkerLoginFormsProvider implements LoginFormsProvider {
     }
 
     @Override
+    public Response createSecretQuestionReset() {
+        return createResponse(LoginFormsPages.LOGIN_RESET_SECRET_QUESTION);
+    }
+
+    @Override
     public Response createOtpReset() {
         return createResponse(LoginFormsPages.LOGIN_RESET_OTP);
     }
