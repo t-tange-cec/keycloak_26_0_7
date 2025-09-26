@@ -12,7 +12,6 @@ import {
   PageSection,
   SelectOption,
 } from "@patternfly/react-core";
-import { updateRealmAttributes } from '../api/keycloak';
 import { useEffect, useState } from "react";
 import { Controller, FormProvider, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -51,8 +50,6 @@ export const RiskbaseTab = ({
 	  defaultValue: false,
 	});
 	const handleSave = async () => {
-		await updateRealmAttributes(realm, { riskbaseEnabled: riskbaseEnabled });
-		await updateRealmAttributes(realm, { threshhold: threshhold });
 	  alert('属性を更新しました');
 	};
 
