@@ -93,7 +93,6 @@ public class UpdateSecretQuestion implements RequiredActionProvider, RequiredAct
             : Stream.empty();
         if (secretQuestionCredentials.count() >= 1 && Validation.isBlank(userLabel)) {
             Response challenge = context.form()
-                    .setAttribute("mode", mode)
                     .addError(new FormMessage(Validation.FIELD_OTP_LABEL, Messages.MISSING_TOTP_DEVICE_NAME))
                     .createResponse(UserModel.RequiredAction.CONFIGURE_SECRET_QUESTION);
             context.challenge(challenge);
@@ -106,7 +105,6 @@ public class UpdateSecretQuestion implements RequiredActionProvider, RequiredAct
 
         if (!CredentialHelper.createSecretQuestionCredential(context.getSession(), context.getRealm(), context.getUser(), answer, credentialModel)) {
             Response challenge = context.form()
-                    .setAttribute("mode", mode)
                     .addError(new FormMessage(Validation.FIELD_SECRET_QUESTION, Messages.INVALID_TOTP))
                     .createResponse(UserModel.RequiredAction.CONFIGURE_SECRET_QUESTION);
             context.challenge(challenge);
