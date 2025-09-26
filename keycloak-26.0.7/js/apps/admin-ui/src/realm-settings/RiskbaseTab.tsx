@@ -34,11 +34,10 @@ export const RiskbaseTab = ({
 	const form = useForm();
 	const { control, handleSubmit, setValue } = form;
 	const { t } = useTranslation();
-	const threshhold_value = useState('50');
 	const threshhold = useWatch({
 	  control,
 	  name: "threshhold",
-	  defaultValue: threshhold_value,
+	  defaultValue: 50,
 	});
 	const setupForm = () => {
 	  convertToFormValues(realm, setValue);
