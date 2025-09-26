@@ -196,6 +196,7 @@ public class RealmRepresentation {
     private List<ProtocolMapperRepresentation> protocolMappers;
     private MultivaluedHashMap<String, ComponentExportRepresentation> components;
     protected Boolean internationalizationEnabled;
+    protected Boolean riskbaseEnabled;
     protected Set<String> supportedLocales;
     protected String defaultLocale;
     protected List<AuthenticationFlowRepresentation> authenticationFlows;
@@ -936,7 +937,15 @@ public class RealmRepresentation {
     public void setInternationalizationEnabled(Boolean internationalizationEnabled) {
         this.internationalizationEnabled = internationalizationEnabled;
     }
+    
+    public Boolean isRiskbaseEnabled() {
+        return riskbaseEnabled;
+    }
 
+    public void setRiskbaseEnabled(Boolean riskbaseEnabled) {
+        this.riskbaseEnabled = riskbaseEnabled;
+    }
+    
     public Set<String> getSupportedLocales() {
         return supportedLocales;
     }

@@ -58,6 +58,8 @@ public class CredentialModel implements Serializable {
     public static final String SECRET = "secret";
     public static final String CLIENT_CERT = "cert";
     public static final String KERBEROS = "kerberos";
+    // riskbase add
+    public static final String SECRET_QUESTION = "secret-question";
 
 
     private String id;

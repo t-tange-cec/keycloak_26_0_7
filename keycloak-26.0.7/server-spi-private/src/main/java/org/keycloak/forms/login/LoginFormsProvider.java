@@ -68,6 +68,8 @@ public interface LoginFormsProvider extends Provider {
 
     Response createPasswordReset();
 
+    Response createSecretQuestionReset();
+
     Response createLoginTotp();
 
     Response createLoginRecoveryAuthnCode();
@@ -107,6 +109,8 @@ public interface LoginFormsProvider extends Provider {
     Response createFrontChannelLogoutPage();
 
     Response createLogoutConfirmPage();
+    
+    Response createLoginSecretQuestion();
 
     LoginFormsProvider setAuthenticationSession(AuthenticationSessionModel authenticationSession);
 

@@ -54,6 +54,7 @@ public class RegistrationPage implements FormAuthenticator, FormAuthenticatorFac
     public static final String FIELD_FIRST_NAME = "firstName";
     public static final String FIELD_RECAPTCHA_RESPONSE = "g-recaptcha-response";
     public static final String PROVIDER_ID = "registration-page-form";
+    public static final String FIELD_SECRET_QUESTION = "secret-question";
 
     @Override
     public Response render(FormContext context, LoginFormsProvider form) {

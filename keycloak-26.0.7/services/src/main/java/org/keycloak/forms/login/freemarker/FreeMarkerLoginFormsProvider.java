@@ -27,6 +27,7 @@ import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationProcessor;
 import org.keycloak.authentication.authenticators.browser.AbstractUsernameFormAuthenticator;
 import org.keycloak.authentication.authenticators.browser.OTPFormAuthenticator;
+import org.keycloak.authentication.authenticators.browser.RiskBaseFormAuthenticator;
 import org.keycloak.authentication.forms.RegistrationPage;
 import org.keycloak.authentication.requiredactions.util.UpdateProfileContext;
 import org.keycloak.authentication.requiredactions.util.UserUpdateProfileContext;
@@ -62,6 +63,7 @@ import org.keycloak.forms.login.freemarker.model.TotpLoginBean;
 import org.keycloak.forms.login.freemarker.model.UrlBean;
 import org.keycloak.forms.login.freemarker.model.VerifyProfileBean;
 import org.keycloak.forms.login.freemarker.model.X509ConfirmBean;
+import org.keycloak.forms.login.freemarker.model.SecretQuestionLoginBean;
 import org.keycloak.models.ClientModel;
 import org.keycloak.models.Constants;
 import org.keycloak.models.KeycloakSession;
@@ -202,6 +204,10 @@ public class FreeMarkerLoginFormsProvider implements LoginFormsProvider {
                 actionMessage = Messages.UPDATE_PROFILE;
                 page = LoginFormsPages.LOGIN_UPDATE_PROFILE;
                 break;
+            case CONFIGURE_SECRET_QUESTION:
+                actionMessage = Messages.CONFIGURE_SECRET_QUESTION;
+                page = LoginFormsPages.LOGIN_CONFIG_SECRET_QUESTION;
+                break;
             default:
                 return Response.serverError().build();
         }
@@ -322,6 +328,9 @@ public class FreeMarkerLoginFormsProvider implements LoginFormsProvider {
                 break;
             case LOGOUT_CONFIRM:
                 attributes.put("logoutConfirm", new LogoutConfirmBean(accessCode, authenticationSession));
+                break;
+            case LOGIN_SECRET_QUESTION:
+                attributes.put("secretQuestionLogin", new SecretQuestionLoginBean(session, realm, user, (String) this.attributes.get(RiskBaseFormAuthenticator.SELECTED_SECRET_QUESTION_CREDENTIAL_ID)));
                 break;
         }
 
@@ -698,6 +707,11 @@ public class FreeMarkerLoginFormsProvider implements LoginFormsProvider {
     @Override
     public Response createLoginExpiredPage() {
         return createResponse(LoginFormsPages.LOGIN_PAGE_EXPIRED);
+    }
+
+    @Override
+    public Response createLoginSecretQuestion() {
+        return createResponse(LoginFormsPages.LOGIN_SECRET_QUESTION);
     }
 
     @Override
