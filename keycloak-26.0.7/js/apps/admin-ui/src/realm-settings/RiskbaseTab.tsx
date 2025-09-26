@@ -33,20 +33,20 @@ export const RiskbaseTab = ({
 	  save,
 	}: RealmSettingsThemesTabProps) => {
 	const form = useForm();
+	const { control, handleSubmit, setValue } = form;
 	const { t } = useTranslation();
 	const threshhold_value = useState('50');
 	const threshhold = useWatch({
-	  control0,
+	  control,
 	  name: "threshhold",
 	  defaultValue: threshhold_value,
 	});
-	const { control, handleSubmit, setValue } = form;
 	const setupForm = () => {
 	  convertToFormValues(realm, setValue);
 	};
 	useEffect(setupForm, []);
 	const riskbaseEnabled = useWatch({
-	  control1,
+	  control,
 	  name: "riskbaseEnabled",
 	  defaultValue: false,
 	});
