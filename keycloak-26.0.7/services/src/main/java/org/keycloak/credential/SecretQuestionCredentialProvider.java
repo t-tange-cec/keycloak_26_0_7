@@ -32,6 +32,9 @@ import org.keycloak.models.credential.dto.SecretQuestionSecretData;
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
  * @version $Revision: 1 $
  */
+/*
+ * ユーザーの秘密の質問資格情報（Credential）を管理・操作するためのプロバイダーです。
+ * ]*/
 public class SecretQuestionCredentialProvider implements CredentialProvider<SecretQuestionCredentialModel>, CredentialInputValidator/*, OnUserCache*/ {
     private static final Logger logger = Logger.getLogger(SecretQuestionCredentialProvider.class);
 

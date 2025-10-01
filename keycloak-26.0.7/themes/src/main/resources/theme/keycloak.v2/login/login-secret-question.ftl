@@ -9,25 +9,17 @@
     <#elseif section="form">
         <form id="kc-otp-login-form" class="${properties.kcFormClass!}" action="${url.loginAction}" method="post">
             <input id="selectedCredentialId" type="hidden" name="selectedCredentialId" value="${seqretQuestionLogin.selectedCredentialId!''}">
-            <#if otpLogin.userSeqretQuestionCredentials?size gt 1>
+            <#if secretQuestionLogin.userSeqretQuestionCredentials?size gt 1>
                 <div class="${properties.kcFormGroupClass!}">
                     <div class="${properties.kcInputWrapperClass!}">
-                        <#list otpLogin.userSecretQuestionCredentials as seqretQuestionCredential>
-                            <div id="kc-secret-question-credential-${seqretQuestionCredential?index}" class="${properties.kcLoginOTPListClass!}"
-                                    onclick="toggleOTP(${seqretQuestionCredential?index}, '${seqretQuestionCredential.id}')">
-                                <span class="${properties.kcLoginOTPListItemHeaderClass!}">
-                                    <span class="${properties.kcLoginOTPListItemIconBodyClass!}">
-                                      <i class="${properties.kcLoginOTPListItemIconClass!}" aria-hidden="true"></i>
-                                    </span>
-                                    <span class="${properties.kcLoginOTPListItemTitleClass!}">${seqretQuestionCredential.userLabel}</span>
-                                </span>
+                        <#list secretQuestionLogin.userSecretQuestionCredentials as seqretQuestionCredential>
+                            <div id="kc-secret-question-credential-${seqretQuestionCredential?index}">
                             </div>
                         </#list>
                     </div>
                 </div>
             </#if>
-
-            <@field.input name="secret-question" label=msg("loginOtpOneTime") autocomplete="one-time-code" fieldName="totp" autofocus=true />
+            <@field.input name="secret-answer" label=msg("loginAnswer")  fieldName="answer" autofocus=true />
 
             <@buttons.loginButton />
         </form>

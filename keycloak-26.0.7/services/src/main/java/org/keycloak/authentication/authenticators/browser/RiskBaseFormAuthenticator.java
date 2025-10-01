@@ -112,7 +112,7 @@ public class RiskBaseFormAuthenticator extends AbstractUsernameFormAuthenticator
         if (!valid) {
             context.getEvent().user(userModel)
                     .error(Errors.INVALID_USER_CREDENTIALS);
-            Response challengeResponse = challenge(context, Messages.INVALID_TOTP, Validation.FIELD_SECRET_QUESTION);
+            Response challengeResponse = challenge(context, Messages.INVALID_SECRET_QUESTION, Validation.FIELD_SECRET_QUESTION);
             context.failureChallenge(AuthenticationFlowError.INVALID_CREDENTIALS, challengeResponse);
             return;
         }
