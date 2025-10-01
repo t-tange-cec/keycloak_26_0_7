@@ -49,7 +49,7 @@ public class RiskBaseFormAuthenticatorFactory implements AuthenticatorFactory {
 
     @Override
     public void init(Config.Scope config) {
-
+    	System.out.println("RiskBaseFormAuthenticatorFactory initialized");
     }
 
     @Override
