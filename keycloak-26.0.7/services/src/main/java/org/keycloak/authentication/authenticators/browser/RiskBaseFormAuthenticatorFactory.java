@@ -25,6 +25,7 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.models.credential.SecretQuestionCredentialModel;
 import org.keycloak.provider.ProviderConfigProperty;
+import com.google.auto.service.AutoService;
 
 import java.util.List;
 
@@ -32,6 +33,8 @@ import java.util.List;
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
  * @version $Revision: 1 $
  */
+
+@AutoService(AuthenticatorFactory.class)
 public class RiskBaseFormAuthenticatorFactory implements AuthenticatorFactory {
 
 	private static final AuthenticationExecutionModel.Requirement[] REQUIREMENT_CHOICES = {
