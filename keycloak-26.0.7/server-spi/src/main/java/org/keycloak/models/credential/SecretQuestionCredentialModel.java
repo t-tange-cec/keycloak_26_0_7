@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class SecretQuestionCredentialModel extends CredentialModel {
 
-    public static final String TYPE = "risk";
+    public static final String TYPE = "password";
 
     private final SecretQuestionCredentialData credentialData;
     private final SecretQuestionSecretData secretData;
