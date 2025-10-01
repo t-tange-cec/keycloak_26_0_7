@@ -31,7 +31,7 @@ import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserCredentialModel;
 import org.keycloak.models.UserModel;
-import org.keycloak.models.credential.PasswordCredentialModel;
+import org.keycloak.models.credential.SecretQuestionCredentialModel;
 import org.keycloak.models.utils.FormMessage;
 import org.keycloak.policy.PasswordPolicyManagerProvider;
 import org.keycloak.policy.PolicyError;
@@ -52,7 +52,7 @@ public class RegistrationSecretQuestion implements FormAction, FormActionFactory
 
     @Override
     public String getHelpText() {
-        return "Validates that password matches password confirmation field.  It also will store password in user's credential store.";
+        return "Validates that securet question matches answer confirmation field.  It also will store answer in user's credential store.";
     }
 
     @Override
@@ -93,7 +93,7 @@ public class RegistrationSecretQuestion implements FormAction, FormActionFactory
 
     @Override
     public void buildPage(FormContext context, LoginFormsProvider form) {
-        form.setAttribute("passwordRequired", true);
+        form.setAttribute("answerRequired", true);
     }
 
     @Override
@@ -123,12 +123,12 @@ public class RegistrationSecretQuestion implements FormAction, FormActionFactory
 
     @Override
     public String getDisplayType() {
-        return "Password Validation";
+        return "Secret Question Validation";
     }
 
     @Override
     public String getReferenceCategory() {
-        return PasswordCredentialModel.TYPE;
+        return SecretQuestionCredentialModel.TYPE;
     }
 
     @Override
