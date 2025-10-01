@@ -89,7 +89,7 @@ public class RiskBaseFormAuthenticatorFactory implements AuthenticatorFactory {
 
     @Override
     public String getDisplayType() {
-        return "Secret question Form";
+        return "Riskbase Form";
     }
 
     @Override
