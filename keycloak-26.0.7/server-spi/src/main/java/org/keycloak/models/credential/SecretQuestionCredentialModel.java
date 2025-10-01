@@ -12,8 +12,7 @@ import java.util.Map;
 
 public class SecretQuestionCredentialModel extends CredentialModel {
 
-    public static final String TYPE = "secret-question";
-    public static final String SECRET_QUESTION_HISTORY = "secret-question-history";
+    public static final String TYPE = "risk";
 
     private final SecretQuestionCredentialData credentialData;
     private final SecretQuestionSecretData secretData;
@@ -22,7 +21,6 @@ public class SecretQuestionCredentialModel extends CredentialModel {
 
     	SecretQuestionSecretData secretData = new  SecretQuestionSecretData(secretValue,null);
     	SecretQuestionCredentialModel credentialModel = new SecretQuestionCredentialModel((SecretQuestionCredentialData)null,secretData);
-        //credentialModel.fillCredentialModelFields();
         credentialModel.setUserLabel(userLabel);
         return credentialModel;
     }
@@ -36,13 +34,13 @@ public class SecretQuestionCredentialModel extends CredentialModel {
         return new SecretQuestionCredentialModel(credentialData, secretData);
     }
 
-    public static SecretQuestionCredentialModel createFromValues(String algorithm, byte[] salt, int hashIterations, String encodedPassword){
-        return createFromValues(algorithm, salt, hashIterations, null, encodedPassword);
+    public static SecretQuestionCredentialModel createFromValues(String algorithm, byte[] salt, int hashIterations, String encodedAnswer){
+        return createFromValues(algorithm, salt, hashIterations, null, encodedAnswer);
     }
 
-    public static SecretQuestionCredentialModel createFromValues(String algorithm, byte[] salt, int hashIterations, Map<String, List<String>> additionalParameters, String encodedPassword){
+    public static SecretQuestionCredentialModel createFromValues(String algorithm, byte[] salt, int hashIterations, Map<String, List<String>> additionalParameters, String encodedAnswer){
         SecretQuestionCredentialData credentialData = new SecretQuestionCredentialData(hashIterations, algorithm, additionalParameters);
-        SecretQuestionSecretData secretData = new SecretQuestionSecretData(encodedPassword, salt);
+        SecretQuestionSecretData secretData = new SecretQuestionSecretData(encodedAnswer, salt);
 
         SecretQuestionCredentialModel secretQuestionCredentialModel = new SecretQuestionCredentialModel(credentialData, secretData);
 
