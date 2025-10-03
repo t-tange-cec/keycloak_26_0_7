@@ -203,10 +203,10 @@ public class FreeMarkerLoginFormsProvider implements LoginFormsProvider {
                 actionMessage = Messages.UPDATE_PROFILE;
                 page = LoginFormsPages.LOGIN_UPDATE_PROFILE;
                 break;
-            case UPDATE_SECRET_QUESTION:
-                actionMessage = Messages.UPDATE_SECRET_QUESTION;
-                page = LoginFormsPages.LOGIN_UPDATE_SECRET_QUESTION;
-                break;
+//            case UPDATE_SECRET_QUESTION:
+//                actionMessage = Messages.UPDATE_SECRET_QUESTION;
+//                page = LoginFormsPages.LOGIN_UPDATE_SECRET_QUESTION;
+//                break;
             case CONFIGURE_SECRET_QUESTION:
                 actionMessage = Messages.CONFIGURE_SECRET_QUESTION;
                 page = LoginFormsPages.LOGIN_CONFIG_SECRET_QUESTION;
@@ -333,7 +333,7 @@ public class FreeMarkerLoginFormsProvider implements LoginFormsProvider {
                 attributes.put("logoutConfirm", new LogoutConfirmBean(accessCode, authenticationSession));
                 break;
             case LOGIN_SECRET_QUESTION:
-                attributes.put("secretQuestionLogin", new SecretQuestionLoginBean(session, realm, user, (String) this.attributes.get(RiskBaseFormAuthenticator.SELECTED_SECRET_QUESTION_CREDENTIAL_ID)));
+                attributes.put("secretQuestionLogin", new SecretQuestionLoginBean(session, realm, user, (String) this.attributes.get("qid")));
                 break;
         }
 
