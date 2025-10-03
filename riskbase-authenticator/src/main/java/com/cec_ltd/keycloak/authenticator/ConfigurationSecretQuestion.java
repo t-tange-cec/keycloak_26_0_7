@@ -16,7 +16,6 @@ import com.cec_ltd.keycloak.risk.CheckItemFactory;
 
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
-import org.keycloak.models.SubjectCredentialManager;
 import org.keycloak.models.UserCredentialModel;
 
 public class ConfigurationSecretQuestion implements Authenticator {
@@ -49,11 +48,11 @@ public class ConfigurationSecretQuestion implements Authenticator {
 		String answer = map.getFirst("secretAnswer");
 		String qid = map.getFirst("qid");
 		if (StringUtil.isNullOrEmpty(answer) || StringUtil.isNullOrEmpty(qid)) {
-		    context.failure("");
+		    //context.failure("error");
 		    return;
 		}		
 		UserCredentialModel credential = UserCredentialModel.secretQuestion(answer);
-		CredentialManager credentialManager = user.credentialManager();
+		UserCredentialManager credentialManager = context.getSession().userCredentialManager();
 		credential.setType("secret-question");
 		credentialManager.updateCredential(realm, user, credential);
 		user.setSingleAttribute("qid", qid);
