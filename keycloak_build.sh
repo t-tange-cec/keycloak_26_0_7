@@ -2,7 +2,10 @@
 
 export REPO_NAME=keycloak_26_0_7
 export REPO_USER=t-tange-cec
-export SOURCE_URL=https://github.com/${REPO_USER}/${REPO_NAME}.git
+#export BRANCH_OPT="-b develop"
+#export BRANCH_OPT="-b Riskbase_4"
+export BRANCH_OPT="-b main"
+export SOURCE_URL=https://t-tange-cec:${GITHUB_PAT}@github.com/${REPO_USER}/${REPO_NAME}.git
 export CLONE_DIR=${HOME}/${REPO_NAME}/keycloak-26.0.7
 export MAVEN_OPTS="-Xmx4g -Xms512m"
 export NODE_OPTIONS="--max-old-space-size=4096"
