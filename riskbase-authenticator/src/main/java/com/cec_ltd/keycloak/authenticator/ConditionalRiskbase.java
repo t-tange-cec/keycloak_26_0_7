@@ -9,7 +9,7 @@ import com.cec_ltd.keycloak.risk.CheckItemFactory;
 
 import org.keycloak.models.RealmModel;
 
-public class ConditionRiskbase implements Authenticator {
+public class ConditionalRiskbase implements Authenticator {
 	@Override
 	public void authenticate(AuthenticationFlowContext context) {
 		String currentIp = context.getConnection().getRemoteAddr();

@@ -14,7 +14,7 @@ import org.keycloak.Config;
 import org.keycloak.models.AuthenticationExecutionModel;
 
 @AutoService(AuthenticatorFactory.class)
-public class ConditionRiskbaseFactory implements AuthenticatorFactory {
+public class ConditionalRiskbaseFactory implements AuthenticatorFactory {
 	public static final String PROVIDER_ID = "cond-riskbase";
 
 	@Override
@@ -24,7 +24,7 @@ public class ConditionRiskbaseFactory implements AuthenticatorFactory {
 
 	@Override
 	public String getDisplayType() {
-		return "Condition Riskbase";
+		return "Conditional Riskbase";
 	}
 
 	@Override
@@ -63,12 +63,12 @@ public class ConditionRiskbaseFactory implements AuthenticatorFactory {
 
 	@Override
 	public Authenticator create(KeycloakSession session) {
-		return new ConditionRiskbase();
+		return new ConditionalRiskbase();
 	}
 
 	@Override
 	public String getHelpText() {
-		return "Condition Riskbase check realm attribute EnableRiskbase has true";
+		return "Conditional Riskbase check realm attribute EnableRiskbase has true";
 	}
 
 	@Override
