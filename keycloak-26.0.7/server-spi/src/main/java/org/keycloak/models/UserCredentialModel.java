@@ -91,11 +91,7 @@ public class UserCredentialModel implements CredentialInput {
     }
 
     public static SecretQuestionCredentialModel secretQuestion(String answer) {
-        return secretQuestion(answer, false);
-    }
-
-    public static SecretQuestionCredentialModel secretQuestion(String answer, boolean adminRequest) {
-    	return SecretQuestionCredentialModel.createFromPolicy(answer);
+    	return SecretQuestionCredentialModel.createFromAnswer(answer);
     }
 
     @Deprecated /** passwordToken is legacy stuff. Not used in Keycloak anymore **/

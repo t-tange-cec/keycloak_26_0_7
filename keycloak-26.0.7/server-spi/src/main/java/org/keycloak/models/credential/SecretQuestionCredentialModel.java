@@ -17,11 +17,12 @@ public class SecretQuestionCredentialModel extends CredentialModel {
     private final SecretQuestionCredentialData credentialData;
     private final SecretQuestionSecretData secretData;
 
-    public static SecretQuestionCredentialModel createFromPolicy(RealmModel realm, String secretValue, String userLabel) {
+    public static SecretQuestionCredentialModel createFromAnswer(String answer) {
 
-    	SecretQuestionSecretData secretData = new  SecretQuestionSecretData(secretValue,null);
+    	SecretQuestionSecretData secretData = new  SecretQuestionSecretData(answer,null);
     	SecretQuestionCredentialModel credentialModel = new SecretQuestionCredentialModel((SecretQuestionCredentialData)null,secretData);
-        credentialModel.setUserLabel(userLabel);
+    	credentialModel.setType(TYPE);
+    	credentialModel.setUserLabel("My answer");
         return credentialModel;
     }
 
