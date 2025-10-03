@@ -15,7 +15,7 @@ import org.keycloak.models.AuthenticationExecutionModel;
 
 @AutoService(AuthenticatorFactory.class)
 public class ConditionRiskbaseFactory implements AuthenticatorFactory {
-	public static final String PROVIDER_ID = "condition-riskbase";
+	public static final String PROVIDER_ID = "cond-riskbase";
 
 	@Override
 	public String getId() {

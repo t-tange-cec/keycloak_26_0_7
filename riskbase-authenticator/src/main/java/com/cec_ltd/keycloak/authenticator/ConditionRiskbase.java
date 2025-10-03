@@ -17,13 +17,13 @@ public class ConditionRiskbase implements Authenticator {
         RealmModel realm = context.getRealm();
         String qid = user.getFirstAttribute("qid");
         String enableRiskbase = realm.getAttribute("EnableRiskbase");
-        Integer ThreashHold = Integer.valueOf(realm.getAttribute("ThreashHold"));
+        Integer threashold = Integer.valueOf(realm.getAttribute("Threashold"));
         if ("true".equalsIgnoreCase(enableRiskbase)) {
             // リスクベース認証を実行（例：IPチェック、時間帯など）
             // ここでは単純に成功とする
         	CheckItemFactory factory=new CheckItemFactory();
         	Integer score=factory.getScore(context);
-        	if (score>ThreashHold){
+        	if (score<threashold){
                 context.success();
         	}else {
                 // スキップまたは失敗
