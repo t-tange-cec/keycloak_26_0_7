@@ -4,6 +4,10 @@
   <artifactId>riskbase-authenticator</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>riskbase-spi</name>
+<properties>
+  <maven.compiler.source>7</maven.compiler.source>
+  <maven.compiler.target>7</maven.compiler.target>
+</properties>
   <dependencies>
   <dependency>
     <groupId>org.keycloak</groupId>
