@@ -32,7 +32,7 @@
   <dependency>
   <groupId>jakarta.ws.rs</groupId>
   <artifactId>jakarta.ws.rs-api</artifactId>
-  <version>3.0.0</version> <!-- or latest version -->
+  <version>2.1.6</version> <!-- or latest version -->
   <scope>provided</scope>
 </dependency>
   </dependencies>
