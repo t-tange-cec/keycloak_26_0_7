@@ -43,8 +43,8 @@ public class ConfigurationSecretQuestion implements Authenticator {
         RealmModel realm = context.getRealm();
         String enableRiskbase = realm.getAttribute("EnableRiskbase");
 		if ("true".equalsIgnoreCase(enableRiskbase)) {
-			HttpRequest request=context.getHttpRequest();
-			MultivaluedMap<String, String> map =　request.getDecodedFormParameters();
+			HttpRequest request = context.getHttpRequest();
+			MultivaluedMap<String, String> map = request.getDecodedFormParameters();
 			String answer = map.getFirst("secretAnswer");
 			String qid = map.getFirst("qid");
 			context.success();
