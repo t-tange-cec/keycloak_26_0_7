@@ -52,7 +52,7 @@ public class ConfigurationSecretQuestion implements Authenticator {
 		    return;
 		}		
 		UserCredentialModel credential = UserCredentialModel.secretQuestion(answer);
-		UserCredentialManager credentialManager = context.getSession().userCredentialManager();
+		CredentialManager credentialManager = context.getSession().userCredentialManager();
 		credential.setType("secret-question");
 		credentialManager.updateCredential(realm, user, credential);
 		user.setSingleAttribute("qid", qid);
