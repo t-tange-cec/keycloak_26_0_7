@@ -42,7 +42,7 @@ public class SecretQuestionForm implements Authenticator {
 		String enableRiskbase = realm.getAttribute("EnableRiskbase");
 		if ("true".equalsIgnoreCase(enableRiskbase)) {
 			HttpRequest request=context.getHttpRequest();
-			MultivaluedMap<String, String> map =　request.getDecodedFormParameters();
+			MultivaluedMap<String, String> map = request.getDecodedFormParameters();
 			String answer = map.getFirst("secretAnswer");
 
 			// ユーザー属性と照合
