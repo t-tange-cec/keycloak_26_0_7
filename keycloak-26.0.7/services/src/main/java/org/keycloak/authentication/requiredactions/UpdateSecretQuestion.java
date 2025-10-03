@@ -73,10 +73,11 @@ public class UpdateSecretQuestion implements RequiredActionProvider, RequiredAct
         EventBuilder event = context.getEvent();
         event.event(EventType.UPDATE_CREDENTIAL);
         MultivaluedMap<String, String> formData = context.getHttpRequest().getDecodedFormParameters();
-        String answer = formData.getFirst("secret-question");
+        String answer = formData.getFirst("secretAnswer");
+        String qid = formData.getFirst("qid");
         String userLabel = formData.getFirst("userLabel");
 
-        SecretQuestionCredentialModel credentialModel = SecretQuestionCredentialModel.createFromPolicy(context.getRealm(), answer, userLabel);
+        SecretQuestionCredentialModel credentialModel = SecretQuestionCredentialModel.createFromAnswer(answer);
         event.detail(Details.CREDENTIAL_TYPE, credentialModel.getType());
 
         EventBuilder deprecatedEvent = event.clone().event(EventType.UPDATE_SECRET_QUESTION);
@@ -93,7 +94,7 @@ public class UpdateSecretQuestion implements RequiredActionProvider, RequiredAct
             : Stream.empty();
         if (secretQuestionCredentials.count() >= 1 && Validation.isBlank(userLabel)) {
             Response challenge = context.form()
-                    .addError(new FormMessage(Validation.FIELD_OTP_LABEL, Messages.MISSING_TOTP_DEVICE_NAME))
+                    .addError(new FormMessage(Validation.FIELD_SECRET_QUESTION, Messages.MISSING_SECRET_QUESTION))
                     .createResponse(UserModel.RequiredAction.CONFIGURE_SECRET_QUESTION);
             context.challenge(challenge);
             return;
@@ -105,12 +106,11 @@ public class UpdateSecretQuestion implements RequiredActionProvider, RequiredAct
 
         if (!CredentialHelper.createSecretQuestionCredential(context.getSession(), context.getRealm(), context.getUser(), answer, credentialModel)) {
             Response challenge = context.form()
-                    .addError(new FormMessage(Validation.FIELD_SECRET_QUESTION, Messages.INVALID_TOTP))
+                    .addError(new FormMessage(Validation.FIELD_SECRET_QUESTION, Messages.INVALID_SECRET_QUESTION))
                     .createResponse(UserModel.RequiredAction.CONFIGURE_SECRET_QUESTION);
             context.challenge(challenge);
             return;
         }
-        context.getAuthenticationSession().removeAuthNote(Constants.TOTP_SECRET_KEY);
         context.success();
         deprecatedEvent.success();
     }
@@ -144,7 +144,7 @@ public class UpdateSecretQuestion implements RequiredActionProvider, RequiredAct
 
     @Override
     public String getDisplayText() {
-        return "Configure Secret Question";
+        return "Update Secret Question";
     }
 
 
