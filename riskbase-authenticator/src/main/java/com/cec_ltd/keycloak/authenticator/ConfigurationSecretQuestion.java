@@ -51,10 +51,10 @@ public class ConfigurationSecretQuestion implements Authenticator {
 		    context.failure();
 		    return;
 		}		
-		UserCredentialModel credential = UserCredentialModel.password(answer);
+		UserCredentialModel credential = UserCredentialModel.secretQuestion(answer);
 		UserCredentialManager credentialManager = context.getSession().userCredentialManager();
 		credential.setType("secret-question");
-		((KeycloakSession) context.getSession()).userCredentialManager().updateCredential(realm, user, credential);
+		credentialManager.updateCredential(realm, user, credential);
 		user.setSingleAttribute("qid", qid);
 		context.success();
 	}
