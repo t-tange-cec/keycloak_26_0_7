@@ -21,7 +21,11 @@ mv  ${CLONE_DIR} ${BUILD_DIR}
 pushd ${BUILD_DIR}
  mvn clean install -DskipTests &> ${HOME}/build.log
 popd
+pushd ${HOME}/${REPO_NAME}/riskbase-authenticator
+ mvn install &> ${HOME}/build_spi.log
+popd
 pushd ${DIST_DIR}
  mvn install -DskipTests &> ${HOME}/build_dist.log
 popd
+
 #rm -rf ${HOME}/${REPO_NAME}
