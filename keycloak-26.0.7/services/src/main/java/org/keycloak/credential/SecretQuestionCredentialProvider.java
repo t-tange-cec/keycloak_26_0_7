@@ -33,7 +33,7 @@ import org.keycloak.models.credential.dto.SecretQuestionSecretData;
  * @version $Revision: 1 $
  */
 /*
- * ƒ†[ƒU[‚Ì”é–§‚Ì¿–â‘Šiî•ñiCredentialj‚ğŠÇ—E‘€ì‚·‚é‚½‚ß‚ÌƒvƒƒoƒCƒ_[‚Å‚·B
+ * ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®ç§˜å¯†ã®è³ªå•è³‡æ ¼æƒ…å ±ï¼ˆCredentialï¼‰ã‚’ç®¡ç†ãƒ»æ“ä½œã™ã‚‹ãŸã‚ã®ãƒ—ãƒ­ãƒã‚¤ãƒ€ãƒ¼ã§ã™ã€‚
  * ]*/
 public class SecretQuestionCredentialProvider implements CredentialProvider<SecretQuestionCredentialModel>, CredentialInputValidator/*, OnUserCache*/ {
     private static final Logger logger = Logger.getLogger(SecretQuestionCredentialProvider.class);

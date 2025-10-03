@@ -22,7 +22,7 @@ import org.keycloak.credential.CredentialInput;
 import org.keycloak.credential.CredentialModel;
 import org.keycloak.models.credential.RecoveryAuthnCodesCredentialModel;
 import org.keycloak.models.credential.OTPCredentialModel;
-import org.keycloak.models.credential.SecretQuestionCredincialModel;
+import org.keycloak.models.credential.SecretQuestionCredencialModel;
 import org.keycloak.models.credential.PasswordCredentialModel;
 import org.keycloak.models.credential.PasswordUserCredentialModel;
 
