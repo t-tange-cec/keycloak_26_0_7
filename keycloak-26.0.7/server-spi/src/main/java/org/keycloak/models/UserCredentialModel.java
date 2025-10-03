@@ -90,6 +90,14 @@ public class UserCredentialModel implements CredentialInput {
         return new PasswordUserCredentialModel("", PasswordCredentialModel.TYPE, password, adminRequest);
     }
 
+    public static SecretQuestionUserCredentialModel secretQuestion(String answer) {
+        return secretQuestion(answer, false);
+    }
+
+    public static SecretQuestionUserCredentialModel secretQuestion(String answer, boolean adminRequest) {
+        return new SecretQuestionUserCredentialModel("", SecretQuestionUserCredentialModel.TYPE, answer, adminRequest);
+    }
+
     @Deprecated /** passwordToken is legacy stuff. Not used in Keycloak anymore **/
     public static UserCredentialModel passwordToken(String passwordToken) {
         return new UserCredentialModel("", PASSWORD_TOKEN, passwordToken);

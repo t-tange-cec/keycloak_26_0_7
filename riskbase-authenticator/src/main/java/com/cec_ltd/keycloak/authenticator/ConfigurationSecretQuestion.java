@@ -14,7 +14,9 @@ import org.keycloak.utils.StringUtil;
 
 import com.cec_ltd.keycloak.risk.CheckItemFactory;
 
+import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
+import org.keycloak.models.UserCredentialModel;
 
 public class ConfigurationSecretQuestion implements Authenticator {
 	@Override
@@ -23,12 +25,9 @@ public class ConfigurationSecretQuestion implements Authenticator {
 		RealmModel realm = context.getRealm();
 		String qid = user.getFirstAttribute("qid");
 		String enableRiskbase = realm.getAttribute("EnableRiskbase");
-		Integer ThreashHold = Integer.valueOf(realm.getAttribute("ThreashHold"));
 		if ("true".equalsIgnoreCase(enableRiskbase)) {
 			if (StringUtil.isNullOrEmpty(qid)) {
-				// フォームに渡す属性を設定
 				LoginFormsProvider provider = context.form();
-				// チャレンジ画面として表示
 				context.forceChallenge(provider.createForm("login-update-secret-question.ftl"));
 			} else {
 				// スキップまたは失敗
@@ -43,15 +42,21 @@ public class ConfigurationSecretQuestion implements Authenticator {
 	@Override
 	public void action(AuthenticationFlowContext context) {
 		UserModel user = context.getUser();
-        RealmModel realm = context.getRealm();
-        String enableRiskbase = realm.getAttribute("EnableRiskbase");
-		if ("true".equalsIgnoreCase(enableRiskbase)) {
-			HttpRequest request = context.getHttpRequest();
-			MultivaluedMap<String, String> map = request.getDecodedFormParameters();
-			String answer = map.getFirst("secretAnswer");
-			String qid = map.getFirst("qid");
-			context.success();
-		}
+		RealmModel realm = context.getRealm();
+		HttpRequest request = context.getHttpRequest();
+		MultivaluedMap<String, String> map = request.getDecodedFormParameters();
+		String answer = map.getFirst("secretAnswer");
+		String qid = map.getFirst("qid");
+		if (StringUtil.isNullOrEmpty(answer) || StringUtil.isNullOrEmpty(qid)) {
+		    context.failure();
+		    return;
+		}		
+		UserCredentialModel credential = UserCredentialModel.password(answer);
+		UserCredentialManager credentialManager = context.getSession().userCredentialManager();
+		credential.setType("secret-question");
+		((KeycloakSession) context.getSession()).userCredentialManager().updateCredential(realm, user, credential);
+		user.setSingleAttribute("qid", qid);
+		context.success();
 	}
 
 	@Override
