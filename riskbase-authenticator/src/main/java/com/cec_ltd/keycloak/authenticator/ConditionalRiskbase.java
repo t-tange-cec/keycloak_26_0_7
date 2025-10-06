@@ -12,7 +12,7 @@ import org.keycloak.models.RealmModel;
 import org.jboss.logging.Logger;
 
 public class ConditionalRiskbase implements Authenticator {
-	private static final com.sun.org.slf4j.internal.Logger logger = Logger.getLogger(ConditionalRiskbase.class);
+	private static final Logger logger = Logger.getLogger(ConditionalRiskbase.class);
 	
 	@Override
 	public void authenticate(AuthenticationFlowContext context) {
