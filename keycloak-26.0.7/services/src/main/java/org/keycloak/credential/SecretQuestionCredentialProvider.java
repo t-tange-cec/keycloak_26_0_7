@@ -45,7 +45,7 @@ public class SecretQuestionCredentialProvider implements CredentialProvider<Cred
     }
 
     @Override
-    public CredentialModel createCredential(RealmModel realm, UserModel user, SecretQuestionCredentialModel credentialModel) {
+    public CredentialModel createCredential(RealmModel realm, UserModel user, CredentialModel credentialModel) {
         if (credentialModel.getCreatedDate() == null) {
             credentialModel.setCreatedDate(Time.currentTimeMillis());
         }

@@ -44,7 +44,6 @@ public class PasswordFormFactory implements AuthenticatorFactory {
 
     @Override
     public void init(Config.Scope config) {
-    	System.out.println("PasswordFormFactory initialized");
     }
 
     @Override
