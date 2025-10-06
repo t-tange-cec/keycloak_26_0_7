@@ -61,10 +61,10 @@ public class LastLoginCheckItem implements CheckItem {
 			if (expired) {
 				riskScore += score;
 			}
-			return riskScore;
 		} catch (Exception e) {
 			context.failure(AuthenticationFlowError.INTERNAL_ERROR);
 			logger.error("Authentication failed", e);
 		}
+		return riskScore;
 	}
 }

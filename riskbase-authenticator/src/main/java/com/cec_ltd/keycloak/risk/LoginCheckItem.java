@@ -55,11 +55,11 @@ public class LoginCheckItem implements CheckItem {
 
 			riskScore += todayEvents.size() * score;
 
-			return riskScore;
 		} catch (Exception e) {
 			context.failure(AuthenticationFlowError.INTERNAL_ERROR);
 			logger.error("Authentication failed", e);
 		}
+		return riskScore;
 	}
 
 }

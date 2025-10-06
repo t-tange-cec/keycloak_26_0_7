@@ -38,11 +38,11 @@ public class IPCheckItem implements CheckItem {
 				// 新規IP（既知でも未知でもない）
 				riskScore += score;
 			}
-			return riskScore;
 		} catch (Exception e) {
 			context.failure(AuthenticationFlowError.INTERNAL_ERROR);
 			Logger.error("Authentication failed", e);
 		}
+		return riskScore;
 	}
 
 	private List<String> getKnownIps(UserModel user) {

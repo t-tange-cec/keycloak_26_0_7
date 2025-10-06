@@ -39,10 +39,10 @@ public class ConditionalRiskbase implements Authenticator {
 				Integer score = factory.getScore(context);
 				logger.info("score:" + Integer.toString(score));
 				if (score < threashold) {
-					logger.info("success:");					
+					logger.info("success:");
 					context.success();
 				} else {
-					logger.info("attempted:");			
+					logger.info("attempted:");
 					// スキップまたは失敗
 					context.attempted(); // スキップ扱い
 				}
