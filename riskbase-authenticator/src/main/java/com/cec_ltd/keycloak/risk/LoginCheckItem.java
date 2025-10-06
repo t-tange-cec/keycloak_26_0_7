@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +49,6 @@ public class LoginCheckItem implements CheckItem {
 		riskScore += todayEvents.size() * score;
 
 		return riskScore;
-
 	}
 
 }
