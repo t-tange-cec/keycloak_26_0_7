@@ -37,7 +37,7 @@ public class LoginCheckItem implements CheckItem {
 		// イベント取得（KeycloakのDBに保存されている場合のみ）
 		@SuppressWarnings("unchecked")
 		List<Event> allEvents = (List<Event>) eventStore.createQuery().type(EventType.LOGIN_ERROR).realm(realmId).user(userId)
-				.collect(Collectors.toList());
+				.getResultList();
 
 
 		ZonedDateTime todayStart = ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).toLocalDate()
