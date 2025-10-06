@@ -3,7 +3,6 @@ package com.cec_ltd.keycloak.authenticator;
 import org.keycloak.authentication.Authenticator;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
-import org.keycloak.authentication.authenticators.ConditionalAuthenticator;
 import org.keycloak.models.UserModel;
 import org.keycloak.utils.StringUtil;
 
@@ -12,7 +11,7 @@ import com.cec_ltd.keycloak.risk.CheckItemFactory;
 import org.keycloak.models.RealmModel;
 import org.jboss.logging.Logger;
 
-public class ConditionalRiskbase implements ConditionalAuthenticator {
+public class ConditionalRiskbase implements Authenticator {
 	private static final Logger logger = Logger.getLogger(ConditionalRiskbase.class);
 	
 	@Override
