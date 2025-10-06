@@ -35,18 +35,8 @@ public class LoginCheckItem implements CheckItem {
 		String userId = context.getUser().getId();
 		String realmId = context.getRealm().getId();
 
-
-		    List<Event> loginEvents = eventStore
-		        .createQuery()
-		        .type(EventType.LOGIN_ERROR)
-		        .user(user.getId())
-		        .stream()
-		        .collect(Collectors.toList());
-
-		
-		EventQuery query = session.events().createQuery().type(EventType.LOGIN_ERROR).user(userId);
-
-		List<Event> allEvents = query.stream().collect(Collectors.toList());
+		List<Event> allEvents = eventStore.createQuery().type(EventType.LOGIN_ERROR).user(userId).stream()
+				.collect(Collectors.toList());
 
 		ZonedDateTime todayStart = ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).toLocalDate()
 				.atStartOfDay(ZoneId.of("Asia/Tokyo"));
