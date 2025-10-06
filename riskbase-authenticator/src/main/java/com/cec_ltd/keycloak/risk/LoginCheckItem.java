@@ -42,9 +42,14 @@ public class LoginCheckItem implements CheckItem {
 
 		Date from = Date.from(todayStart.toInstant());
 		Date to = Date.from(todayEnd.toInstant());
+	    EventQuery query = eventStore.createQuery()
+	            .type(EventType.LOGIN_ERROR)
+	            .user(userId)
+	            .fromDate(from)
+	            .toDate(to);
 
-		List<Event> todayEvents = eventStore.queryEvents(EventType.LOGIN_ERROR, userId, from, to)
-				.collect(Collectors.toList());
+	        List<Event> todayEvents = query.getResultStream().collect(Collectors.toList());
+
 
 		riskScore += todayEvents.size() * score;
 

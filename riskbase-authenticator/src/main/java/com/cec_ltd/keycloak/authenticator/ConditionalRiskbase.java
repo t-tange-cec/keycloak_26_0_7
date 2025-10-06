@@ -13,7 +13,7 @@ import org.jboss.logging.Logger;
 
 public class ConditionalRiskbase implements Authenticator {
 	private static final Logger logger = Logger.getLogger(ConditionalRiskbase.class);
-	
+
 	@Override
 	public void authenticate(AuthenticationFlowContext context) {
 		String currentIp = context.getConnection().getRemoteAddr();
@@ -21,7 +21,7 @@ public class ConditionalRiskbase implements Authenticator {
 		RealmModel realm = context.getRealm();
 		String qid = user.getFirstAttribute("qid");
 		String enableRiskbase = realm.getAttribute("EnableRiskbase");
-		if (StringUtil.isNullOrEmpty(enableRiskbase)){
+		if (StringUtil.isNullOrEmpty(enableRiskbase)) {
 			enableRiskbase = "true";
 		}
 		logger.debug("enableRiskbase: " + enableRiskbase);
@@ -31,12 +31,12 @@ public class ConditionalRiskbase implements Authenticator {
 				strThreahhold = "50";
 			}
 			Integer threashold = Integer.valueOf(strThreahhold);
-			logger.debug("threshhold:"+strThreahhold);
+			logger.debug("threshhold:" + strThreahhold);
 			// リスクベース認証を実行（例：IPチェック、時間帯など）
 			// ここでは単純に成功とする
 			CheckItemFactory factory = new CheckItemFactory();
 			Integer score = factory.getScore(context);
-			logger.debug("score:"+Integer.toString(score));
+			logger.debug("score:" + Integer.toString(score));
 			if (score < threashold) {
 				context.success();
 			} else {
