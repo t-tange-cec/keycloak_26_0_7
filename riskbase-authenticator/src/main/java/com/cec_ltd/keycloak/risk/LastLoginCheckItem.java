@@ -15,7 +15,6 @@ import org.keycloak.events.EventStoreProvider;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.UserModel;
 
-
 /*
  * 最終ログインからの経過時間チェック
  * */
@@ -35,22 +34,11 @@ public class LastLoginCheckItem implements CheckItem {
 		EventStoreProvider eventStore = session.getProvider(EventStoreProvider.class);
 		String userId = context.getUser().getId();
 		String realmId = context.getRealm().getId();
-        // 最新の LOGIN イベントを取得（降順で1件）
-		EventQuery query = eventStore.createQuery()
-				.type(EventType.LOGIN)
-				.realm(realmId)
-				.user(userId)
-				.orderByDescTime();
+		// 最新の LOGIN イベントを取得（降順で1件）
+		EventQuery query = eventStore.createQuery().type(EventType.LOGIN).realm(realmId).user(userId).orderByDescTime();
 
 		List<Event> loginEvents = query.getResultStream().collect(Collectors.toList());
-		
-		List<Event> loginEvents = (List<Event>) eventStore.createQuery()
-				.type(EventType.LOGIN)
-				.realm(realmId)
-				.user(userId)
-				.orderByDescTime()
-		        .maxResults(1)
-		        .getResultStream();
+
 		boolean expired = false;
 		if (!loginEvents.isEmpty()) {
 			Event lastLogin = loginEvents.get(0);
@@ -60,11 +48,11 @@ public class LastLoginCheckItem implements CheckItem {
 			expired = daysSinceLogin >= 14;
 		} else {
 			// ログイン履歴がない場合は「初回」とみなすか、期限切れとみなす
-		    expired = true;
+			expired = true;
 		}
 		if (expired) {
-			riskScore+= score;
-		}		
+			riskScore += score;
+		}
 		return riskScore;
 	}
 }
