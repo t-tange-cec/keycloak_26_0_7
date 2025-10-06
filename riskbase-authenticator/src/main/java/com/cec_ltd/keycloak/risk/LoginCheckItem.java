@@ -34,11 +34,9 @@ public class LoginCheckItem implements CheckItem {
 		String userId = context.getUser().getId();
 		String realmId = context.getRealm().getId();
 
-		// イベント取得（KeycloakのDBに保存されている場合のみ）
-		@SuppressWarnings("unchecked")
-		List<Event> allEvents = (List<Event>) eventStore.createQuery().type(EventType.LOGIN_ERROR).realm(realmId).user(userId)
-				.getResultList();
+		EventQuery query = session.events().createQuery().type(EventType.LOGIN_ERROR).user(user.getId());
 
+		List<Event> allEvents = query.stream().collect(Collectors.toList());
 
 		ZonedDateTime todayStart = ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).toLocalDate()
 				.atStartOfDay(ZoneId.of("Asia/Tokyo"));
