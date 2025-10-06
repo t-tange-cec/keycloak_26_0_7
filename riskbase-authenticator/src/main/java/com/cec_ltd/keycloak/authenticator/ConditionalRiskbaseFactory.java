@@ -31,7 +31,10 @@ public class ConditionalRiskbaseFactory implements AuthenticatorFactory {
 	public String getReferenceCategory() {
 		return "risk";
 	}
-
+	@Override
+	public boolean isConditional() {
+	    return true;
+	}
 	@Override
 	public boolean isConfigurable() {
 		return false;

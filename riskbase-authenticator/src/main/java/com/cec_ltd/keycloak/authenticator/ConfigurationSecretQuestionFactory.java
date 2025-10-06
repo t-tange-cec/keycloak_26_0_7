@@ -34,7 +34,7 @@ public class ConfigurationSecretQuestionFactory implements AuthenticatorFactory 
 
 	@Override
 	public boolean isConfigurable() {
-		return false;
+		return true;
 	}
 
 	@Override
