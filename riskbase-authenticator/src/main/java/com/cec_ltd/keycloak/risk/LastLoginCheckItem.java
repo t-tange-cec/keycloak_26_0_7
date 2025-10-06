@@ -5,6 +5,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.events.Event;
@@ -35,6 +36,14 @@ public class LastLoginCheckItem implements CheckItem {
 		String userId = context.getUser().getId();
 		String realmId = context.getRealm().getId();
         // 最新の LOGIN イベントを取得（降順で1件）
+		EventQuery query = eventStore.createQuery()
+				.type(EventType.LOGIN)
+				.realm(realmId)
+				.user(userId)
+				.orderByDescTime();
+
+		List<Event> loginEvents = query.getResultStream().collect(Collectors.toList());
+		
 		List<Event> loginEvents = (List<Event>) eventStore.createQuery()
 				.type(EventType.LOGIN)
 				.realm(realmId)
