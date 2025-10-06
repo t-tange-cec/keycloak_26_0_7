@@ -4,6 +4,7 @@ import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 
 import org.keycloak.authentication.Authenticator;
+import org.keycloak.credential.CredentialInput;
 import org.keycloak.credential.CredentialModel;
 import org.keycloak.credential.CredentialProvider;
 import org.keycloak.forms.login.LoginFormsProvider;
@@ -24,14 +25,10 @@ public class SecretQuestionForm implements Authenticator {
 		RealmModel realm = context.getRealm();
 		String qid = user.getFirstAttribute("qid");
 
-		// ユーザー属性から秘密の質問を取得（例：user.getFirstAttribute("secretQuestion")）
 		String question = user.getFirstAttribute("qid");
 
-		// フォームに渡す属性を設定
 		LoginFormsProvider provider = context.form();
 		provider.setAttribute("qid", question);
-
-		// チャレンジ画面として表示
 		context.forceChallenge(provider.createForm("login-secret-question.ftl"));
 	}
 
@@ -44,16 +41,31 @@ public class SecretQuestionForm implements Authenticator {
 		MultivaluedMap<String, String> map = request.getDecodedFormParameters();
 		String answer = map.getFirst("secretAnswer");
 
-		CredentialProvider<CredentialModel> provider = 
-		    (CredentialProvider<CredentialModel>) context.getSession()
-		        .getProvider(CredentialProvider.class, "secret-question");
-		UserCredentialModel input = UserCredentialModel.secretQuestion(answer);
+		CredentialInput input = new CredentialInput() {
+			public String getType() {
+				return "secret-question";
+			}
+
+			public String getChallengeResponse() {
+				return answer;
+			}
+
+			public String getCredentialId() {
+				return null;
+			}
+		};
+
+		CredentialProvider<CredentialModel> provider = (CredentialProvider<CredentialModel>) context.getSession()
+				.getProvider(CredentialProvider.class, "secret-question");
+
 		boolean valid = provider.isValid(context.getRealm(), context.getUser(), input);
+
 		if (valid) {
-		    context.success();
+			context.success();
 		} else {
-		    context.failure(AuthenticationFlowError.INVALID_CREDENTIALS);
+			context.failure(AuthenticationFlowError.INVALID_CREDENTIALS);
 		}
+
 	}
 
 	@Override

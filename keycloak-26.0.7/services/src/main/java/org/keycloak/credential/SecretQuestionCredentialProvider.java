@@ -35,8 +35,8 @@ import org.keycloak.models.credential.dto.SecretQuestionSecretData;
 /*
  * ユーザーの秘密の質問資格情報（Credential）を管理・操作するためのプロバイダーです。
  * ]*/
-public class SecretQuestionCredentialProvider implements CredentialProvider<SecretQuestionCredentialModel>, CredentialInputValidator/*, OnUserCache*/ {
-    private static final Logger logger = Logger.getLogger(SecretQuestionCredentialProvider.class);
+public class SecretQuestionCredentialProvider implements CredentialProvider<CredentialModel>, CredentialInputValidator/*, OnUserCache*/ {
+    private static final Logger logger = Logger.getLogger(CredentialProvider.class);
 
     protected KeycloakSession session;
 
