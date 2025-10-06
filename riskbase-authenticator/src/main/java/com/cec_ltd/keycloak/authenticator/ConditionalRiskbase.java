@@ -31,12 +31,12 @@ public class ConditionalRiskbase implements Authenticator {
 				strThreahhold = "50";
 			}
 			Integer threashold = Integer.valueOf(strThreahhold);
-			logger.debug("threshhold:" + strThreahhold);
+			logger.info("threshhold:" + strThreahhold);
 			// リスクベース認証を実行（例：IPチェック、時間帯など）
 			// ここでは単純に成功とする
 			CheckItemFactory factory = new CheckItemFactory();
 			Integer score = factory.getScore(context);
-			logger.debug("score:" + Integer.toString(score));
+			logger.info("score:" + Integer.toString(score));
 			if (score < threashold) {
 				context.success();
 			} else {
