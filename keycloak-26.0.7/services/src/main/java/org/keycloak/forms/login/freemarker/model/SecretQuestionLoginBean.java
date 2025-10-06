@@ -48,8 +48,8 @@ public class SecretQuestionLoginBean {
 
         // This means user did not yet manually selected any Secret Question credential through the UI. So just go with the default one with biggest priority
         if (selectedCredentialId == null || selectedCredentialId.isEmpty()) {
-        	SecretQuestionCredentialProvider secretQuestionCredentialProvider = (SecretQuestionCredentialProvider)session.getProvider(CredentialProvider.class, SecretQuestionCredentialProviderFactory.PROVIDER_ID);
-        	SecretQuestionCredentialModel secretQuestionCredential = secretQuestionCredentialProvider
+        	CredentialProvider secretQuestionCredentialProvider = session.getProvider(CredentialProvider.class, SecretQuestionCredentialProviderFactory.PROVIDER_ID);
+        	CredentialModel secretQuestionCredential = secretQuestionCredentialProvider
                     .getDefaultCredential(session, realm, user);
 
             selectedCredentialId = secretQuestionCredential==null ? null : secretQuestionCredential.getId();
