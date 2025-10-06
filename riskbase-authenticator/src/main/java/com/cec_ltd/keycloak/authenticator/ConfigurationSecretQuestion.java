@@ -19,25 +19,37 @@ import com.cec_ltd.keycloak.risk.CheckItemFactory;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserCredentialModel;
+import org.jboss.logging.Logger;
 
 public class ConfigurationSecretQuestion implements Authenticator {
+	private static final Logger logger = Logger.getLogger(ConditionalRiskbase.class);
+
 	@Override
 	public void authenticate(AuthenticationFlowContext context) {
 		UserModel user = context.getUser();
 		RealmModel realm = context.getRealm();
 		String enableRiskbase = realm.getAttribute("EnableRiskbase");
-		if ("true".equalsIgnoreCase(enableRiskbase)) {
-			String qid = user.getFirstAttribute("qid");
-			if (StringUtil.isNullOrEmpty(qid)) {
-				LoginFormsProvider provider = context.form();
-				context.forceChallenge(provider.createForm("login-update-secret-question.ftl"));
+		try {
+			if (StringUtil.isNullOrEmpty(enableRiskbase)) {
+				enableRiskbase = "true";
+			}
+			logger.info("enableRiskbase: " + enableRiskbase);
+			if ("true".equalsIgnoreCase(enableRiskbase)) {
+				String qid = user.getFirstAttribute("qid");
+				if (StringUtil.isNullOrEmpty(qid)) {
+					LoginFormsProvider provider = context.form();
+					context.forceChallenge(provider.createForm("login-update-secret-question.ftl"));
+				} else {
+					// スキップまたは失敗
+					context.attempted(); // スキップ扱い
+				}
 			} else {
 				// スキップまたは失敗
 				context.attempted(); // スキップ扱い
 			}
-		} else {
-			// スキップまたは失敗
-			context.attempted(); // スキップ扱い
+		} catch (Exception e) {
+			context.failure(AuthenticationFlowError.INTERNAL_ERROR);
+			logger.error("Authentication failed", e);
 		}
 	}
 
@@ -51,15 +63,14 @@ public class ConfigurationSecretQuestion implements Authenticator {
 		String qid = map.getFirst("qid");
 		if (StringUtil.isNullOrEmpty(answer) || StringUtil.isNullOrEmpty(qid)) {
 			context.failureChallenge(AuthenticationFlowError.INVALID_CREDENTIALS,
-				    context.form().setError("質問または回答が入力されていません").createForm("login-update-secret-question.ftl"));			
+					context.form().setError("質問または回答が入力されていません").createForm("login-update-secret-question.ftl"));
 			return;
 		}
 		CredentialModel credential = new CredentialModel();
 		credential.setType("secret-question");
 		credential.setValue(answer);
-		CredentialProvider<CredentialModel> provider = 
-			    (CredentialProvider<CredentialModel>) context.getSession()
-			        .getProvider(CredentialProvider.class, "secret-question");
+		CredentialProvider<CredentialModel> provider = (CredentialProvider<CredentialModel>) context.getSession()
+				.getProvider(CredentialProvider.class, "secret-question");
 		provider.createCredential(realm, user, credential);
 		user.setSingleAttribute("qid", qid);
 		context.success();
