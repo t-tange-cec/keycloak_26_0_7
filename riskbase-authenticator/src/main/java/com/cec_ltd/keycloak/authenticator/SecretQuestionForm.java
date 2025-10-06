@@ -5,6 +5,7 @@ import jakarta.ws.rs.core.Response;
 
 import org.keycloak.authentication.Authenticator;
 import org.keycloak.credential.CredentialInput;
+import org.keycloak.credential.CredentialInputValidator;
 import org.keycloak.credential.CredentialModel;
 import org.keycloak.credential.CredentialProvider;
 import org.keycloak.forms.login.LoginFormsProvider;
@@ -55,7 +56,7 @@ public class SecretQuestionForm implements Authenticator {
 			}
 		};
 
-		CredentialProvider<CredentialModel> provider = (CredentialProvider<CredentialModel>) context.getSession()
+		CredentialInputValidator <CredentialModel> provider = (CredentialInputValidator <CredentialModel>) context.getSession()
 				.getProvider(CredentialProvider.class, "secret-question");
 
 		boolean valid = provider.isValid(context.getRealm(), context.getUser(), input);
