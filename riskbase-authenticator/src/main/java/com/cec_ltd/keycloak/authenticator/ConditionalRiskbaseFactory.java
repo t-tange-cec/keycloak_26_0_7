@@ -12,10 +12,13 @@ import java.util.List;
 
 import org.keycloak.Config;
 import org.keycloak.models.AuthenticationExecutionModel;
+import org.jboss.logging.Logger;
+
 
 @AutoService(AuthenticatorFactory.class)
 public class ConditionalRiskbaseFactory implements AuthenticatorFactory {
 	public static final String PROVIDER_ID = "cond-riskbase";
+	private static final Logger logger = Logger.getLogger(ConditionalRiskbaseFactory.class);
 
 	@Override
 	public String getId() {
