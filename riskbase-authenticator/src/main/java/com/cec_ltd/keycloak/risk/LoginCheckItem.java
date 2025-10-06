@@ -29,28 +29,26 @@ public class LoginCheckItem implements CheckItem {
 	@Override
 	public int getScore(AuthenticationFlowContext context) {
 		int riskScore = 0;
+
 		KeycloakSession session = context.getSession();
 		EventStoreProvider eventStore = session.getProvider(EventStoreProvider.class);
 
 		String userId = context.getUser().getId();
-		String realmId = context.getRealm().getId();
-
-		List<Event> allEvents = eventStore.createQuery().type(EventType.LOGIN_ERROR).user(userId).stream()
-				.collect(Collectors.toList());
 
 		ZonedDateTime todayStart = ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).toLocalDate()
 				.atStartOfDay(ZoneId.of("Asia/Tokyo"));
 		ZonedDateTime todayEnd = todayStart.plusDays(1).minusSeconds(1);
 
-		List<Event> todayEvents = allEvents.stream().filter(e -> {
-			Instant eventTime = Instant.ofEpochMilli(e.getTime());
-			ZonedDateTime eventZdt = eventTime.atZone(ZoneId.of("Asia/Tokyo"));
-			return !eventZdt.isBefore(todayStart) && !eventZdt.isAfter(todayEnd);
-		}).collect(Collectors.toList());
+		Date from = Date.from(todayStart.toInstant());
+		Date to = Date.from(todayEnd.toInstant());
+
+		List<Event> todayEvents = eventStore.createQuery().type(EventType.LOGIN_ERROR).user(userId).fromDate(from)
+				.toDate(to).getEvents();
 
 		riskScore += todayEvents.size() * score;
 
 		return riskScore;
+
 	}
 
 }
