@@ -56,7 +56,7 @@ public class SecretQuestionForm implements Authenticator {
 			}
 		};
 
-		CredentialInputValidator <CredentialModel> provider = (CredentialInputValidator <CredentialModel>) context.getSession()
+		CredentialInputValidator  provider = (CredentialInputValidator) context.getSession()
 				.getProvider(CredentialProvider.class, "secret-question");
 
 		boolean valid = provider.isValid(context.getRealm(), context.getUser(), input);
