@@ -9,7 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
+import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.events.Event;
 import org.keycloak.events.EventQuery;
 import org.keycloak.events.EventStoreProvider;
@@ -19,8 +21,12 @@ import org.keycloak.models.KeycloakSession;
  * 認証失敗チェック
  * */
 
+import com.cec_ltd.keycloak.authenticator.ConditionalRiskbase;
+
 public class LoginCheckItem implements CheckItem {
 	private int score;
+	private static final Logger logger = Logger.getLogger(ConditionalRiskbase.class);
+
 
 	@Override
 	public void setScore(int value) {
@@ -30,25 +36,30 @@ public class LoginCheckItem implements CheckItem {
 	@Override
 	public int getScore(AuthenticationFlowContext context) {
 		int riskScore = 0;
+		try {
+			KeycloakSession session = context.getSession();
+			EventStoreProvider eventStore = session.getProvider(EventStoreProvider.class);
 
-		KeycloakSession session = context.getSession();
-		EventStoreProvider eventStore = session.getProvider(EventStoreProvider.class);
+			String userId = context.getUser().getId();
 
-		String userId = context.getUser().getId();
+			ZonedDateTime todayStart = ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).toLocalDate()
+					.atStartOfDay(ZoneId.of("Asia/Tokyo"));
+			ZonedDateTime todayEnd = todayStart.plusDays(1).minusSeconds(1);
 
-		ZonedDateTime todayStart = ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).toLocalDate()
-				.atStartOfDay(ZoneId.of("Asia/Tokyo"));
-		ZonedDateTime todayEnd = todayStart.plusDays(1).minusSeconds(1);
+			Date from = Date.from(todayStart.toInstant());
+			Date to = Date.from(todayEnd.toInstant());
+			EventQuery query = eventStore.createQuery().type(EventType.LOGIN_ERROR).user(userId).fromDate(from)
+					.toDate(to);
 
-		Date from = Date.from(todayStart.toInstant());
-		Date to = Date.from(todayEnd.toInstant());
-		EventQuery query = eventStore.createQuery().type(EventType.LOGIN_ERROR).user(userId).fromDate(from).toDate(to);
+			List<Event> todayEvents = query.getResultStream().collect(Collectors.toList());
 
-		List<Event> todayEvents = query.getResultStream().collect(Collectors.toList());
+			riskScore += todayEvents.size() * score;
 
-		riskScore += todayEvents.size() * score;
-
-		return riskScore;
+			return riskScore;
+		} catch (Exception e) {
+			context.failure(AuthenticationFlowError.INTERNAL_ERROR);
+			logger.error("Authentication failed", e);
+		}
 	}
 
 }
