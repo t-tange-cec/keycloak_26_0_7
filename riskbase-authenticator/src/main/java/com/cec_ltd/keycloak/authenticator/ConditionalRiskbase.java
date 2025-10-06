@@ -21,31 +21,36 @@ public class ConditionalRiskbase implements Authenticator {
 		RealmModel realm = context.getRealm();
 		String qid = user.getFirstAttribute("qid");
 		String enableRiskbase = realm.getAttribute("EnableRiskbase");
-		if (StringUtil.isNullOrEmpty(enableRiskbase)) {
-			enableRiskbase = "true";
-		}
-		logger.debug("enableRiskbase: " + enableRiskbase);
-		if ("true".equalsIgnoreCase(enableRiskbase)) {
-			String strThreahhold = realm.getAttribute("Threashold");
-			if (StringUtil.isNullOrEmpty(strThreahhold)) {
-				strThreahhold = "50";
+		try {
+			if (StringUtil.isNullOrEmpty(enableRiskbase)) {
+				enableRiskbase = "true";
 			}
-			Integer threashold = Integer.valueOf(strThreahhold);
-			logger.info("threshhold:" + strThreahhold);
-			// リスクベース認証を実行（例：IPチェック、時間帯など）
-			// ここでは単純に成功とする
-			CheckItemFactory factory = new CheckItemFactory();
-			Integer score = factory.getScore(context);
-			logger.info("score:" + Integer.toString(score));
-			if (score < threashold) {
-				context.success();
+			logger.debug("enableRiskbase: " + enableRiskbase);
+			if ("true".equalsIgnoreCase(enableRiskbase)) {
+				String strThreahhold = realm.getAttribute("Threashold");
+				if (StringUtil.isNullOrEmpty(strThreahhold)) {
+					strThreahhold = "50";
+				}
+				Integer threashold = Integer.valueOf(strThreahhold);
+				logger.info("threshhold:" + strThreahhold);
+				// リスクベース認証を実行（例：IPチェック、時間帯など）
+				// ここでは単純に成功とする
+				CheckItemFactory factory = new CheckItemFactory();
+				Integer score = factory.getScore(context);
+				logger.info("score:" + Integer.toString(score));
+				if (score < threashold) {
+					context.success();
+				} else {
+					// スキップまたは失敗
+					context.attempted(); // スキップ扱い
+				}
 			} else {
 				// スキップまたは失敗
 				context.attempted(); // スキップ扱い
 			}
-		} else {
-			// スキップまたは失敗
-			context.attempted(); // スキップ扱い
+		} catch (Exception e) {
+			context.failure(AuthenticationFlowError.INTERNAL_ERROR);
+			logger.error("Authentication failed", e);
 		}
 	}
 
