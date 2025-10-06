@@ -21,10 +21,10 @@ public class ConditionalRiskbase implements Authenticator {
 		RealmModel realm = context.getRealm();
 		String qid = user.getFirstAttribute("qid");
 		String enableRiskbase = realm.getAttribute("EnableRiskbase");
-		if (StringUtil.isNullOrEmpty(enableRiskbase))) {
+		if (StringUtil.isNullOrEmpty(enableRiskbase)){
 			enableRiskbase = "true";
 		}
-		logger.debug("enableRiskbase: " + enableRiskbase)
+		logger.debug("enableRiskbase: " + enableRiskbase);
 		if ("true".equalsIgnoreCase(enableRiskbase)) {
 			String strThreahhold = realm.getAttribute("Threashold");
 			if (StringUtil.isNullOrEmpty(strThreahhold)) {
