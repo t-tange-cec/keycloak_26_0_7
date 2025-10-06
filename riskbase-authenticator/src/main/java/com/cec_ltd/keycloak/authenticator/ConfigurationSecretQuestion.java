@@ -4,6 +4,8 @@ import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 
 import org.keycloak.authentication.Authenticator;
+import org.keycloak.credential.CredentialModel;
+import org.keycloak.credential.CredentialProvider;
 import org.keycloak.forms.login.LoginFormsProvider;
 import org.keycloak.http.HttpRequest;
 import org.apache.commons.codec.binary.StringUtils;
@@ -23,9 +25,9 @@ public class ConfigurationSecretQuestion implements Authenticator {
 	public void authenticate(AuthenticationFlowContext context) {
 		UserModel user = context.getUser();
 		RealmModel realm = context.getRealm();
-		String qid = user.getFirstAttribute("qid");
 		String enableRiskbase = realm.getAttribute("EnableRiskbase");
 		if ("true".equalsIgnoreCase(enableRiskbase)) {
+			String qid = user.getFirstAttribute("qid");
 			if (StringUtil.isNullOrEmpty(qid)) {
 				LoginFormsProvider provider = context.form();
 				context.forceChallenge(provider.createForm("login-update-secret-question.ftl"));
@@ -48,13 +50,17 @@ public class ConfigurationSecretQuestion implements Authenticator {
 		String answer = map.getFirst("secretAnswer");
 		String qid = map.getFirst("qid");
 		if (StringUtil.isNullOrEmpty(answer) || StringUtil.isNullOrEmpty(qid)) {
-		    //context.failure("error");
-		    return;
-		}		
-		UserCredentialModel credential = UserCredentialModel.secretQuestion(answer);
-		UserCredentialManager credentialManager = context.getSession().userCredentialManager();
+			context.failureChallenge(AuthenticationFlowError.INVALID_CREDENTIALS,
+				    context.form().setError("質問または回答が入力されていません").createForm("login-update-secret-question.ftl"));			
+			return;
+		}
+		CredentialModel credential = new CredentialModel();
 		credential.setType("secret-question");
-		credentialManager.updateCredential(realm, user, credential);
+		credential.setValue(answer);
+		CredentialProvider<CredentialModel> provider = 
+			    (CredentialProvider<CredentialModel>) context.getSession()
+			        .getProvider(CredentialProvider.class, "secret-question");
+		provider.createCredential(realm, user, credential);
 		user.setSingleAttribute("qid", qid);
 		context.success();
 	}

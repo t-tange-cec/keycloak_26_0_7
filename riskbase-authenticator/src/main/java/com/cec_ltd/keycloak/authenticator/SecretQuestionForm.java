@@ -4,12 +4,18 @@ import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 
 import org.keycloak.authentication.Authenticator;
+import org.keycloak.credential.CredentialModel;
+import org.keycloak.credential.CredentialProvider;
 import org.keycloak.forms.login.LoginFormsProvider;
 import org.keycloak.http.HttpRequest;
+
+import java.util.List;
+
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.models.UserModel;
 import org.keycloak.models.RealmModel;
+import org.keycloak.models.UserCredentialModel;
 
 public class SecretQuestionForm implements Authenticator {
 	@Override
@@ -17,42 +23,36 @@ public class SecretQuestionForm implements Authenticator {
 		UserModel user = context.getUser();
 		RealmModel realm = context.getRealm();
 		String qid = user.getFirstAttribute("qid");
-		String enableRiskbase = realm.getAttribute("EnableRiskbase");
-		if ("true".equalsIgnoreCase(enableRiskbase)) {
-			// リスクベース認証を実行（例：IPチェック、時間帯など）
-			// ここでは単純に成功とする
 
-			// ユーザー属性から秘密の質問を取得（例：user.getFirstAttribute("secretQuestion")）
-			String question = user.getFirstAttribute("qid");
+		// ユーザー属性から秘密の質問を取得（例：user.getFirstAttribute("secretQuestion")）
+		String question = user.getFirstAttribute("qid");
 
-			// フォームに渡す属性を設定
-			LoginFormsProvider provider = context.form();
-			provider.setAttribute("qid", question);
+		// フォームに渡す属性を設定
+		LoginFormsProvider provider = context.form();
+		provider.setAttribute("qid", question);
 
-			// チャレンジ画面として表示
-			context.forceChallenge(provider.createForm("login-secret-question.ftl"));
-		} else {
-			context.success();
-		}
+		// チャレンジ画面として表示
+		context.forceChallenge(provider.createForm("login-secret-question.ftl"));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void action(AuthenticationFlowContext context) {
 		RealmModel realm = context.getRealm();
-		String enableRiskbase = realm.getAttribute("EnableRiskbase");
-		if ("true".equalsIgnoreCase(enableRiskbase)) {
-			HttpRequest request=context.getHttpRequest();
-			MultivaluedMap<String, String> map = request.getDecodedFormParameters();
-			String answer = map.getFirst("secretAnswer");
+		UserModel user = context.getUser();
+		HttpRequest request = context.getHttpRequest();
+		MultivaluedMap<String, String> map = request.getDecodedFormParameters();
+		String answer = map.getFirst("secretAnswer");
 
-			// ユーザー属性と照合
-			String expected = context.getUser().getFirstAttribute("secretAnswer");
-
-			if (expected != null && expected.equalsIgnoreCase(answer)) {
-				context.success();
-			} else {
-				context.failure(AuthenticationFlowError.INVALID_CREDENTIALS);
-			}
+		CredentialProvider<CredentialModel> provider = 
+		    (CredentialProvider<CredentialModel>) context.getSession()
+		        .getProvider(CredentialProvider.class, "secret-question");
+		UserCredentialModel input = UserCredentialModel.secretQuestion(answer);
+		boolean valid = provider.isValid(context.getRealm(), context.getUser(), input);
+		if (valid) {
+		    context.success();
+		} else {
+		    context.failure(AuthenticationFlowError.INVALID_CREDENTIALS);
 		}
 	}
 
