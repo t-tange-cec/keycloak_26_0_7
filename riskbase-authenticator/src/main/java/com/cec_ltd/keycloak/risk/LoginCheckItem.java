@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.events.Event;
+import org.keycloak.events.EventQuery;
 import org.keycloak.events.EventStoreProvider;
 import org.keycloak.events.EventType;
 import org.keycloak.models.KeycloakSession;
@@ -34,7 +35,16 @@ public class LoginCheckItem implements CheckItem {
 		String userId = context.getUser().getId();
 		String realmId = context.getRealm().getId();
 
-		EventQuery query = session.events().createQuery().type(EventType.LOGIN_ERROR).user(user.getId());
+
+		    List<Event> loginEvents = eventStore
+		        .createQuery()
+		        .type(EventType.LOGIN_ERROR)
+		        .user(user.getId())
+		        .stream()
+		        .collect(Collectors.toList());
+
+		
+		EventQuery query = session.events().createQuery().type(EventType.LOGIN_ERROR).user(userId);
 
 		List<Event> allEvents = query.stream().collect(Collectors.toList());
 
