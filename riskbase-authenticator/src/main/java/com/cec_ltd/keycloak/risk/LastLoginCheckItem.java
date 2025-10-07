@@ -54,6 +54,7 @@ public class LastLoginCheckItem implements CheckItem {
 				Instant now = Instant.now();
 				long daysSinceLogin = ChronoUnit.DAYS.between(lastLoginTime, now);
 				expired = daysSinceLogin >= 14;
+				logger.info("Last login :"+Integer.toString(daysSinceLogin)+" days");
 			} else {
 				// ログイン履歴がない場合は「初回」とみなすか、期限切れとみなす
 				expired = true;
