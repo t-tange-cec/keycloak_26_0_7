@@ -3,23 +3,14 @@
 <#import "buttons.ftl" as buttons>
 <@layout.registrationLayout displayMessage=!messagesPerField.existsError('secret-question'); section>
 <!-- template: login-secret-question.ftl -->
-
     <#if section="header">
         ${msg("doLogIn")}
     <#elseif section="form">
         <form id="kc-secret-question-login-form" class="${properties.kcFormClass!}" action="${url.loginAction}" method="post">
-            <#if secretQuestionLogin.userSeqretQuestionCredentials?size gt 1>
-                <div class="${properties.kcFormGroupClass!}">
-                    <div class="${properties.kcInputWrapperClass!}">
-                        <#list secretQuestionLogin.userSecretQuestionCredentials as seqretQuestionCredential>
-                            <div id="kc-secret-question-credential-${seqretQuestionCredential?index}">
-                            </div>
-                        </#list>
-                    </div>
-                </div>
-            </#if>
-            <@field.input name="secret-answer" label=msg("loginAnswer")  fieldName="answer" autofocus=true />
-
+            <label for="qid">”é–§‚ÌŽ¿–â:</label>
+            <@field.input name="qid" label=msg("qid")  fieldName="qid" />
+            <label for="secretAnswer">“š‚¦:</label>
+            <@field.input name="secretAnswer" label=msg("secretAnswer")  fieldName="answer" />
             <@buttons.loginButton />
         </form>
     </#if>
