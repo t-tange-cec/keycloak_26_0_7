@@ -64,12 +64,16 @@ public class SecretQuestionForm implements Authenticator {
 			}
 		};
 		try {
+			logger.info("answer:"+answer);
 			CredentialInputValidator provider = (CredentialInputValidator) context.getSession()
 					.getProvider(CredentialProvider.class, "secret-question");
-
+			if (provider == null) {
+				logger.info("provider:null");				
+			}
 			boolean valid = provider.isValid(context.getRealm(), context.getUser(), input);
 
 			if (valid) {
+				logger.info("success:");
 				context.success();
 			} else {
 				context.failure(AuthenticationFlowError.INVALID_CREDENTIALS);
