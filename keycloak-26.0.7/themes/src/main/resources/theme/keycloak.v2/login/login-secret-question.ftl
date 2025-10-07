@@ -7,9 +7,7 @@
         ${msg("doLogIn")}
     <#elseif section="form">
         <form id="kc-secret-question-login-form" class="${properties.kcFormClass!}" action="${url.loginAction}" method="post">
-            <label for="qid">”é–§‚ÌŽ¿–â:</label>
             <@field.input name="qid" label=msg("qid")  fieldName="qid" />
-            <label for="secretAnswer">“š‚¦:</label>
             <@field.input name="secretAnswer" label=msg("secretAnswer")  fieldName="answer" />
             <@buttons.loginButton />
         </form>

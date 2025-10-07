@@ -23,7 +23,7 @@ import org.keycloak.models.KeycloakSession;
  * @version $Revision: 1 $
  */
 public class SecretQuestionCredentialProviderFactory implements CredentialProviderFactory<SecretQuestionCredentialProvider> {
-    public static final String PROVIDER_ID="keycloak-secret-question";
+    public static final String PROVIDER_ID="secret-question";
     @Override
     public SecretQuestionCredentialProvider create(KeycloakSession session) {
         return new SecretQuestionCredentialProvider(session);
