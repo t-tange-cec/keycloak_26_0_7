@@ -38,9 +38,9 @@ public class ConditionalRiskbase implements Authenticator {
 				CheckItemFactory factory = new CheckItemFactory();
 				Integer score = factory.getScore(context);
 				logger.info("score:" + Integer.toString(score));
-				String riskLael= (score >= threashold)? "high":"low";
-				logger.info("riskLael:" + riskLael);
-				context.getAuthenticationSession().setAuthNote("riskLevel", riskLael);
+				String riskLevel = (score >= threashold) ? "high" : "low";
+				logger.info("riskLevel:" + riskLevel);
+				context.getAuthenticationSession().setAuthNote("riskLevel", riskLevel);
 			}
 			logger.info("success:");
 			context.success();
