@@ -39,16 +39,14 @@ public class ConfigurationSecretQuestion implements Authenticator {
 				if (StringUtil.isNullOrEmpty(qid)) {
 					logger.info("qid: null");
 					LoginFormsProvider provider = context.form();
+					logger.info("login-update-secret-question.ftl");
 					context.forceChallenge(provider.createForm("login-update-secret-question.ftl"));
+					return;
 				} else {
 					logger.info("qid: "+qid);
-					// スキップまたは失敗
-					context.attempted(); // スキップ扱い
 				}
-			} else {
-				// スキップまたは失敗
-				context.attempted(); // スキップ扱い
 			}
+			context.success(); // スキップ扱い
 		} catch (Exception e) {
 			context.failure(AuthenticationFlowError.INTERNAL_ERROR);
 			logger.error("Authentication failed", e);
