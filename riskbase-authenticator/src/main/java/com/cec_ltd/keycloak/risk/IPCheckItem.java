@@ -33,11 +33,14 @@ public class IPCheckItem implements CheckItem {
 			List<String> knownIps = getKnownIps(user);
 			if (knownIps.size() < 1) {
 				// 初回ログイン
+				logger.info("1st login");
 				riskScore += score;
 			} else if (!knownIps.contains(currentIp)) {
 				// 新規IP（既知でも未知でもない）
+				logger.info("unknown IP:"+currentIp);
 				riskScore += score;
 			}
+			logger.info("IP check:"+Integer.toString(riskScore));
 		} catch (Exception e) {
 			context.failure(AuthenticationFlowError.INTERNAL_ERROR);
 			logger.error("Authentication failed", e);

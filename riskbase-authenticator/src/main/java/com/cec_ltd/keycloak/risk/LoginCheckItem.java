@@ -50,11 +50,9 @@ public class LoginCheckItem implements CheckItem {
 			Date to = Date.from(todayEnd.toInstant());
 			EventQuery query = eventStore.createQuery().type(EventType.LOGIN_ERROR).user(userId).fromDate(from)
 					.toDate(to);
-
 			List<Event> todayEvents = query.getResultStream().collect(Collectors.toList());
-
 			riskScore += todayEvents.size() * score;
-
+			logger.info("login fail:"+Integer.toString(riskScore));
 		} catch (Exception e) {
 			context.failure(AuthenticationFlowError.INTERNAL_ERROR);
 			logger.error("Authentication failed", e);
