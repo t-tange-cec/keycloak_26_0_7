@@ -13,6 +13,7 @@ import org.keycloak.http.HttpRequest;
 
 import java.util.List;
 
+import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.models.UserModel;
@@ -20,6 +21,8 @@ import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserCredentialModel;
 
 public class SecretQuestionForm implements Authenticator {
+	private static final Logger logger = Logger.getLogger(SecretQuestionForm.class);
+
 	@Override
 	public void authenticate(AuthenticationFlowContext context) {
 		UserModel user = context.getUser();
@@ -41,7 +44,6 @@ public class SecretQuestionForm implements Authenticator {
 		HttpRequest request = context.getHttpRequest();
 		MultivaluedMap<String, String> map = request.getDecodedFormParameters();
 		String answer = map.getFirst("secretAnswer");
-
 		CredentialInput input = new CredentialInput() {
 			public String getType() {
 				return "secret-question";
@@ -55,18 +57,21 @@ public class SecretQuestionForm implements Authenticator {
 				return null;
 			}
 		};
+		try {
+			CredentialInputValidator provider = (CredentialInputValidator) context.getSession()
+					.getProvider(CredentialProvider.class, "secret-question");
 
-		CredentialInputValidator  provider = (CredentialInputValidator) context.getSession()
-				.getProvider(CredentialProvider.class, "secret-question");
+			boolean valid = provider.isValid(context.getRealm(), context.getUser(), input);
 
-		boolean valid = provider.isValid(context.getRealm(), context.getUser(), input);
-
-		if (valid) {
-			context.success();
-		} else {
-			context.failure(AuthenticationFlowError.INVALID_CREDENTIALS);
+			if (valid) {
+				context.success();
+			} else {
+				context.failure(AuthenticationFlowError.INVALID_CREDENTIALS);
+			}
+		} catch (Exception e) {
+			context.failure(AuthenticationFlowError.INTERNAL_ERROR);
+			logger.error("Authentication failed", e);
 		}
-
 	}
 
 	@Override

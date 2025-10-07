@@ -40,7 +40,7 @@ public class IPCheckItem implements CheckItem {
 			}
 		} catch (Exception e) {
 			context.failure(AuthenticationFlowError.INTERNAL_ERROR);
-			Logger.error("Authentication failed", e);
+			logger.error("Authentication failed", e);
 		}
 		return riskScore;
 	}

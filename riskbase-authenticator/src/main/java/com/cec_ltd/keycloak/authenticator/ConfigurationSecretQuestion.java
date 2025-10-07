@@ -22,7 +22,7 @@ import org.keycloak.models.UserCredentialModel;
 import org.jboss.logging.Logger;
 
 public class ConfigurationSecretQuestion implements Authenticator {
-	private static final Logger logger = Logger.getLogger(ConditionalRiskbase.class);
+	private static final Logger logger = Logger.getLogger(ConfigurationSecretQuestion.class);
 
 	@Override
 	public void authenticate(AuthenticationFlowContext context) {
@@ -37,9 +37,11 @@ public class ConfigurationSecretQuestion implements Authenticator {
 			if ("true".equalsIgnoreCase(enableRiskbase)) {
 				String qid = user.getFirstAttribute("qid");
 				if (StringUtil.isNullOrEmpty(qid)) {
+					logger.info("qid: null");
 					LoginFormsProvider provider = context.form();
 					context.forceChallenge(provider.createForm("login-update-secret-question.ftl"));
 				} else {
+					logger.info("qid: "+qid);
 					// スキップまたは失敗
 					context.attempted(); // スキップ扱い
 				}
@@ -61,6 +63,8 @@ public class ConfigurationSecretQuestion implements Authenticator {
 		MultivaluedMap<String, String> map = request.getDecodedFormParameters();
 		String answer = map.getFirst("secretAnswer");
 		String qid = map.getFirst("qid");
+		logger.info("qid: "+qid);
+		logger.info("secretAnswer: "+answer);
 		if (StringUtil.isNullOrEmpty(answer) || StringUtil.isNullOrEmpty(qid)) {
 			context.failureChallenge(AuthenticationFlowError.INVALID_CREDENTIALS,
 					context.form().setError("質問または回答が入力されていません").createForm("login-update-secret-question.ftl"));
