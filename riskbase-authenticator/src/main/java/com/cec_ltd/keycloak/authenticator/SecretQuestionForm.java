@@ -25,6 +25,12 @@ public class SecretQuestionForm implements Authenticator {
 
 	@Override
 	public void authenticate(AuthenticationFlowContext context) {
+		String riskLevel = context.getAuthenticationSession().getAuthNote("riskLevel");
+		if (!"high".equals(riskLevel)) {
+			logger.info("success:");
+			context.success();
+			return;
+		}
 		UserModel user = context.getUser();
 		RealmModel realm = context.getRealm();
 		String qid = user.getFirstAttribute("qid");

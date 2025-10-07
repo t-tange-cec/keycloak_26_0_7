@@ -1,14 +1,13 @@
 <#import "template.ftl" as layout>
 <#import "field.ftl" as field>
 <#import "buttons.ftl" as buttons>
-<@layout.registrationLayout displayMessage=!messagesPerField.existsError('totp'); section>
+<@layout.registrationLayout displayMessage=!messagesPerField.existsError('secret-question'); section>
 <!-- template: login-secret-question.ftl -->
 
     <#if section="header">
         ${msg("doLogIn")}
     <#elseif section="form">
-        <form id="kc-otp-login-form" class="${properties.kcFormClass!}" action="${url.loginAction}" method="post">
-            <input id="selectedCredentialId" type="hidden" name="selectedCredentialId" value="${seqretQuestionLogin.selectedCredentialId!''}">
+        <form id="kc-secret-question-login-form" class="${properties.kcFormClass!}" action="${url.loginAction}" method="post">
             <#if secretQuestionLogin.userSeqretQuestionCredentials?size gt 1>
                 <div class="${properties.kcFormGroupClass!}">
                     <div class="${properties.kcInputWrapperClass!}">
