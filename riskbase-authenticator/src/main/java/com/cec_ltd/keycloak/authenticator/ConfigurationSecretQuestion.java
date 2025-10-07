@@ -23,7 +23,7 @@ import org.jboss.logging.Logger;
 
 public class ConfigurationSecretQuestion implements Authenticator {
 	private static final Logger logger = Logger.getLogger(ConfigurationSecretQuestion.class);
-
+	private static String FORM_NAME="login-update-secret-question.ftl";
 	@Override
 	public void authenticate(AuthenticationFlowContext context) {
 		UserModel user = context.getUser();
@@ -39,8 +39,8 @@ public class ConfigurationSecretQuestion implements Authenticator {
 				if (StringUtil.isNullOrEmpty(qid)) {
 					logger.info("qid: null");
 					LoginFormsProvider provider = context.form();
-					logger.info("login-update-secret-question.ftl");
-					context.forceChallenge(provider.createForm("login-update-secret-question.ftl"));
+					logger.info(FORM_NAME);
+					context.forceChallenge(provider.createForm(FORM_NAME));
 					return;
 				} else {
 					logger.info("qid: "+qid);
@@ -65,7 +65,7 @@ public class ConfigurationSecretQuestion implements Authenticator {
 		logger.info("secretAnswer: "+answer);
 		if (StringUtil.isNullOrEmpty(answer) || StringUtil.isNullOrEmpty(qid)) {
 			context.failureChallenge(AuthenticationFlowError.INVALID_CREDENTIALS,
-					context.form().setError("質問または回答が入力されていません").createForm("login-update-secret-question.ftl"));
+					context.form().setError("質問または回答が入力されていません").createForm(FORM_NAME));
 			return;
 		}
 		CredentialModel credential = new CredentialModel();
