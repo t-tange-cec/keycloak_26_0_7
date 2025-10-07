@@ -25,7 +25,7 @@ import com.cec_ltd.keycloak.authenticator.ConditionalRiskbase;
 
 public class LastLoginCheckItem implements CheckItem {
 	private int score;
-	private static final Logger logger = Logger.getLogger(ConditionalRiskbase.class);
+	private static final Logger logger = Logger.getLogger(LastLoginCheckItem.class);
 
 
 	@Override

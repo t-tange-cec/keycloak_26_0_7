@@ -16,7 +16,7 @@ import com.cec_ltd.keycloak.authenticator.ConditionalRiskbase;
 
 public class IPCheckItem implements CheckItem {
 	private int score;
-	private static final Logger logger = Logger.getLogger(ConditionalRiskbase.class);
+	private static final Logger logger = Logger.getLogger(IPCheckItem.class);
 
 	@Override
 	public void setScore(int value) {
