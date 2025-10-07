@@ -3,18 +3,13 @@
 <#import "field.ftl" as field>
 <#import "buttons.ftl" as buttons>
 <@layout.registrationLayout displayMessage=!messagesPerField.existsError('password','password-confirm'); section>
-<!-- template: login-update-password.ftl -->
+<!-- template: login-update-secret-question.ftl -->
     <#if section = "header">
-        ${msg("updatePasswordTitle")}
+        ${msg("updateSecretQuestion")}
     <#elseif section = "form">
-        <form id="kc-passwd-update-form" class="${properties.kcFormClass!}" action="${url.loginAction}" method="post" novalidate="novalidate">
-            <@field.password name="password-new" label=msg("passwordNew") fieldName="password" autocomplete="new-password" autofocus=true />
-            <@field.password name="password-confirm" label=msg("passwordConfirm") autocomplete="new-password" />
-
-            <div class="${properties.kcFormGroupClass!}">
-                <@passwordCommons.logoutOtherSessions/>
-            </div>
-
+        <form id="kc-update_secret-question-form" class="${properties.kcFormClass!}" action="${url.loginAction}" method="post" novalidate="novalidate">
+            <@field.input name="secretAnswer" label=msg("secretAnswer") fieldName="secretAnswer" />
+            <@field.input name="qid" label=msg("qid")  fieldName="qid" />
             <@buttons.actionGroup>
                 <#if isAppInitiatedAction??>
                     <@buttons.button label="doSubmit" class=["kcButtonPrimaryClass"]/>
