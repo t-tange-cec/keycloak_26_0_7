@@ -59,28 +59,38 @@ public class SecretQuestionForm implements Authenticator {
 		MultivaluedMap<String, String> map = request.getDecodedFormParameters();
 		String answer = map.getFirst("secretAnswer");
 //		CredentialInput input = new CredentialInput() {
-//			public String getType() {
-//				return "secret-question";
-//			}
+//		public String getType() {
+//			return "secret-question";
+//		}
 //
-//			public String getChallengeResponse() {
-//				return answer;
-//			}
+//		public String getChallengeResponse() {
+//			return answer;
+//		}
 //
-//			public String getCredentialId() {
-//				return null;
-//			}
-//		};
+//		public String getCredentialId() {
+//			return null;
+//		}
+//	};
+		CredentialInput input = (CredentialInput) new UserCredentialModel() {
+			public String getType() {
+				return "secret-question";
+			}
+
+			public String getChallengeResponse() {
+				return answer;
+			}
+
+			public String getCredentialId() {
+				return null;
+			}
+		};
 		try {
-			UserCredentialModel input = new UserCredentialModel();
-			input.setType("secret-question");
-			((CredentialInput)input).setChallengeResponse(answer); // ÉÜÅ[ÉUÅ[Ç™ì¸óÕÇµÇΩâÒìö			
-			logger.info("answer:"+answer);
+			logger.info("answer:" + answer);
 			CredentialInputValidator provider = (CredentialInputValidator) context.getSession()
 					.getProvider(CredentialProvider.class, "secret-question");
 			if (provider == null) {
-				logger.info("provider:null");				
-			}else {
+				logger.info("provider:null");
+			} else {
 				logger.info("provider:not null");
 			}
 			boolean valid = provider.isValid(realm, user, input);
