@@ -58,20 +58,23 @@ public class SecretQuestionForm implements Authenticator {
 		HttpRequest request = context.getHttpRequest();
 		MultivaluedMap<String, String> map = request.getDecodedFormParameters();
 		String answer = map.getFirst("secretAnswer");
-		CredentialInput input = new CredentialInput() {
-			public String getType() {
-				return "secret-question";
-			}
-
-			public String getChallengeResponse() {
-				return answer;
-			}
-
-			public String getCredentialId() {
-				return null;
-			}
-		};
+//		CredentialInput input = new CredentialInput() {
+//			public String getType() {
+//				return "secret-question";
+//			}
+//
+//			public String getChallengeResponse() {
+//				return answer;
+//			}
+//
+//			public String getCredentialId() {
+//				return null;
+//			}
+//		};
 		try {
+			UserCredentialModel input = new UserCredentialModel();
+			input.setType("secret-question");
+			((CredentialInput)input).setChallengeResponse(answer); // ƒ†[ƒU[‚ª“ü—Í‚µ‚½‰ñ“š			
 			logger.info("answer:"+answer);
 			CredentialInputValidator provider = (CredentialInputValidator) context.getSession()
 					.getProvider(CredentialProvider.class, "secret-question");
