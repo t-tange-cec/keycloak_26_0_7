@@ -89,7 +89,7 @@ public class SecretQuestionCredentialProvider implements CredentialProvider<Cred
             return false;
         }
         if (ObjectUtil.isBlank(credentialInput.getCredentialId())) {
-            logger.error("CredentialId is null when validating credential of user %s", user.getUsername());
+            logger.error("CredentialId is null when validating credential of user "+user.getUsername());
             return false;
         }
 
