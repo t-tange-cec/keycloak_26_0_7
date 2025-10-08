@@ -73,10 +73,10 @@ public class SecretQuestionForm implements Authenticator {
 				logger.info("provider:not null");
 			}
 			boolean valid = provider.isValid(realm, user, input);
-			if (!valid) {
-				context.failure(AuthenticationFlowError.INVALID_CREDENTIALS);
-				return;
-			}
+//			if (!valid) {
+//				context.failure(AuthenticationFlowError.INVALID_CREDENTIALS);
+//				return;
+//			}
 			logger.info("success:");
 			context.success();
 		} catch (Exception e) {

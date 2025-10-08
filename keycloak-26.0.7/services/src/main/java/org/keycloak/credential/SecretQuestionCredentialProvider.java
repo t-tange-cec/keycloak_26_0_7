@@ -36,7 +36,7 @@ import org.keycloak.models.credential.dto.SecretQuestionSecretData;
  * ユーザーの秘密の質問資格情報（Credential）を管理・操作するためのプロバイダーです。
  * ]*/
 public class SecretQuestionCredentialProvider implements CredentialProvider<CredentialModel>, CredentialInputValidator/*, OnUserCache*/ {
-    private static final Logger logger = Logger.getLogger(CredentialProvider.class);
+    private static final Logger logger = Logger.getLogger(SecretQuestionCredentialProvider.class);
 
     protected KeycloakSession session;
 
@@ -80,7 +80,7 @@ public class SecretQuestionCredentialProvider implements CredentialProvider<Cred
     @Override
     public boolean isValid(RealmModel realm, UserModel user, CredentialInput credentialInput) {
         if (!(credentialInput instanceof UserCredentialModel)) {
-            logger.debug("Expected instance of UserCredentialModel for CredentialInput");
+            logger.error("Expected instance of UserCredentialModel for CredentialInput");
             return false;
 
         }
@@ -89,7 +89,7 @@ public class SecretQuestionCredentialProvider implements CredentialProvider<Cred
             return false;
         }
         if (ObjectUtil.isBlank(credentialInput.getCredentialId())) {
-            logger.debugf("CredentialId is null when validating credential of user %s", user.getUsername());
+            logger.error("CredentialId is null when validating credential of user %s", user.getUsername());
             return false;
         }
 
