@@ -81,7 +81,7 @@ public class SecretQuestionForm implements Authenticator {
 			}
 
 			public String getCredentialId() {
-				return null;
+				return UUID.randomUUID().toString();
 			}
 		};
 		try {
