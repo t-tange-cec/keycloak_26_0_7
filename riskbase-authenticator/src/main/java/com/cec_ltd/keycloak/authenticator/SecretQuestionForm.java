@@ -17,6 +17,7 @@ import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.models.UserModel;
+import org.keycloak.utils.StringUtil;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserCredentialModel;
 
@@ -25,14 +26,23 @@ public class SecretQuestionForm implements Authenticator {
 
 	@Override
 	public void authenticate(AuthenticationFlowContext context) {
+		RealmModel realm = context.getRealm();
+		String enableRiskbase = realm.getAttribute("EnableRiskbase");
 		String riskLevel = context.getAuthenticationSession().getAuthNote("riskLevel");
+		if (StringUtil.isNullOrEmpty(enableRiskbase)) {
+			enableRiskbase = "false";
+		}
+		if ("false".equals(enableRiskbase)) {
+			logger.info("enableRiskbase:false");
+			context.success();
+			return;
+		}
 		if (!"high".equals(riskLevel)) {
 			logger.info("success:");
 			context.success();
 			return;
 		}
 		UserModel user = context.getUser();
-		RealmModel realm = context.getRealm();
 		String qid = user.getFirstAttribute("qid");
 		LoginFormsProvider provider = context.form();
 		provider.setAttribute("qid", qid);
