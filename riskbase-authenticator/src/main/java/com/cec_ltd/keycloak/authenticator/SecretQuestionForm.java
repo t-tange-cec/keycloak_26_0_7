@@ -4,6 +4,7 @@ import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 
 import org.keycloak.authentication.Authenticator;
+import org.keycloak.common.util.Base64;
 import org.keycloak.credential.CredentialInput;
 import org.keycloak.credential.CredentialInputValidator;
 import org.keycloak.credential.CredentialProvider;
@@ -55,13 +56,14 @@ public class SecretQuestionForm implements Authenticator {
 		MultivaluedMap<String, String> map = request.getDecodedFormParameters();
 		String answer = map.getFirst("secretAnswer");
 		String id = user.getId();
+		String encodedAnswer = Base64.encodeBytes(answer.getBytes());
 		CredentialInput input = (CredentialInput) new UserCredentialModel() {
 			public String getType() {
 				return "secret-question";
 			}
 
 			public String getChallengeResponse() {
-				return answer;
+				return encodedAnswer;
 			}
 
 			public String getCredentialId() {
@@ -69,7 +71,7 @@ public class SecretQuestionForm implements Authenticator {
 			}
 		};
 		try {
-			logger.info("answer:" + answer);
+			logger.info("answer(Base64):" + encodedAnswer);
 			CredentialInputValidator provider = (CredentialInputValidator) context.getSession()
 					.getProvider(CredentialProvider.class, "secret-question");
 			if (provider == null) {
@@ -77,7 +79,8 @@ public class SecretQuestionForm implements Authenticator {
 			} else {
 				logger.info("provider:not null");
 			}
-			//boolean valid = provider.isValid(realm, user, input);
+			
+			boolean valid = provider.isValid(realm, user, input);
 //			if (!valid) {
 //				logger.info("failure");
 //				context.failure(AuthenticationFlowError.INVALID_CREDENTIALS);

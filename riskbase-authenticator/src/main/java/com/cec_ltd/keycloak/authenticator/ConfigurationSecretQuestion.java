@@ -1,29 +1,35 @@
 package com.cec_ltd.keycloak.authenticator;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
+import org.apache.commons.codec.binary.StringUtils;
 
+import org.keycloak.authentication.AuthenticationFlowContext;
+import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.authentication.Authenticator;
 import org.keycloak.common.util.Base64;
 import org.keycloak.credential.CredentialModel;
 import org.keycloak.credential.CredentialProvider;
 import org.keycloak.forms.login.LoginFormsProvider;
 import org.keycloak.http.HttpRequest;
-
-import java.util.UUID;
-
-import org.apache.commons.codec.binary.StringUtils;
-
-import org.keycloak.authentication.AuthenticationFlowContext;
-import org.keycloak.authentication.AuthenticationFlowError;
-import org.keycloak.models.UserModel;
-import org.keycloak.utils.StringUtil;
-
-import com.cec_ltd.keycloak.risk.CheckItemFactory;
-
+import org.keycloak.models.credential.SecretQuestionCredentialModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserCredentialModel;
+
+import org.keycloak.models.UserModel;
+import org.keycloak.utils.StringUtil;
+
+
+import com.cec_ltd.keycloak.risk.CheckItemFactory;
+
 import org.jboss.logging.Logger;
 
 public class ConfigurationSecretQuestion implements Authenticator {
@@ -60,28 +66,37 @@ public class ConfigurationSecretQuestion implements Authenticator {
 		String answer = map.getFirst("secretAnswer");
 		String qid = map.getFirst("qid");
 		logger.info("qid: " + qid);
-		logger.info("secretAnswer: " + answer);
-		if (StringUtil.isNullOrEmpty(answer) || StringUtil.isNullOrEmpty(qid)) {
-			context.failureChallenge(AuthenticationFlowError.INVALID_CREDENTIALS,
-					context.form().setError("質問または回答が入力されていません").createForm(FORM_NAME));
-			return;
+		try {
+			logger.info("secretAnswer: " + answer);
+			if (StringUtil.isNullOrEmpty(answer) || StringUtil.isNullOrEmpty(qid)) {
+				context.failureChallenge(AuthenticationFlowError.INVALID_CREDENTIALS,
+						context.form().setError("質問または回答が入力されていません").createForm(FORM_NAME));
+				return;
+			}
+
+			MessageDigest digest;
+			digest = MessageDigest.getInstance("PBKDF2");
+			SecureRandom random = new SecureRandom();
+			byte[] salt = new byte[16];
+			random.nextBytes(salt);
+			digest.update(salt);
+			String encodedSalt = Base64.encodeBytes(salt);
+			byte[] hashed = digest.digest(answer.getBytes(StandardCharsets.UTF_8));
+			String encodedAnswer = Base64.encodeBytes(hashed);
+			SecretQuestionCredentialModel model = SecretQuestionCredentialModel.createFromValues(
+				    "pbkdf2-sha256", encodedSalt, 27500, Map.of("questionId", List.of(qid)), encodedAnswer
+				);
+
+			CredentialProvider<CredentialModel> provider = (CredentialProvider<CredentialModel>) context.getSession()
+					.getProvider(CredentialProvider.class, "secret-question");
+			provider.createCredential(realm, user, model);
+			user.setSingleAttribute("qid", qid);
+			logger.info("success");
+			context.success();
+		} catch (Exception e) {
+			context.failure(AuthenticationFlowError.INTERNAL_ERROR);
+			logger.error("Authentication failed", e);
 		}
-		CredentialModel credential = new CredentialModel();
-		credential.setType("secret-question");
-		credential.setId(UUID.randomUUID().toString());
-		credential.setCredentialData("{\"hashIterations\": 27500,"
-				+ "  \"algorithm\": \"pbkdf2-sha256\","
-				+ "  \"questionId\": \""+qid+"\"}");
-		String encodedAnswer = Base64.encodeBytes(answer.getBytes());
-		credential.setSecretData("{\"encodedAnswer\": \""+encodedAnswer+"\","
-				+ "  \"salt\": \"randomSaltBytes\""
-				+ "}");
-		CredentialProvider<CredentialModel> provider = (CredentialProvider<CredentialModel>) context.getSession()
-				.getProvider(CredentialProvider.class, "secret-question");
-		provider.createCredential(realm, user, credential);
-		user.setSingleAttribute("qid", qid);
-		logger.info("success");
-		context.success();
 	}
 
 	@Override
@@ -90,9 +105,8 @@ public class ConfigurationSecretQuestion implements Authenticator {
 	}
 
 	@Override
-	public boolean configuredFor(org.keycloak.models.KeycloakSession session, org.keycloak.models.RealmModel realm,
-			UserModel user) {
-		return true;
+	public boolean configuredFor(KeycloakSession session, RealmModel realm, UserModel user) {
+		return user.getFirstAttribute("qid") != null;
 	}
 
 	@Override
