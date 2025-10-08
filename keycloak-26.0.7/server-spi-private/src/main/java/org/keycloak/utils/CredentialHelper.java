@@ -128,24 +128,10 @@ public class CredentialHelper {
         }
     }
     
-    public static boolean createSecretQuestionCredential(KeycloakSession session, RealmModel realm, UserModel user, String answer, SecretQuestionCredentialModel credentialModel) {
-        CredentialProvider secretQuestionCredentialProvider = session.getProvider(CredentialProvider.class, "keycloak-secret-question");
-        String totpSecret = credentialModel.getSecretQuestionSecretData().getValue();
-
-        UserCredentialModel otpUserCredential = new UserCredentialModel("", realm.getOTPPolicy().getType(), answer);
-        boolean userStorageCreated = user.credentialManager().updateCredential(otpUserCredential);
-
-        String credentialId = null;
-        if (userStorageCreated) {
-            logger.debugf("Created Secret Question credential for user '%s' in the user storage", user.getUsername());
-        } else {
-            CredentialModel createdCredential = secretQuestionCredentialProvider.createCredential(realm, user, credentialModel);
-            credentialId = createdCredential.getId();
-        }
-
-        //If the type is HOTP, call verify once to consume the Secret Question used for registration and increase the counter.
-        UserCredentialModel credential = new UserCredentialModel(credentialId, secretQuestionCredentialProvider.getType(), answer);
-        return user.credentialManager().isValid(credential);
+    public static boolean createSecretQuestionCredential(KeycloakSession session, RealmModel realm, UserModel user,String qid, String answer, SecretQuestionCredentialModel credentialModel) {
+        UserCredentialModel userCredential = UserCredentialModel.secretQuestion(answer);
+		user.setSingleAttribute("qid", qid);
+        return user.credentialManager().updateCredential(userCredential);
     }
 
     /**

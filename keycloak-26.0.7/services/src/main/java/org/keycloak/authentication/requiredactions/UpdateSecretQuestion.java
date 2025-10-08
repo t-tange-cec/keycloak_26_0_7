@@ -88,7 +88,7 @@ public class UpdateSecretQuestion implements RequiredActionProvider, RequiredAct
             context.challenge(challenge);
             return;
         }
-        SecretQuestionCredentialProvider secretQuestionCredentialProvider = (SecretQuestionCredentialProvider) context.getSession().getProvider(CredentialProvider.class, "keycloak-secret-question");
+        SecretQuestionCredentialProvider secretQuestionCredentialProvider = (SecretQuestionCredentialProvider) context.getSession().getProvider(CredentialProvider.class, "secret-question");
         final Stream<CredentialModel> secretQuestionCredentials  = (secretQuestionCredentialProvider.isConfiguredFor(context.getRealm(), context.getUser()))
             ? context.getUser().credentialManager().getStoredCredentialsByTypeStream(SecretQuestionCredentialModel.TYPE)
             : Stream.empty();
@@ -104,7 +104,7 @@ public class UpdateSecretQuestion implements RequiredActionProvider, RequiredAct
             AuthenticatorUtil.logoutOtherSessions(context);
         }
 
-        if (!CredentialHelper.createSecretQuestionCredential(context.getSession(), context.getRealm(), context.getUser(), answer, credentialModel)) {
+        if (!CredentialHelper.createSecretQuestionCredential(context.getSession(), context.getRealm(), context.getUser(), qid, answer, credentialModel)) {
             Response challenge = context.form()
                     .addError(new FormMessage(Validation.FIELD_SECRET_QUESTION, Messages.INVALID_SECRET_QUESTION))
                     .createResponse(UserModel.RequiredAction.CONFIGURE_SECRET_QUESTION);
@@ -116,10 +116,10 @@ public class UpdateSecretQuestion implements RequiredActionProvider, RequiredAct
     }
 
 
-    // Use separate method, so it's possible to override in the custom provider
-    protected boolean validateSequetQuestionCredential(RequiredActionContext context, String token, SecretQuestionCredentialModel credentialModel) {
-        return true;
-    }
+//    // Use separate method, so it's possible to override in the custom provider
+//    protected boolean validateSecretQuestionCredential(RequiredActionContext context, String token, SecretQuestionCredentialModel credentialModel) {
+//        return true;
+//    }
 
 
     @Override

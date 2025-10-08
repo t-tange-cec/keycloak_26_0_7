@@ -43,13 +43,12 @@ public class SecretQuestionCredentialModel extends CredentialModel {
         SecretQuestionCredentialData credentialData = new SecretQuestionCredentialData(hashIterations, algorithm, additionalParameters);
         SecretQuestionSecretData secretData = new SecretQuestionSecretData(encodedAnswer, salt);
 
-        SecretQuestionCredentialModel secretQuestionCredentialModel = new SecretQuestionCredentialModel(credentialData, secretData);
-
+        SecretQuestionCredentialModel model = new SecretQuestionCredentialModel(credentialData, secretData);
         try {
-        	secretQuestionCredentialModel.setCredentialData(JsonSerialization.writeValueAsString(credentialData));
-        	secretQuestionCredentialModel.setSecretData(JsonSerialization.writeValueAsString(secretData));
-        	secretQuestionCredentialModel.setType(TYPE);
-            return secretQuestionCredentialModel;
+        	model.setCredentialData(JsonSerialization.writeValueAsString(credentialData));
+        	model.setSecretData(JsonSerialization.writeValueAsString(secretData));
+        	model.setType(TYPE);
+            return model;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -60,15 +59,15 @@ public class SecretQuestionCredentialModel extends CredentialModel {
             SecretQuestionCredentialData credentialData = JsonSerialization.readValue(credentialModel.getCredentialData(),
                     SecretQuestionCredentialData.class);
             SecretQuestionSecretData secretData = JsonSerialization.readValue(credentialModel.getSecretData(), SecretQuestionSecretData.class);
-            SecretQuestionCredentialModel secretQuestionCredentialModel = new SecretQuestionCredentialModel(credentialData, secretData);
-            secretQuestionCredentialModel.setCreatedDate(credentialModel.getCreatedDate());
-            secretQuestionCredentialModel.setCredentialData(credentialModel.getCredentialData());
-            secretQuestionCredentialModel.setId(credentialModel.getId());
-            secretQuestionCredentialModel.setSecretData(credentialModel.getSecretData());
-            secretQuestionCredentialModel.setType(credentialModel.getType());
-            secretQuestionCredentialModel.setUserLabel(credentialModel.getUserLabel());
+            SecretQuestionCredentialModel model = new SecretQuestionCredentialModel(credentialData, secretData);
+            model.setCreatedDate(credentialModel.getCreatedDate());
+            model.setCredentialData(credentialModel.getCredentialData());
+            model.setId(credentialModel.getId());
+            model.setSecretData(credentialModel.getSecretData());
+            model.setType(credentialModel.getType());
+            model.setUserLabel(credentialModel.getUserLabel());
 
-            return secretQuestionCredentialModel;
+            return model;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -82,6 +81,5 @@ public class SecretQuestionCredentialModel extends CredentialModel {
     public SecretQuestionSecretData getSecretQuestionSecretData() {
         return secretData;
     }
-
 
 }
