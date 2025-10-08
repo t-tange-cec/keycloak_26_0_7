@@ -27,7 +27,7 @@ public class SecretQuestionForm implements Authenticator {
 	@Override
 	public void authenticate(AuthenticationFlowContext context) {
 		RealmModel realm = context.getRealm();
-		String enableRiskbase = realm.getAttribute("EnableRiskbase");
+		String enableRiskbase = context.getAuthenticationSession().getAuthNote("EnableRiskbase");
 		String riskLevel = context.getAuthenticationSession().getAuthNote("riskLevel");
 		if (StringUtil.isNullOrEmpty(enableRiskbase)) {
 			enableRiskbase = "false";

@@ -42,6 +42,7 @@ public class ConditionalRiskbase implements Authenticator {
 				logger.info("riskLevel:" + riskLevel);
 				context.getAuthenticationSession().setAuthNote("riskLevel", riskLevel);
 			}
+			context.getAuthenticationSession().setAuthNote("EnableRiskbase", enableRiskbase);
 			logger.info("success:");
 			context.success();
 		} catch (Exception e) {
