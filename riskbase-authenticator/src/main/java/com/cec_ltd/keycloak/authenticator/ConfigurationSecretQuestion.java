@@ -68,7 +68,6 @@ public class ConfigurationSecretQuestion implements Authenticator {
 		}
 		CredentialModel credential = new CredentialModel();
 		credential.setType("secret-question");
-		credential.setCreatedDate("secret-question");
 		credential.setId(UUID.randomUUID().toString());
 		credential.setCredentialData("{\"hashIterations\": 27500,"
 				+ "  \"algorithm\": \"pbkdf2-sha256\","
