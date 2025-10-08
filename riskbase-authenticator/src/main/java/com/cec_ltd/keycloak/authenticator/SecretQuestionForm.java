@@ -34,11 +34,9 @@ public class SecretQuestionForm implements Authenticator {
 		UserModel user = context.getUser();
 		RealmModel realm = context.getRealm();
 		String qid = user.getFirstAttribute("qid");
-
-		String question = user.getFirstAttribute("qid");
-
 		LoginFormsProvider provider = context.form();
-		provider.setAttribute("qid", question);
+		provider.setAttribute("qid", qid);
+		provider.setAttribute("message", qid);
 		context.forceChallenge(provider.createForm("login-secret-question.ftl"));
 	}
 
