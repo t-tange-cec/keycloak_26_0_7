@@ -95,8 +95,8 @@ public class SecretQuestionCredentialProvider implements CredentialProvider<Cred
 
         CredentialModel credential = user.credentialManager().getStoredCredentialById(credentialInput.getCredentialId());
         SecretQuestionCredentialModel secretQuestionCredentialModel = SecretQuestionCredentialModel.createFromCredentialModel(credential);
-        SecretQuestionSecretData secretData = secretQuestionCredentialModel.getSecretQuestionSecretData();
-        SecretQuestionCredentialData credentialData = secretQuestionCredentialModel.getSecretQuestionCredentialData();
+//        SecretQuestionSecretData secretData = secretQuestionCredentialModel.getSecretQuestionSecretData();
+//        SecretQuestionCredentialData credentialData = secretQuestionCredentialModel.getSecretQuestionCredentialData();
         return true;
     }
 

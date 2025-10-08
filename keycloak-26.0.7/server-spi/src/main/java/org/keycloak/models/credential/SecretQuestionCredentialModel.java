@@ -20,7 +20,8 @@ public class SecretQuestionCredentialModel extends CredentialModel {
     public static SecretQuestionCredentialModel createFromAnswer(String answer) {
 
     	SecretQuestionSecretData secretData = new  SecretQuestionSecretData(answer,null);
-    	SecretQuestionCredentialModel credentialModel = new SecretQuestionCredentialModel((SecretQuestionCredentialData)null,secretData);
+    	SecretQuestionCredentialData data = new SecretQuestionCredentialData(0,"");
+    	SecretQuestionCredentialModel credentialModel = new SecretQuestionCredentialModel(data,secretData);
     	credentialModel.setType(TYPE);
     	credentialModel.setUserLabel("My answer");
         return credentialModel;
