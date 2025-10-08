@@ -4,11 +4,16 @@ import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 
 import org.keycloak.authentication.Authenticator;
+import org.keycloak.common.util.Base64;
 import org.keycloak.credential.CredentialModel;
 import org.keycloak.credential.CredentialProvider;
 import org.keycloak.forms.login.LoginFormsProvider;
 import org.keycloak.http.HttpRequest;
+
+import java.util.UUID;
+
 import org.apache.commons.codec.binary.StringUtils;
+
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.models.UserModel;
@@ -63,7 +68,15 @@ public class ConfigurationSecretQuestion implements Authenticator {
 		}
 		CredentialModel credential = new CredentialModel();
 		credential.setType("secret-question");
-		credential.setValue(answer);
+		credential.setCreatedDate("secret-question");
+		credential.setId(UUID.randomUUID().toString());
+		credential.setCredentialData("{\"hashIterations\": 27500,"
+				+ "  \"algorithm\": \"pbkdf2-sha256\","
+				+ "  \"questionId\": \""+qid+"\"}");
+		String encodedAnswer = Base64.encodeBytes(answer.getBytes());
+		credential.setSecretData("{\"encodedAnswer\": \""+encodedAnswer+"\","
+				+ "  \"salt\": \"randomSaltBytes\""
+				+ "}");
 		CredentialProvider<CredentialModel> provider = (CredentialProvider<CredentialModel>) context.getSession()
 				.getProvider(CredentialProvider.class, "secret-question");
 		provider.createCredential(realm, user, credential);
