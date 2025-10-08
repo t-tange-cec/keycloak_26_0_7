@@ -129,7 +129,7 @@ public class CredentialHelper {
     }
     
     public static boolean createSecretQuestionCredential(KeycloakSession session, RealmModel realm, UserModel user,String qid, String answer, SecretQuestionCredentialModel credentialModel) {
-        UserCredentialModel userCredential = UserCredentialModel.secretQuestion(answer);
+        SecretQuestionCredentialModel userCredential = UserCredentialModel.secretQuestion(answer);
 		user.setSingleAttribute("qid", qid);
         return user.credentialManager().updateCredential(userCredential);
     }
