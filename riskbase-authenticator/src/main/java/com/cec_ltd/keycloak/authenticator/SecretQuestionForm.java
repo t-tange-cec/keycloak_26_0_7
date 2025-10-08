@@ -6,12 +6,9 @@ import jakarta.ws.rs.core.Response;
 import org.keycloak.authentication.Authenticator;
 import org.keycloak.credential.CredentialInput;
 import org.keycloak.credential.CredentialInputValidator;
-import org.keycloak.credential.CredentialModel;
 import org.keycloak.credential.CredentialProvider;
 import org.keycloak.forms.login.LoginFormsProvider;
 import org.keycloak.http.HttpRequest;
-
-import java.util.List;
 
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
@@ -50,7 +47,6 @@ public class SecretQuestionForm implements Authenticator {
 		context.forceChallenge(provider.createForm("login-secret-question.ftl"));
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void action(AuthenticationFlowContext context) {
 		RealmModel realm = context.getRealm();
@@ -58,19 +54,7 @@ public class SecretQuestionForm implements Authenticator {
 		HttpRequest request = context.getHttpRequest();
 		MultivaluedMap<String, String> map = request.getDecodedFormParameters();
 		String answer = map.getFirst("secretAnswer");
-//		CredentialInput input = new CredentialInput() {
-//		public String getType() {
-//			return "secret-question";
-//		}
-//
-//		public String getChallengeResponse() {
-//			return answer;
-//		}
-//
-//		public String getCredentialId() {
-//			return null;
-//		}
-//	};
+		String id = user.getId();
 		CredentialInput input = (CredentialInput) new UserCredentialModel() {
 			public String getType() {
 				return "secret-question";
@@ -81,7 +65,7 @@ public class SecretQuestionForm implements Authenticator {
 			}
 
 			public String getCredentialId() {
-				return UUID.randomUUID().toString();
+				return id;
 			}
 		};
 		try {
