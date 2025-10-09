@@ -29,6 +29,9 @@ import org.keycloak.models.credential.SecretQuestionCredentialModel;
 import org.keycloak.models.credential.dto.SecretQuestionCredentialData;
 import org.keycloak.models.credential.dto.SecretQuestionSecretData;
 
+import java.util.List;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
  * @version $Revision: 1 $
@@ -84,6 +87,7 @@ public class SecretQuestionCredentialProvider implements CredentialProvider<Cred
             logger.error("Expected instance of UserCredentialModel for CredentialInput");
             return false;
         }
+        UserCredentialModel userInput = (UserCredentialModel) credentialInput;
         String challengeResponse = credentialInput.getChallengeResponse();
         if (challengeResponse == null) {
             return false;
