@@ -111,7 +111,7 @@ public class SecretQuestionCredentialProvider implements CredentialProvider<Cred
             byte[] hashed = skf.generateSecret(spec).getEncoded();
             String encodedInput = Base64.encodeBytes(hashed);
 
-            return encodedInput.equals(secretData.getEncodedAnswer());
+            return encodedInput.equals(secretData.getValue());
         } catch (Exception e) {
             logger.error("Error validating secret question credential", e);
             return false;
