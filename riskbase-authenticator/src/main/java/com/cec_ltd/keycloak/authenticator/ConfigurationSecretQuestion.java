@@ -114,7 +114,7 @@ public class ConfigurationSecretQuestion implements Authenticator {
 
 	@Override
 	public boolean configuredFor(KeycloakSession session, RealmModel realm, UserModel user) {
-		return user.getFirstAttribute("qid") != null;
+		return true;
 	}
 
 	@Override
