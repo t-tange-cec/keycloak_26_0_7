@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 import org.apache.commons.codec.binary.StringUtils;
@@ -42,6 +45,7 @@ public class ConfigurationSecretQuestion implements Authenticator {
 		RealmModel realm = context.getRealm();
 		try {
 			String qid = user.getFirstAttribute("qid");
+			logger.info("start");
 			if (StringUtil.isNullOrEmpty(qid)) {
 				logger.info("qid: null");
 				LoginFormsProvider provider = context.form();
@@ -73,19 +77,24 @@ public class ConfigurationSecretQuestion implements Authenticator {
 						context.form().setError("質問または回答が入力されていません").createForm(FORM_NAME));
 				return;
 			}
-
-			MessageDigest digest;
-			digest = MessageDigest.getInstance("PBKDF2");
+			logger.info("phase 1 ");
+			
+			MessageDigest digest = MessageDigest.getInstance("PBKDF2WithHmacSHA256");
 			SecureRandom random = new SecureRandom();
 			byte[] salt = new byte[16];
 			random.nextBytes(salt);
 			digest.update(salt);
-			byte[] hashed = digest.digest(answer.getBytes(StandardCharsets.UTF_8));
+
+			SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+			PBEKeySpec spec = new PBEKeySpec(answer.toCharArray(), salt, 27500, 256);
+			byte[] hashed = skf.generateSecret(spec).getEncoded();
+
 			String encodedAnswer = Base64.encodeBytes(hashed);
+			logger.info("phase 2 ");
 			SecretQuestionCredentialModel model = SecretQuestionCredentialModel.createFromValues(
 				    "pbkdf2-sha256", hashed, 27500, Map.of("questionId", List.of(qid)), encodedAnswer
 				);
-
+			logger.info("phase 3 ");
 			CredentialProvider<CredentialModel> provider = (CredentialProvider<CredentialModel>) context.getSession()
 					.getProvider(CredentialProvider.class, "secret-question");
 			provider.createCredential(realm, user, model);
