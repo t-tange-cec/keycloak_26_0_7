@@ -78,26 +78,25 @@ public class ConfigurationSecretQuestion implements Authenticator {
 				return;
 			}
 			logger.info("phase 1 ");
-			
-//			MessageDigest digest = MessageDigest.getInstance("PBKDF2WithHmacSHA256");
-//			SecureRandom random = new SecureRandom();
-//			byte[] salt = new byte[16];
-//			random.nextBytes(salt);
-//			digest.update(salt);
-//
-//			SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-//			PBEKeySpec spec = new PBEKeySpec(answer.toCharArray(), salt, 27500, 256);
-//			byte[] hashed = skf.generateSecret(spec).getEncoded();
-//
-//			String encodedAnswer = Base64.encodeBytes(hashed);
-//			logger.info("phase 2 ");
-//			SecretQuestionCredentialModel model = SecretQuestionCredentialModel.createFromValues(
-//				    "pbkdf2-sha256", hashed, 27500, Map.of("questionId", List.of(qid)), encodedAnswer
-//				);
-//			logger.info("phase 3 ");
-//			CredentialProvider<CredentialModel> provider = (CredentialProvider<CredentialModel>) context.getSession()
-//					.getProvider(CredentialProvider.class, "secret-question");
-//			provider.createCredential(realm, user, model);
+			MessageDigest digest = MessageDigest.getInstance("PBKDF2WithHmacSHA256");
+			SecureRandom random = new SecureRandom();
+			byte[] salt = new byte[16];
+			random.nextBytes(salt);
+			digest.update(salt);
+
+			SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+			PBEKeySpec spec = new PBEKeySpec(answer.toCharArray(), salt, 27500, 256);
+			byte[] hashed = skf.generateSecret(spec).getEncoded();
+
+			String encodedAnswer = Base64.encodeBytes(hashed);
+			logger.info("phase 2 ");
+			SecretQuestionCredentialModel model = SecretQuestionCredentialModel.createFromValues(
+				    "pbkdf2-sha256", hashed, 27500, Map.of("questionId", List.of(qid)), encodedAnswer
+				);
+			logger.info("phase 3 ");
+			CredentialProvider<CredentialModel> provider = (CredentialProvider<CredentialModel>) context.getSession()
+					.getProvider(CredentialProvider.class, "secret-question");
+			provider.createCredential(realm, user, model);
 			user.setSingleAttribute("qid", qid);
 			logger.info("success");
 			context.success();
