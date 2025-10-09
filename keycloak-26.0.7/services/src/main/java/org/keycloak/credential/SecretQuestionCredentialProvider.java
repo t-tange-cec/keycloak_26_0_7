@@ -17,6 +17,7 @@
 package org.keycloak.credential;
 
 import org.jboss.logging.Logger;
+import org.keycloak.common.util.Base64;
 import org.keycloak.common.util.ObjectUtil;
 import org.keycloak.common.util.Time;
 import org.keycloak.models.KeycloakSession;
@@ -82,7 +83,6 @@ public class SecretQuestionCredentialProvider implements CredentialProvider<Cred
         if (!(credentialInput instanceof UserCredentialModel)) {
             logger.error("Expected instance of UserCredentialModel for CredentialInput");
             return false;
-
         }
         String challengeResponse = credentialInput.getChallengeResponse();
         if (challengeResponse == null) {

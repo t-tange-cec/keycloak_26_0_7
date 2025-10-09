@@ -44,15 +44,6 @@ public class SecretQuestionForm implements Authenticator {
 			return;
 		}
 		UserModel user = context.getUser();
-		List<CredentialModel> creds = context.getSession().users()
-			    .getStoredCredentialsByType(realm, user, "secret-question");
-		
-		if (creds == null || creds.isEmpty()) {
-		    logger.warn("No secret-question credentials found for user: " + user.getUsername());
-			logger.info("success:");
-			context.success();
-			return;
-		}		
 		String qid = user.getFirstAttribute("qid");
 		LoginFormsProvider provider = context.form();
 		provider.setAttribute("qid", qid);
