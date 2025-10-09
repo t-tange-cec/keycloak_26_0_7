@@ -28,7 +28,6 @@ import org.keycloak.models.UserModel;
 import org.keycloak.models.credential.SecretQuestionCredentialModel;
 import org.keycloak.models.credential.dto.SecretQuestionCredentialData;
 import org.keycloak.models.credential.dto.SecretQuestionSecretData;
-import org.keycloak.storage.UserCredentialStore;
 
 import java.util.List;
 import javax.crypto.SecretKeyFactory;
