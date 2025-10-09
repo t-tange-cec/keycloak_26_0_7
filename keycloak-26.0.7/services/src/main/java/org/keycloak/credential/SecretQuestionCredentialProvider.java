@@ -97,7 +97,8 @@ public class SecretQuestionCredentialProvider implements CredentialProvider<Cred
             return false;
         }
 
-        List<CredentialModel> storedCreds = getCredentialStore().getCredentialsByType(realm, user, SecretQuestionCredentialModel.TYPE);
+        List<CredentialModel> storedCreds = session.userCredentialManager()
+        	    .getStoredCredentialsByType(realm, user, "secret-question");
         if (storedCreds == null || storedCreds.isEmpty()) {
             logger.warn("No secret-question credentials found for user: " + user.getUsername());
             return false;
@@ -113,7 +114,7 @@ public class SecretQuestionCredentialProvider implements CredentialProvider<Cred
             byte[] hashed = skf.generateSecret(spec).getEncoded();
             String encodedInput = Base64.encodeBytes(hashed);
 
-            return encodedInput.equals(secretData.getEncodedAnswer());
+            return encodedInput.equals(secretData.getValue());
         } catch (Exception e) {
             logger.error("Error validating secret question credential", e);
             return false;
