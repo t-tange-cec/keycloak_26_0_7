@@ -1,8 +1,8 @@
-package org.keycloak.models.credential;
+package com.cec_ltd.keycloak.credential;
 
 import org.keycloak.credential.CredentialModel;
-import org.keycloak.models.credential.dto.SecretQuestionCredentialData;
-import org.keycloak.models.credential.dto.SecretQuestionSecretData;
+import com.cec_ltd.keycloak.credential.model.dto.SecretQuestionCredentialData;
+import com.cec_ltd.keycloak.credential.model.dto.SecretQuestionSecretData;
 import org.keycloak.models.RealmModel;
 import org.keycloak.util.JsonSerialization;
 

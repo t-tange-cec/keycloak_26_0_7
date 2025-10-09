@@ -1,4 +1,5 @@
 package com.cec_ltd.keycloak.authenticator;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,7 +23,6 @@ import org.keycloak.credential.CredentialModel;
 import org.keycloak.credential.CredentialProvider;
 import org.keycloak.forms.login.LoginFormsProvider;
 import org.keycloak.http.HttpRequest;
-//import org.keycloak.models.credential.SecretQuestionCredentialModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserCredentialModel;
@@ -30,7 +30,7 @@ import org.keycloak.models.UserCredentialModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.utils.StringUtil;
 
-
+import com.cec_ltd.keycloak.credential.SecretQuestionCredentialModel;
 import com.cec_ltd.keycloak.risk.CheckItemFactory;
 
 import org.jboss.logging.Logger;
