@@ -28,6 +28,7 @@ import org.keycloak.models.UserModel;
 import org.keycloak.models.credential.SecretQuestionCredentialModel;
 import org.keycloak.models.credential.dto.SecretQuestionCredentialData;
 import org.keycloak.models.credential.dto.SecretQuestionSecretData;
+import org.keycloak.storage.UserCredentialStore;
 
 import java.util.List;
 import javax.crypto.SecretKeyFactory;
@@ -96,9 +97,10 @@ public class SecretQuestionCredentialProvider implements CredentialProvider<Cred
             logger.error("CredentialId is null when validating credential of user "+user.getUsername());
             return false;
         }
+ 
+        UserCredentialStore store = (UserCredentialStore) session.getProvider(UserCredentialStore.class);
+        List<CredentialModel> storedCreds = store.getCredentialsByType(realm, user, "secret-question");
 
-        List<CredentialModel> storedCreds = session.userCredentialManager()
-        	    .getStoredCredentialsByType(realm, user, "secret-question");
         if (storedCreds == null || storedCreds.isEmpty()) {
             logger.warn("No secret-question credentials found for user: " + user.getUsername());
             return false;
