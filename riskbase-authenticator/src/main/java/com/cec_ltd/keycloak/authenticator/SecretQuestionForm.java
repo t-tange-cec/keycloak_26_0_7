@@ -7,9 +7,12 @@ import org.keycloak.authentication.Authenticator;
 import org.keycloak.common.util.Base64;
 import org.keycloak.credential.CredentialInput;
 import org.keycloak.credential.CredentialInputValidator;
+import org.keycloak.credential.CredentialModel;
 import org.keycloak.credential.CredentialProvider;
 import org.keycloak.forms.login.LoginFormsProvider;
 import org.keycloak.http.HttpRequest;
+
+import java.util.List;
 
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
@@ -41,6 +44,13 @@ public class SecretQuestionForm implements Authenticator {
 			return;
 		}
 		UserModel user = context.getUser();
+		List<CredentialModel> creds = context.getSession().userCredentialManager()
+			    .getStoredCredentialsByType(realm, user, "secret-question");
+		
+		if (creds == null || creds.isEmpty()) {
+		    logger.warn("No secret-question credentials found for user: " + user.getUsername());
+		    return;
+		}		
 		String qid = user.getFirstAttribute("qid");
 		LoginFormsProvider provider = context.form();
 		provider.setAttribute("qid", qid);
