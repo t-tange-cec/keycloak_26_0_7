@@ -93,11 +93,27 @@ public class SecretQuestionCredentialProvider implements CredentialProvider<Cred
             return false;
         }
 
-        CredentialModel credential = user.credentialManager().getStoredCredentialById(credentialInput.getCredentialId());
-        SecretQuestionCredentialModel secretQuestionCredentialModel = SecretQuestionCredentialModel.createFromCredentialModel(credential);
-//        SecretQuestionSecretData secretData = secretQuestionCredentialModel.getSecretQuestionSecretData();
-//        SecretQuestionCredentialData credentialData = secretQuestionCredentialModel.getSecretQuestionCredentialData();
-        return true;
+        List<CredentialModel> storedCreds = getCredentialStore().getCredentialsByType(realm, user, SecretQuestionCredentialModel.TYPE);
+        if (storedCreds == null || storedCreds.isEmpty()) {
+            logger.warn("No secret-question credentials found for user: " + user.getUsername());
+            return false;
+        }
+        CredentialModel stored = storedCreds.get(0);
+        SecretQuestionCredentialModel model = SecretQuestionCredentialModel.createFromCredentialModel(stored);
+        SecretQuestionSecretData secretData = model.getSecretQuestionSecretData();
+
+        try {
+            byte[] salt = secretData.getSalt();
+            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            PBEKeySpec spec = new PBEKeySpec(userInput.getChallengeResponse().toCharArray(), salt, model.getSecretQuestionCredentialData().getHashIterations(), 256);
+            byte[] hashed = skf.generateSecret(spec).getEncoded();
+            String encodedInput = Base64.encodeBytes(hashed);
+
+            return encodedInput.equals(secretData.getEncodedAnswer());
+        } catch (Exception e) {
+            logger.error("Error validating secret question credential", e);
+            return false;
+        }
     }
 
     @Override

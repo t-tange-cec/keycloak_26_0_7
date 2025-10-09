@@ -44,12 +44,14 @@ public class SecretQuestionForm implements Authenticator {
 			return;
 		}
 		UserModel user = context.getUser();
-		List<CredentialModel> creds = context.getSession().userCredentialManager()
+		List<CredentialModel> creds = context.getSession().users()
 			    .getStoredCredentialsByType(realm, user, "secret-question");
 		
 		if (creds == null || creds.isEmpty()) {
 		    logger.warn("No secret-question credentials found for user: " + user.getUsername());
-		    return;
+			logger.info("success:");
+			context.success();
+			return;
 		}		
 		String qid = user.getFirstAttribute("qid");
 		LoginFormsProvider provider = context.form();
@@ -66,14 +68,13 @@ public class SecretQuestionForm implements Authenticator {
 		MultivaluedMap<String, String> map = request.getDecodedFormParameters();
 		String answer = map.getFirst("secretAnswer");
 		String id = user.getId();
-		String encodedAnswer = Base64.encodeBytes(answer.getBytes());
 		CredentialInput input = (CredentialInput) new UserCredentialModel() {
 			public String getType() {
 				return "secret-question";
 			}
 
 			public String getChallengeResponse() {
-				return encodedAnswer;
+				return answer;
 			}
 
 			public String getCredentialId() {
@@ -81,7 +82,6 @@ public class SecretQuestionForm implements Authenticator {
 			}
 		};
 		try {
-			logger.info("answer(Base64):" + encodedAnswer);
 			CredentialInputValidator provider = (CredentialInputValidator) context.getSession()
 					.getProvider(CredentialProvider.class, "secret-question");
 			if (provider == null) {
@@ -89,13 +89,12 @@ public class SecretQuestionForm implements Authenticator {
 			} else {
 				logger.info("provider:not null");
 			}
-			
 			boolean valid = provider.isValid(realm, user, input);
-//			if (!valid) {
-//				logger.info("failure");
-//				context.failure(AuthenticationFlowError.INVALID_CREDENTIALS);
-//				return;
-//			}
+			if (!valid) {
+				logger.info("failure");
+				context.failure(AuthenticationFlowError.INVALID_CREDENTIALS);
+				return;
+			}
 			logger.info("success:");
 			context.success();
 		} catch (Exception e) {
