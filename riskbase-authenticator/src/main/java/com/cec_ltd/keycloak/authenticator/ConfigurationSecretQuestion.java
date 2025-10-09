@@ -80,8 +80,8 @@ public class ConfigurationSecretQuestion implements Authenticator {
 			byte[] salt = new byte[16];
 			random.nextBytes(salt);
 			digest.update(salt);
-			String encodedSalt = Base64.encodeBytes(salt);
 			byte[] hashed = digest.digest(answer.getBytes(StandardCharsets.UTF_8));
+			String encodedAnswer = Base64.encodeBytes(hashed);
 			SecretQuestionCredentialModel model = SecretQuestionCredentialModel.createFromValues(
 				    "pbkdf2-sha256", hashed, 27500, Map.of("questionId", List.of(qid)), encodedAnswer
 				);
