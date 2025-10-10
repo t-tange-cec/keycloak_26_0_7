@@ -24,6 +24,8 @@ import org.keycloak.models.credential.RecoveryAuthnCodesCredentialModel;
 import org.keycloak.models.credential.OTPCredentialModel;
 import org.keycloak.models.credential.PasswordCredentialModel;
 import org.keycloak.models.credential.PasswordUserCredentialModel;
+import org.keycloak.models.credential.SecretQuestionCredentialModel;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -87,6 +89,10 @@ public class UserCredentialModel implements CredentialInput {
     public static PasswordUserCredentialModel password(String password, boolean adminRequest) {
         // It uses PasswordUserCredentialModel for backwards compatibility. Some UserStorage providers can check for that type
         return new PasswordUserCredentialModel("", PasswordCredentialModel.TYPE, password, adminRequest);
+    }
+
+    public static SecretQuestionCredentialModel secretQuestion(String answer) {
+        return new SecretQuestionCredentialModel("", SecretQuestionCredentialModel.TYPE, answer);
     }
 
     @Deprecated /** passwordToken is legacy stuff. Not used in Keycloak anymore **/
