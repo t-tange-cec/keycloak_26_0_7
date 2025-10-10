@@ -8,7 +8,9 @@
     <#elseif section="form">
         <form id="kc-secret-question-login-form" class="${properties.kcFormClass!}" action="${url.loginAction}" method="post">
             <input id="qid" type="hidden" name="qid" value="${qid!''}">
-            <input id="question" type="hidden" name="question" value="${question!''}">
+            <span class="pf-v5-c-form__label-text">
+    	      ${question}
+	        </span>
             <@field.input name="secretAnswer" label=msg("secretAnswer")  fieldName="secretAnswerr" />
             <@buttons.loginButton />
         </form>
