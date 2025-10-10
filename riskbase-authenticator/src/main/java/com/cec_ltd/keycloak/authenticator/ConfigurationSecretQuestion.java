@@ -74,6 +74,7 @@ public class ConfigurationSecretQuestion implements Authenticator {
 			if (StringUtil.isNullOrEmpty(qid)) {
 				getMessageList(locale);
 				logger.info("qid: null");
+				logger.info("locale: "+locale.toString());
 				LoginFormsProvider provider = context.form();
 				provider.setAttribute("selectionOptions", options);
 				logger.info(FORM_NAME);

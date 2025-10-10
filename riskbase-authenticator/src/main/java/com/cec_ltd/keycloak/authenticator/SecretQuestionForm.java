@@ -61,6 +61,7 @@ public class SecretQuestionForm implements Authenticator {
 			context.success();
 			return;
 		}
+		logger.info("locale: "+locale.toString());
 		getMessageList(locale);
 		UserModel user = context.getUser();
 		String qid = user.getFirstAttribute("qid");
