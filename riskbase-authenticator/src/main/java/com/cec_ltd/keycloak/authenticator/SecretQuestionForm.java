@@ -29,6 +29,8 @@ import org.keycloak.models.UserCredentialModel;
 
 public class SecretQuestionForm implements Authenticator {
 	private static final Logger logger = Logger.getLogger(SecretQuestionForm.class);
+	private static String FORM_NAME = "login-secret-question.ftl";
+
 	private static Map<String, String> messagelist = new HashMap<>();
 
 	private void getMessageList(Locale locale){
@@ -65,10 +67,18 @@ public class SecretQuestionForm implements Authenticator {
 		getMessageList(locale);
 		UserModel user = context.getUser();
 		String qid = user.getFirstAttribute("qid");
-		context.form()
-				.setAttribute("qid", qid)
-				.setAttribute("message", messagelist.get(qid))
-				.createForm("login-secret-question.ftl");
+		LoginFormsProvider provider = context.form();
+		provider.setAttribute("qid", qid);
+		provider.setAttribute("message", messagelist.get(qid));
+		logger.info(FORM_NAME);
+		context.forceChallenge(provider.createForm(FORM_NAME));
+		return;
+
+//		logger.info("create  ");
+//		context.form()
+//				.setAttribute("qid", qid)
+//				.setAttribute("message", messagelist.get(qid))
+//				.createForm(FORM_NAME);
 	}
 
 	@Override
