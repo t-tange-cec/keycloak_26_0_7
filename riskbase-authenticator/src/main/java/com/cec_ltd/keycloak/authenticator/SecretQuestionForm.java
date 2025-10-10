@@ -65,10 +65,10 @@ public class SecretQuestionForm implements Authenticator {
 		getMessageList(locale);
 		UserModel user = context.getUser();
 		String qid = user.getFirstAttribute("qid");
-		LoginFormsProvider provider = context.form();
-		provider.setAttribute("qid", qid);
-		provider.setAttribute("message", messagelist.get(qid));
-		context.forceChallenge(provider.createForm("login-secret-question.ftl"));
+		context.form()
+				.setAttribute("qid", qid)
+				.setAttribute("message", messagelist.get(qid))
+				.createForm("login-secret-question.ftl");
 	}
 
 	@Override
