@@ -9,7 +9,7 @@
         <form id="kc-secret-question-login-form" class="${properties.kcFormClass!}" action="${url.loginAction}" method="post">
             <input id="qid" type="hidden" name="qid" value="${qid!''}">
 			<#if message??>
-			  <p class="secret-question">${message}</p>
+            <input id="message" type="hidden" name="message" value="${message!''}">
 			</#if>
             <@field.input name="secretAnswer" label=msg("secretAnswer")  fieldName="secretAnswerr" />
             <@buttons.loginButton />
