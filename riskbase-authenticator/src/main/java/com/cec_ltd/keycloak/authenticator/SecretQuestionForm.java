@@ -72,7 +72,7 @@ public class SecretQuestionForm implements Authenticator {
 		logger.info("message: "+message);
 		LoginFormsProvider provider = context.form();
 		provider.setAttribute("qid", qid);
-		provider.setAttribute("msg", message);
+		provider.setAttribute("question", message);
 		logger.info(FORM_NAME);
 		context.forceChallenge(provider.createForm(FORM_NAME));
 		return;
