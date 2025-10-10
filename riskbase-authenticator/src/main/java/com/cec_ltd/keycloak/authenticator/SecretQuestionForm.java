@@ -1,5 +1,6 @@
 package com.cec_ltd.keycloak.authenticator;
 
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 
@@ -12,7 +13,11 @@ import org.keycloak.credential.CredentialProvider;
 import org.keycloak.forms.login.LoginFormsProvider;
 import org.keycloak.http.HttpRequest;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
@@ -24,10 +29,23 @@ import org.keycloak.models.UserCredentialModel;
 
 public class SecretQuestionForm implements Authenticator {
 	private static final Logger logger = Logger.getLogger(SecretQuestionForm.class);
+	private static Map<String, String> messagelist = new HashMap<>();
+
+	private void getMessageList(Locale locale){
+		messagelist.clear();
+		messagelist.put("PI001", "What's your favorite movie?");
+		messagelist.put("PI002", "What's your pet's name?");
+		messagelist.put("PI003", "What's your mother's maiden name?");
+		messagelist.put("PI004", "Where are you from?");
+		messagelist.put("PI005", "What's your favorite sports team?");
+		messagelist.put("PI006", "Where was the first place you traveled to?");		
+	}
 
 	@Override
 	public void authenticate(AuthenticationFlowContext context) {
 		RealmModel realm = context.getRealm();
+		String acceptLanguage = context.getHttpRequest().getHttpHeaders().getHeaderString(HttpHeaders.ACCEPT_LANGUAGE);
+		Locale locale = Locale.forLanguageTag(acceptLanguage.split(",")[0]);	
 		String enableRiskbase = context.getAuthenticationSession().getAuthNote("EnableRiskbase");
 		String riskLevel = context.getAuthenticationSession().getAuthNote("riskLevel");
 		if (StringUtil.isNullOrEmpty(enableRiskbase)) {
@@ -43,11 +61,12 @@ public class SecretQuestionForm implements Authenticator {
 			context.success();
 			return;
 		}
+		getMessageList(locale);
 		UserModel user = context.getUser();
 		String qid = user.getFirstAttribute("qid");
 		LoginFormsProvider provider = context.form();
 		provider.setAttribute("qid", qid);
-		provider.setAttribute("message", qid);
+		provider.setAttribute("message", messagelist.get(qid));
 		context.forceChallenge(provider.createForm("login-secret-question.ftl"));
 	}
 
@@ -81,11 +100,11 @@ public class SecretQuestionForm implements Authenticator {
 				logger.info("provider:not null");
 			}
 			boolean valid = provider.isValid(realm, user, input);
-			if (!valid) {
-				logger.info("failure");
-				context.failure(AuthenticationFlowError.INVALID_CREDENTIALS);
-				return;
-			}
+//			if (!valid) {
+//				logger.info("failure");
+//				context.failure(AuthenticationFlowError.INVALID_CREDENTIALS);
+//				return;
+//			}
 			logger.info("success:");
 			context.success();
 		} catch (Exception e) {

@@ -4,13 +4,17 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 import org.apache.commons.codec.binary.StringUtils;
@@ -38,17 +42,40 @@ import org.jboss.logging.Logger;
 public class ConfigurationSecretQuestion implements Authenticator {
 	private static final Logger logger = Logger.getLogger(ConfigurationSecretQuestion.class);
 	private static String FORM_NAME = "login-update-secret-question.ftl";
+	private static Map<String, String> messagelist = new HashMap<>();
+	private static List<Map<String, String>> options = new ArrayList<>();
 
+
+	private void getMessageList(Locale locale){
+		messagelist.clear();
+		options.clear();
+		messagelist.put("PI001", "What's your favorite movie?");
+		messagelist.put("PI002", "What's your pet's name?");
+		messagelist.put("PI003", "What's your mother's maiden name?");
+		messagelist.put("PI004", "Where are you from?");
+		messagelist.put("PI005", "What's your favorite sports team?");
+		messagelist.put("PI006", "Where was the first place you traveled to?");		
+		for(Map.Entry<String, String> entry : messagelist.entrySet()) {
+			Map<String, String> message = new HashMap<>();
+			message.put("id", entry.getKey());
+			message.put("message", entry.getValue());
+			options.add(message);
+		}
+	}
 	@Override
 	public void authenticate(AuthenticationFlowContext context) {
 		UserModel user = context.getUser();
 		RealmModel realm = context.getRealm();
+		String acceptLanguage = context.getHttpRequest().getHttpHeaders().getHeaderString(HttpHeaders.ACCEPT_LANGUAGE);
+		Locale locale = Locale.forLanguageTag(acceptLanguage.split(",")[0]);	
 		try {
 			String qid = user.getFirstAttribute("qid");
 			logger.info("start");
 			if (StringUtil.isNullOrEmpty(qid)) {
+				getMessageList(locale);
 				logger.info("qid: null");
 				LoginFormsProvider provider = context.form();
+				provider.setAttribute("selectionOptions", options);
 				logger.info(FORM_NAME);
 				context.forceChallenge(provider.createForm(FORM_NAME));
 				return;

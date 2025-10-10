@@ -8,8 +8,13 @@
         ${msg("updateSecretQuestion")}
     <#elseif section = "form">
         <form id="kc-update_secret-question-form" class="${properties.kcFormClass!}" action="${url.loginAction}" method="post" novalidate="novalidate">
+			<label for="qid">Secret QuestionÅF</label>
+			<select name="qid" id="qid">
+			  <#list selectionOptions as option>
+			    <option value="${option.id}">${option.message}</option>
+			  </#list>
+			</select>
             <@field.input name="secretAnswer" label=msg("secretAnswer") fieldName="secretAnswer" />
-            <@field.input name="qid" label=msg("qid")  fieldName="qid" />
             <@buttons.actionGroup>
                 <#if isAppInitiatedAction??>
                     <@buttons.button label="doSubmit" class=["kcButtonPrimaryClass"]/>
