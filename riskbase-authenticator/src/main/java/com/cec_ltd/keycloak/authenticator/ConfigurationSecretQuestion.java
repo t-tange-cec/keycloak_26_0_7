@@ -70,6 +70,7 @@ public class ConfigurationSecretQuestion implements Authenticator {
 		String answer = map.getFirst("secretAnswer");
 		String qid = map.getFirst("qid");
 		logger.info("qid: " + qid);
+		SecretQuestionCredentialModel model = null;
 		try {
 			logger.info("secretAnswer: " + answer);
 			if (StringUtil.isNullOrEmpty(answer) || StringUtil.isNullOrEmpty(qid)) {
@@ -77,22 +78,26 @@ public class ConfigurationSecretQuestion implements Authenticator {
 						context.form().setError("質問または回答が入力されていません").createForm(FORM_NAME));
 				return;
 			}
-			logger.info("phase 1 ");
-			MessageDigest digest = MessageDigest.getInstance("PBKDF2WithHmacSHA256");
-			SecureRandom random = new SecureRandom();
-			byte[] salt = new byte[16];
-			random.nextBytes(salt);
-			digest.update(salt);
+			if (false) {
+				logger.info("phase 1 ");
+				MessageDigest digest = MessageDigest.getInstance("PBKDF2WithHmacSHA256");
+				SecureRandom random = new SecureRandom();
+				byte[] salt = new byte[16];
+				random.nextBytes(salt);
+				digest.update(salt);
 
-			SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-			PBEKeySpec spec = new PBEKeySpec(answer.toCharArray(), salt, 27500, 256);
-			byte[] hashed = skf.generateSecret(spec).getEncoded();
+				SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+				PBEKeySpec spec = new PBEKeySpec(answer.toCharArray(), salt, 27500, 256);
+				byte[] hashed = skf.generateSecret(spec).getEncoded();
 
-			String encodedAnswer = Base64.encodeBytes(hashed);
-			logger.info("phase 2 ");
-			SecretQuestionCredentialModel model = SecretQuestionCredentialModel.createFromValues(
-				    "pbkdf2-sha256", hashed, 27500, Map.of("questionId", List.of(qid)), encodedAnswer
-				);
+				String encodedAnswer = Base64.encodeBytes(hashed);
+				logger.info("phase 2 ");
+				model = SecretQuestionCredentialModel.createFromValues("pbkdf2-sha256", salt, 27500,
+						Map.of("questionId", List.of(qid)), encodedAnswer);
+			} else {
+				model = SecretQuestionCredentialModel.createFromValues("", null, 27500,
+						Map.of("questionId", List.of(qid)), answer);
+			}
 			logger.info("phase 3 ");
 			CredentialProvider<CredentialModel> provider = (CredentialProvider<CredentialModel>) context.getSession()
 					.getProvider(CredentialProvider.class, "secret-question");
