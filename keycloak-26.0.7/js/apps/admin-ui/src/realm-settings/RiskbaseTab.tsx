@@ -131,8 +131,8 @@ export const RiskbaseTab = ({
 		      name={setting.name}
 		      riskScore={setting.riskScore}
 		      enabled={setting.enabled}
-		      onChange={({setting.enabled}) => {
-		        console.log(`設定 ${setting.name} が ${setting.enabled ? '有効化' : '無効化'} されました`);
+		      onChange={(enabled) => {
+		        console.log(`設定  ${enabled ? '有効化' : '無効化'} されました`);
 		      }}
 		    />
 			))}
