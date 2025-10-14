@@ -31,7 +31,7 @@ interface SettingConfig {
   id: string;
   name: string;
   riskScore: number;
-  defaultEnabled: boolean;
+  enabled: boolean;
 }
 
 const settings: SettingConfig[] = [
@@ -39,19 +39,19 @@ const settings: SettingConfig[] = [
     id: '0',
     name: '認証失敗チェック',
     riskScore: 20,
-    defaultEnabled: true,
+    enabled: true,
   },
   {
     id: '1',
     name: 'IP履歴チェック',
     riskScore: 30,
-    defaultEnabled: true,
+    enabled: true,
   },
   {
     id: '2',
     name: '最終ログインからの経過時間チェック',
     riskScore: 30,
-    defaultEnabled: true,
+    enabled: true,
   },
 ];
 
@@ -133,7 +133,7 @@ export const RiskbaseTab = ({
 		      key={setting.id}
 		      name={setting.name}
 		      riskScore={setting.riskScore}
-		      defaultEnabled={setting.defaultEnabled}
+		      enabled={setting.enabled}
 		    />
 		  ))}
 		</div>
