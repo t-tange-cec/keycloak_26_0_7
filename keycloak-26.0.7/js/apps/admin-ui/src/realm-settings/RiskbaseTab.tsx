@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 import { FormAccess } from "../components/form/FormAccess";
 import { useServerInfo } from "../context/server-info/ServerInfoProvider";
 import { convertToFormValues } from "../util";
-
+import SettingItem from './SettingItem'; 
 import { useConfirmDialog } from "../components/confirm-dialog/ConfirmDialog";
 
 type RealmSettingsThemesTabProps = {
@@ -129,17 +129,18 @@ export const RiskbaseTab = ({
 		    aria-label={t("riskbase")}
 		  />
 		</FormProvider>
-		<div style={{ border: `2px solid ${riskColor}`, padding: '1rem', marginBottom: '1rem' }}>
-		  <h3>{name}</h3>
-		  <p>
-		    <strong>リスクスコア:</strong>{' '}
-		    <span style={{ color: riskColor }}>{riskScore}</span>
-		  </p>
-		  <label>
-		    <input type="checkbox" checked={enabled} onChange={(e) => onChange(e.target.checked)} />
-		    有効化
-		  </label>
+		<div>
+		  <h2>🔧 管理設定一覧</h2>
+		  {settings.map((setting) => (
+		    <SettingItem
+		      key={setting.id}
+		      name={setting.name}
+		      riskScore={setting.riskScore}
+		      defaultEnabled={setting.defaultEnabled}
+		    />
+		  ))}
 		</div>
+		
 		<h2>t("threshhold")</h2>
 		<input
 		  type="text"
