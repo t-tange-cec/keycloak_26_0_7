@@ -77,12 +77,6 @@ const getRiskColor = (score: number): string => {
   return 'red';
 };
 
-const SettingItems: React.FC<SettingItemProps> = ({ name,  riskScore, onChange, enabled }) => {
-  const riskLabel = getRiskLabel(riskScore);
-  const riskColor = getRiskColor(riskScore);
-  return (<div>...</div>);
-};
-
 
 export const RiskbaseTab = ({
 	  realm,
@@ -137,8 +131,8 @@ export const RiskbaseTab = ({
 		      name={setting.name}
 		      riskScore={setting.riskScore}
 		      enabled={setting.enabled}
-		      onChange={(enabled) => {
-		        console.log(`設定 ${setting.name} が ${enabled ? '有効化' : '無効化'} されました`);
+		      onChange={({setting.enabled}) => {
+		        console.log(`設定 ${setting.name} が ${setting.enabled ? '有効化' : '無効化'} されました`);
 		      }}
 		    />
 			))}
