@@ -77,7 +77,7 @@ const getRiskColor = (score: number): string => {
   return 'red';
 };
 
-const SettingItem: React.FC<SettingItemProps> = ({ name,  riskScore, onChange, enabled }) => {
+const SettingItems: React.FC<SettingItemProps> = ({ name,  riskScore, onChange, enabled }) => {
   const riskLabel = getRiskLabel(riskScore);
   const riskColor = getRiskColor(riskScore);
   return (<div>...</div>);
