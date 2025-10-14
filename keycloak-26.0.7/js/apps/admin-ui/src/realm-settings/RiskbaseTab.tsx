@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 import { FormAccess } from "../components/form/FormAccess";
 import { useServerInfo } from "../context/server-info/ServerInfoProvider";
 import { convertToFormValues } from "../util";
-import SettingItem from './SettingItem'; 
+import { SettingItem } from './SettingItem'; 
 import { useConfirmDialog } from "../components/confirm-dialog/ConfirmDialog";
 
 type RealmSettingsThemesTabProps = {
@@ -78,9 +78,9 @@ const getRiskColor = (score: number): string => {
 const SettingItem: React.FC<SettingConfig> = ({ name,  riskScore, onChange, enabled }) => {
   const riskLabel = getRiskLabel(riskScore);
   const riskColor = getRiskColor(riskScore);
+  return (<div>...</div>);
 };
 
-export default SettingItem;
 
 export const RiskbaseTab = ({
 	  realm,
