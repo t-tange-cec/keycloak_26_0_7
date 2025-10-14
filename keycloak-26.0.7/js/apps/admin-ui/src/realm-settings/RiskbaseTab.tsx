@@ -22,6 +22,7 @@ import { convertToFormValues } from "../util";
 import { useConfirmDialog } from "../components/confirm-dialog/ConfirmDialog";
 import SettingItem from './SettingItem'; 
 
+
 type RealmSettingsThemesTabProps = {
   realm: RealmRepresentation;
   save: (realm: RealmRepresentation) => void;
@@ -64,6 +65,15 @@ export const settings: SettingItemProps[] = [
     },
   },
 ];
+const [settingsState, setSettingsState] = useState(settings);
+const handleToggle = (id: string, newEnabled: boolean) => {
+  setSettingsState((prev) =>
+    prev.map((item) =>
+      item.id === id ? { ...item, enabled: newEnabled } : item
+    )
+  );
+};
+
 
 const getRiskLabel = (score: number): string => {
   if (score < 30) return '低';
@@ -76,7 +86,6 @@ const getRiskColor = (score: number): string => {
   if (score < 70) return 'orange';
   return 'red';
 };
-
 
 export const RiskbaseTab = ({
 	  realm,
@@ -131,9 +140,7 @@ export const RiskbaseTab = ({
 		      name={setting.name}
 		      riskScore={setting.riskScore}
 		      enabled={setting.enabled}
-		      onChange={(enabled) => {
-		        console.log(`設定  ${enabled ? '有効化' : '無効化'} されました`);
-		      }}
+		      onChange={(newEnabled) => handleToggle(setting.id, newEnabled)}
 		    />
 			))}
 		</div>
