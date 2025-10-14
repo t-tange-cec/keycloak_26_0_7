@@ -28,14 +28,8 @@ const SettingItem: React.FC<SettingItemProps> = ({ name, riskScore, enabled, onC
     <div style={{ border: `2px solid ${riskColor}`, padding: '1rem', marginBottom: '1rem' }}>
       <h3>{name}</h3>
       <p>
-	  <label>
-	  リスクスコア:
-	    <input
-	      type="test"
-	      checked={enabled}
-	      onChange={(e) => onChange(e.target.riskScore)}
-	    value={riskScore} />
-		</label>
+        <strong>リスクスコア:</strong>{' '}
+        <span style={{ color: riskColor }}>{riskScore} / 100（{riskLabel}）</span>
       </p>
       <label>
         <input
