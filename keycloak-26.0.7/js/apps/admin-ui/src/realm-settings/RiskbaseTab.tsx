@@ -27,14 +27,16 @@ type RealmSettingsThemesTabProps = {
   save: (realm: RealmRepresentation) => void;
 };
 
-interface SettingConfig {
-  id: string;
-  name: string;
-  riskScore: number;
+export interface SettingItemProps{
+	id: string;
+	name: string;
+  riskScore: number; // 0〜100のスコア
+  onChange: (enabled: boolean) => void;
   enabled: boolean;
-}
+};
 
-const settings: SettingConfig[] = [
+
+export const settings: SettingItemProps[] = [
   {
     id: '0',
     name: '認証失敗チェック',
@@ -55,13 +57,6 @@ const settings: SettingConfig[] = [
   },
 ];
 
-export interface SettingItemProps{
-  name: string;
-  riskScore: number; // 0〜100のスコア
-  onChange: (enabled: boolean) => void;
-  enabled: boolean;
-}
-
 const getRiskLabel = (score: number): string => {
   if (score < 30) return '低';
   if (score < 70) return '中';
@@ -74,7 +69,7 @@ const getRiskColor = (score: number): string => {
   return 'red';
 };
 
-const SettingItem: React.FC<SettingConfig> = ({ name,  riskScore, onChange, enabled }) => {
+const SettingItem: React.FC<SettingItemProps> = ({ name,  riskScore, onChange, enabled }) => {
   const riskLabel = getRiskLabel(riskScore);
   const riskColor = getRiskColor(riskScore);
   return (<div>...</div>);
@@ -130,11 +125,14 @@ export const RiskbaseTab = ({
 		  {settings.map((setting) => (
 		    <SettingItem
 		      key={setting.id}
+		      id={setting.id}
 		      name={setting.name}
 		      riskScore={setting.riskScore}
-		      enabled={setting.enabled}
+		      enabled={setting.defaultEnabled}
+		      onChange={(enabled) => {
+		        console.log(`設定 ${setting.name} が ${enabled ? '有効化' : '無効化'} されました`);
+		      }}
 		    />
-		  ))}
 		</div>
 		
 		<h2>t("threshhold")</h2>
