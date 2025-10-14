@@ -41,18 +41,21 @@ export const settings: SettingItemProps[] = [
     id: '0',
     name: '認証失敗チェック',
     riskScore: 20,
+	onChange: (enabled: boolean) => void,
     enabled: true,
   },
   {
     id: '1',
     name: 'IP履歴チェック',
     riskScore: 30,
+	onChange: (enabled: boolean) => void,
     enabled: true,
   },
   {
     id: '2',
     name: '最終ログインからの経過時間チェック',
     riskScore: 30,
+	onChange: (enabled: boolean) => void,
     enabled: true,
   },
 ];
