@@ -24,11 +24,6 @@ type RealmSettingsThemesTabProps = {
   realm: RealmRepresentation;
   save: (realm: RealmRepresentation) => void;
 };
-export interface QuestionItemProps{
-	id: string;
-	locale: string;
-	question: string;
-};
 
 export const SecretTab = ({
 	  realm,
