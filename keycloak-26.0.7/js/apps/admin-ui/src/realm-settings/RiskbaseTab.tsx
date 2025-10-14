@@ -133,7 +133,7 @@ export const RiskbaseTab = ({
 		        console.log(`設定 ${setting.name} が ${enabled ? '有効化' : '無効化'} されました`);
 		      }}
 		    />
-			)};
+			)}
 		</div>
 		
 		<h2>t("threshhold")</h2>
