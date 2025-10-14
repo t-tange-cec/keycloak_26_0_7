@@ -128,11 +128,12 @@ export const RiskbaseTab = ({
 		      id={setting.id}
 		      name={setting.name}
 		      riskScore={setting.riskScore}
-		      enabled={setting.defaultEnabled}
+		      enabled={setting.enabled}
 		      onChange={(enabled) => {
 		        console.log(`設定 ${setting.name} が ${enabled ? '有効化' : '無効化'} されました`);
 		      }}
 		    />
+			)};
 		</div>
 		
 		<h2>t("threshhold")</h2>
