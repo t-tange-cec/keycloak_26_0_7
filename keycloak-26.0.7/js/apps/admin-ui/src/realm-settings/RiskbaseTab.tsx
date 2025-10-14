@@ -1,4 +1,5 @@
 import type RealmRepresentation from "@keycloak/keycloak-admin-client/lib/defs/realmRepresentation";
+import React from 'react';
 import {
   HelpItem,
   KeycloakSelect,
@@ -26,6 +27,63 @@ type RealmSettingsThemesTabProps = {
   save: (realm: RealmRepresentation) => void;
 };
 
+interface SettingConfig {
+  id: string;
+  name: string;
+  riskScore: number;
+  defaultEnabled: boolean;
+}
+
+const settings: SettingConfig[] = [
+  {
+    id: '0',
+    name: '認証失敗チェック',
+    riskScore: 20,
+    defaultEnabled: true,
+  },
+  {
+    id: '1',
+    name: 'IP履歴チェック',
+    riskScore: 30,
+    defaultEnabled: true,
+  },
+  {
+    id: '2',
+    name: '最終ログインからの経過時間チェック',
+    riskScore: 30,
+    defaultEnabled: true,
+  },
+];
+
+
+interface SettingItemProps {
+  name: string;
+  riskScore: number; // 0〜100のスコア
+  onChange: (enabled: boolean) => void;
+  enabled: boolean;
+}
+
+const getRiskLabel = (score: number): string => {
+  if (score < 30) return '低';
+  if (score < 70) return '中';
+  return '高';
+};
+
+const getRiskColor = (score: number): string => {
+  if (score < 30) return 'green';
+  if (score < 70) return 'orange';
+  return 'red';
+};
+
+const SettingItem: React.FC<SettingItemProps> = ({ name, description, riskScore, onChange, enabled }) => {
+  const riskLabel = getRiskLabel(riskScore);
+  const riskColor = getRiskColor(riskScore);
+
+  return (
+  );
+};
+
+export default SettingItem;
 
 export const RiskbaseTab = ({
 	  realm,
@@ -71,6 +129,17 @@ export const RiskbaseTab = ({
 		    aria-label={t("riskbase")}
 		  />
 		</FormProvider>
+		<div style={{ border: `2px solid ${riskColor}`, padding: '1rem', marginBottom: '1rem' }}>
+		  <h3>{name}</h3>
+		  <p>
+		    <strong>リスクスコア:</strong>{' '}
+		    <span style={{ color: riskColor }}>{riskScore}</span>
+		  </p>
+		  <label>
+		    <input type="checkbox" checked={enabled} onChange={(e) => onChange(e.target.checked)} />
+		    有効化
+		  </label>
+		</div>
 		<h2>t("threshhold")</h2>
 		<input
 		  type="text"
