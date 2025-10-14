@@ -35,34 +35,33 @@ export interface SettingItemProps{
   enabled: boolean;
 };
 
-
 export const settings: SettingItemProps[] = [
   {
     id: '0',
     name: '認証失敗チェック',
     riskScore: 20,
-	onChange:{(enabled) => {
-	  console.log(`設定 ${setting.name} が ${enabled ? '有効化' : '無効化'} されました`);
-	}},
     enabled: true,
+    onChange: (enabled) => {
+      console.log(`設定 認証失敗チェック が ${enabled ? '有効化' : '無効化'} されました`);
+    },
   },
   {
     id: '1',
     name: 'IP履歴チェック',
     riskScore: 30,
-	onChange:{(enabled) => {
-	  console.log(`設定 ${setting.name} が ${enabled ? '有効化' : '無効化'} されました`);
-	}},
     enabled: true,
+    onChange: (enabled) => {
+      console.log(`設定 IP履歴チェック が ${enabled ? '有効化' : '無効化'} されました`);
+    },
   },
   {
     id: '2',
     name: '最終ログインからの経過時間チェック',
     riskScore: 30,
-	onChange:{(enabled) => {
-	  console.log(`設定 ${setting.name} が ${enabled ? '有効化' : '無効化'} されました`);
-	}},
     enabled: true,
+    onChange: (enabled) => {
+      console.log(`設定 最終ログインからの経過時間チェック が ${enabled ? '有効化' : '無効化'} されました`);
+    },
   },
 ];
 
