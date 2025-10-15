@@ -112,14 +112,25 @@ export const RiskbaseTab = ({
 	const handleSave = async () => {
 	  alert('属性を更新しました');
 	};
+	const handleSave = async (formValues: any) => {
+	  const updatedRealm: RealmRepresentation = {
+	    ...realm,
+	    attributes: {
+	      ...realm.attributes,
+	      EnableRiskbase: formValues.riskbaseEnabled ? "true" : "false",
+	    },
+	  };
 
+	  save(updatedRealm);
+	  alert("属性を更新しました");
+	};
 	return (
 		<PageSection variant="light">
 		<FormAccess
 		  isHorizontal
 		  role="manage-realm"
 		  className="pf-v5-u-mt-lg"
-		  onSubmit={handleSubmit(save)}
+		  onSubmit={handleSubmit(handleSave)}
 		>
 		
 		<FormProvider {...form}>
