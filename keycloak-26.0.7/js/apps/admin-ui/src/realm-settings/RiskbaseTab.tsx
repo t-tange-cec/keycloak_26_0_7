@@ -65,13 +65,6 @@ export const settings: SettingItemProps[] = [
     },
   },
 ];
-const handleToggle = (id: string, newEnabled: boolean) => {
-  setSettingsState((prev) =>
-    prev.map((item) =>
-      item.id === id ? { ...item, enabled: newEnabled } : item
-    )
-  );
-};
 
 
 const getRiskLabel = (score: number): string => {
@@ -93,6 +86,15 @@ export const RiskbaseTab = ({
 	const form = useForm();
 	const { control, handleSubmit, setValue } = form;
 	const { t } = useTranslation();
+	const [settingsState, setSettingsState] = useState(settings);
+	const handleToggle = (id: string, newEnabled: boolean) => {
+	  setSettingsState((prev) =>
+	    prev.map((item) =>
+	      item.id === id ? { ...item, enabled: newEnabled } : item
+	    )
+	  );
+	};
+	
 	const threshhold = useWatch({
 	  control,
 	  name: "threshhold",
