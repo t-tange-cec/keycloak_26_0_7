@@ -44,17 +44,6 @@ export const SecretTab = ({
 		  className="pf-v5-u-mt-lg"
 		  onSubmit={handleSubmit(save)}
 		>
-		<FormGroup
-		  label={t("secret")}
-		  fieldId="kc-secret"
-		  labelIcon={
-		    <HelpItem
-		      helpText={t("secretHelp")}
-		      fieldLabelId="secretLabel"
-		    />
-		  }
-		>
-		</FormGroup>
 		<ActionGroup>
 		  <Button variant="primary" type="submit" data-testid="secret-tab-save">
 		    {t("save")}
