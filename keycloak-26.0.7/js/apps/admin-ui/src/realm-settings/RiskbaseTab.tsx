@@ -102,7 +102,10 @@ export const RiskbaseTab = ({
 	});
 	const setupForm = () => {
 	  convertToFormValues(realm, setValue);
-	};
+
+	  const enabled = realm.attributes?.EnableRiskbase === "true";
+	  setValue("riskbaseEnabled", enabled);
+	};	
 	useEffect(setupForm, []);
 	const riskbaseEnabled = useWatch({
 	  control,
