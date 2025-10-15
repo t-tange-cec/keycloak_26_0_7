@@ -45,36 +45,45 @@ public class ConfigurationSecretQuestion implements Authenticator {
 	private static Map<String, String> messagelist = new HashMap<>();
 	private static List<Map<String, String>> options = new ArrayList<>();
 
-
-	private void getMessageList(Locale locale){
+	private void getMessageList(RealmModel realm,Locale locale) {
 		messagelist.clear();
 		options.clear();
-		messagelist.put("PI001", "What's your favorite movie?");
-		messagelist.put("PI002", "What's your pet's name?");
-		messagelist.put("PI003", "What's your mother's maiden name?");
-		messagelist.put("PI004", "Where are you from?");
-		messagelist.put("PI005", "What's your favorite sports team?");
-		messagelist.put("PI006", "Where was the first place you traveled to?");		
-		for(Map.Entry<String, String> entry : messagelist.entrySet()) {
+		if (locale.toString().equals("ja")) {
+			messagelist.put("PI001", "あなたの好きな映画は？");
+			messagelist.put("PI002", "あなたのペットの名前は？");
+			messagelist.put("PI003", "あなたの母親の旧姓は？");
+			messagelist.put("PI004", "あなたの出身地は？");
+			messagelist.put("PI005", "あなたの好きなスポーツチームは？");
+			messagelist.put("PI006", "初めて旅行した場所は？");
+		} else {
+			messagelist.put("PI001", "What's your favorite movie?");
+			messagelist.put("PI002", "What's your pet's name?");
+			messagelist.put("PI003", "What's your mother's maiden name?");
+			messagelist.put("PI004", "Where are you from?");
+			messagelist.put("PI005", "What's your favorite sports team?");
+			messagelist.put("PI006", "Where was the first place you traveled to?");
+		}
+		for (Map.Entry<String, String> entry : messagelist.entrySet()) {
 			Map<String, String> message = new HashMap<>();
 			message.put("id", entry.getKey());
 			message.put("message", entry.getValue());
 			options.add(message);
 		}
 	}
+
 	@Override
 	public void authenticate(AuthenticationFlowContext context) {
 		UserModel user = context.getUser();
 		RealmModel realm = context.getRealm();
 		String acceptLanguage = context.getHttpRequest().getHttpHeaders().getHeaderString(HttpHeaders.ACCEPT_LANGUAGE);
-		Locale locale = Locale.forLanguageTag(acceptLanguage.split(",")[0]);	
+		Locale locale = Locale.forLanguageTag(acceptLanguage.split(",")[0]);
 		try {
 			String qid = user.getFirstAttribute("qid");
 			logger.info("start");
 			if (StringUtil.isNullOrEmpty(qid)) {
-				getMessageList(locale);
+				getMessageList(realm,locale);
 				logger.info("qid: null");
-				logger.info("locale: "+locale.toString());
+				logger.info("locale: " + locale.toString());
 				LoginFormsProvider provider = context.form();
 				provider.setAttribute("selectionOptions", options);
 				logger.info(FORM_NAME);

@@ -35,12 +35,21 @@ public class SecretQuestionForm implements Authenticator {
 
 	private void getMessageList(Locale locale){
 		messagelist.clear();
-		messagelist.put("PI001", "What's your favorite movie?");
-		messagelist.put("PI002", "What's your pet's name?");
-		messagelist.put("PI003", "What's your mother's maiden name?");
-		messagelist.put("PI004", "Where are you from?");
-		messagelist.put("PI005", "What's your favorite sports team?");
-		messagelist.put("PI006", "Where was the first place you traveled to?");		
+		if (locale.toString().equals("ja")) {
+			messagelist.put("PI001", "あなたの好きな映画は？");
+			messagelist.put("PI002", "あなたのペットの名前は？");
+			messagelist.put("PI003", "あなたの母親の旧姓は？");
+			messagelist.put("PI004", "あなたの出身地は？");
+			messagelist.put("PI005", "あなたの好きなスポーツチームは？");
+			messagelist.put("PI006", "初めて旅行した場所は？");
+		} else {
+			messagelist.put("PI001", "What's your favorite movie?");
+			messagelist.put("PI002", "What's your pet's name?");
+			messagelist.put("PI003", "What's your mother's maiden name?");
+			messagelist.put("PI004", "Where are you from?");
+			messagelist.put("PI005", "What's your favorite sports team?");
+			messagelist.put("PI006", "Where was the first place you traveled to?");
+		}
 	}
 
 	@Override
