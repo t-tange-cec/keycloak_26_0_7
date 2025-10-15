@@ -160,13 +160,17 @@ export const RiskbaseTab = ({
 			))}
 		</div>
 		
-		<h2>t("threshhold")</h2>
-		<input
-		  type="text"
-		  value={threshhold}
-		  placeholder="threshhold を入力"
-		/>
-		
+		<Controller
+		  name="threshhold"
+		  control={control}
+		  render={({ field }) => (
+		    <input
+		      type="number"
+		      {...field}
+		      placeholder="threshhold を入力"
+		    />
+		  )}
+		/>		
 		<ActionGroup>
 		  <Button variant="primary" type="submit" data-testid="riskbase-tab-save">
 		    {t("save")}
