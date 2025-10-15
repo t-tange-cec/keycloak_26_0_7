@@ -125,7 +125,6 @@ export const RiskbaseTab = ({
 	  };
 
 	  save(updatedRealm);
-	  alert("属性を更新しました");
 	};
 	return (
 		<PageSection variant="light">
