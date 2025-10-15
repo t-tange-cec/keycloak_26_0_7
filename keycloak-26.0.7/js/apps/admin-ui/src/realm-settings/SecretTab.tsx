@@ -1,4 +1,5 @@
 import type RealmRepresentation from "@keycloak/keycloak-admin-client/lib/defs/realmRepresentation";
+import React from 'react';
 import {
   HelpItem,
   KeycloakSelect,
