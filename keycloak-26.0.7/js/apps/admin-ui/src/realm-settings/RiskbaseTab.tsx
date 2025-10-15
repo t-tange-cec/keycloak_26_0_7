@@ -65,7 +65,6 @@ export const settings: SettingItemProps[] = [
     },
   },
 ];
-const [settingsState, setSettingsState] = useState(settings);
 const handleToggle = (id: string, newEnabled: boolean) => {
   setSettingsState((prev) =>
     prev.map((item) =>
@@ -94,6 +93,7 @@ export const RiskbaseTab = ({
 	const form = useForm();
 	const { control, handleSubmit, setValue } = form;
 	const { t } = useTranslation();
+	const [settingsState, setSettingsState] = useState(settings);
 	const threshhold = useWatch({
 	  control,
 	  name: "threshhold",
