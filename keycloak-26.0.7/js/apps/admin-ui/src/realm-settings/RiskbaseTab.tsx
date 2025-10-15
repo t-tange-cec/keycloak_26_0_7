@@ -109,9 +109,6 @@ export const RiskbaseTab = ({
 	  name: "riskbaseEnabled",
 	  defaultValue: false,
 	});
-	const handleSave = async () => {
-	  alert('属性を更新しました');
-	};
 	const handleSave = async (formValues: any) => {
 	  const updatedRealm: RealmRepresentation = {
 	    ...realm,
