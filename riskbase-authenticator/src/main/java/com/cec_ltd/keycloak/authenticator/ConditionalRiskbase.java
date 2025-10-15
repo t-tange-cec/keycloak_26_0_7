@@ -27,7 +27,7 @@ public class ConditionalRiskbase implements Authenticator {
 			}
 			logger.info("enableRiskbase: " + enableRiskbase);
 			if ("true".equalsIgnoreCase(enableRiskbase)) {
-				String strThreahhold = realm.getAttribute("threashhold");
+				String strThreahhold = realm.getAttribute("threshhold");
 				if (StringUtil.isNullOrEmpty(strThreahhold)) {
 					strThreahhold = "50";
 				}
