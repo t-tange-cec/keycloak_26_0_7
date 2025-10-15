@@ -105,7 +105,9 @@ export const RiskbaseTab = ({
 
 	  const enabled = realm.attributes?.EnableRiskbase === "true";
 	  setValue("riskbaseEnabled", enabled);
-	};	
+  	const threshholdValue = realm.attributes?.threshhold ?? "50";
+  		setValue("threshhold", Number(threshholdValue));
+  	};	
 	useEffect(setupForm, []);
 	const riskbaseEnabled = useWatch({
 	  control,
@@ -118,6 +120,7 @@ export const RiskbaseTab = ({
 	    attributes: {
 	      ...realm.attributes,
 	      EnableRiskbase: formValues.riskbaseEnabled ? "true" : "false",
+		  threshhold: String(formValues.threshhold),
 	    },
 	  };
 
