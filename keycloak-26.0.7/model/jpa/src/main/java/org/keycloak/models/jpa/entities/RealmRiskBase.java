@@ -64,7 +64,6 @@ public class RealmRiskBase {
 	/*
 	 * レルムID
 	 */
-    @Id
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "REALM_ID")
     private RealmEntity realm;
@@ -72,10 +71,9 @@ public class RealmRiskBase {
 	/*
 	 * チェックID
 	 */
-    @Id
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name = "CHECK_ID")
-    private CheckItemEntity checkItem;
+    @Nationalized
+    @Column(name = "CHECK_ID")
+    private String check_id;
 
 	/*
 	 * スコア
@@ -106,12 +104,12 @@ public class RealmRiskBase {
         this.realm = realm;
     }
 
-    public CheckItemEntity getCheckItem() {
-        return checkItem;
+    public String getCheckId() {
+        return check_id;
     }
 
-    public void setCheckItem(CheckItemEntity checkItem) {
-        this.checkItem = checkItem;
+    public void setCheckId(String checkId) {
+        this.check_id = checkId;
     }
 
     public String getValue() {
