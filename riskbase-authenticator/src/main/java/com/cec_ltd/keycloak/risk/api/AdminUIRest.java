@@ -27,7 +27,7 @@ public class AdminUIRest {
 	@PostMapping("/admin/riskbase")
 	public ResponseEntity<?> saveRiskItems(@RequestBody List<RiskItemDto> items) {
 	    for (RiskItemDto dto : items) {
-			RealmEntity realm = realmRepository.findById(dto.getRealmId());
+	    	RealmEntity realm = realmRepository.findById(dto.getRealmId()).orElseThrow();
 	        RealmRiskBase entity = new RealmRiskBase();
 	        entity.setId(UUID.randomUUID().toString());
 	        entity.setRealm(realm);
