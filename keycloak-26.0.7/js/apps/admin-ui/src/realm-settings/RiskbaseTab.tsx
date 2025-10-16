@@ -123,6 +123,20 @@ export const RiskbaseTab = ({
 		  threshhold: String(formValues.threshhold),
 	    },
 	  };
+	  const riskItems = settingsState.map((item) => ({
+	    id: item.id,
+	    check_id: item.id,
+	    value: String(item.riskScore),
+	    enabled: item.enabled,
+	    realmId: realm.id,
+	  }));
+
+	  await fetch("/admin/riskbase", {
+	    method: "POST",
+	    headers: { "Content-Type": "application/json" },
+	    body: JSON.stringify(riskItems),
+	  });
+
 
 	  save(updatedRealm);
 	};
@@ -147,7 +161,7 @@ export const RiskbaseTab = ({
 		</FormProvider>
 		<div>
 		  <h2>🔧 管理設定一覧</h2>
-		  {settings.map((setting) => (
+		  {settingsState.map((setting) => (
 		    <SettingItem
 		      key={setting.id}
 		      id={setting.id}

@@ -17,8 +17,8 @@ public class CheckItemFactory {
 //
 //		List<RealmRiskBase> results = query.getResultList();
 //		for (RealmRiskBase r : results) {
-//			System.out.println("チェックID: " + r.getCheckid());
-//			System.out.println("スコア: " + r.getValue());
+//			System.out.println("" + r.getCheckid());
+//			System.out.println("" + r.getValue());
 //		}
 		instanceList = new ArrayList<CheckItem>();
 		CheckItem item = (CheckItem) new LoginCheckItem();
