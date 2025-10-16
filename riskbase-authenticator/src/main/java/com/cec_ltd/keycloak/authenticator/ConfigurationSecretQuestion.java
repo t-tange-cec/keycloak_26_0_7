@@ -49,12 +49,12 @@ public class ConfigurationSecretQuestion implements Authenticator {
 		messagelist.clear();
 		options.clear();
 		if (locale.toString().equals("ja")) {
-			messagelist.put("PI001", "\\xe3\\x81\\x82\\xe3\\x81\\xaa\\xe3\\x81\\x9f\\xe3\\x81\\xae\\xe5\\xa5\\xbd\\xe3\\x81\\x8d\\xe3\\x81\\xaa\\xe6\\x98\\xa0\\xe7\\x94\\xbb\\xe3\\x81\\xaf\\xef\\xbc\\x9f");
-			messagelist.put("PI002", "\\xe3\\x81\\x82\\xe3\\x81\\xaa\\xe3\\x81\\x9f\\xe3\\x81\\xae\\xe3\\x83\\x9a\\xe3\\x83\\x83\\xe3\\x83\\x88\\xe3\\x81\\xae\\xe5\\x90\\x8d\\xe5\\x89\\x8d\\xe3\\x81\\xaf\\xef\\xbc\\x9f");
-			messagelist.put("PI003", "\\xe3\\x81\\x82\\xe3\\x81\\xaa\\xe3\\x81\\x9f\\xe3\\x81\\xae\\xe6\\xaf\\x8d\\xe8\\xa6\\xaa\\xe3\\x81\\xae\\xe6\\x97\\xa7\\xe5\\xa7\\x93\\xe3\\x81\\xaf\\xef\\xbc\\x9f");
-			messagelist.put("PI004", "\\xe3\\x81\\x82\\xe3\\x81\\xaa\\xe3\\x81\\x9f\\xe3\\x81\\xae\\xe5\\x87\\xba\\xe8\\xba\\xab\\xe5\\x9c\\xb0\\xe3\\x81\\xaf\\xef\\xbc\\x9f");
-			messagelist.put("PI005", "\\xe3\\x81\\x82\\xe3\\x81\\xaa\\xe3\\x81\\x9f\\xe3\\x81\\xae\\xe5\\xa5\\xbd\\xe3\\x81\\x8d\\xe3\\x81\\xaa\\xe3\\x82\\xb9\\xe3\\x83\\x9d\\xe3\\x83\\xbc\\xe3\\x83\\x84\\xe3\\x83\\x81\\xe3\\x83\\xbc\\xe3\\x83\\xa0\\xe3\\x81\\xaf\\xef\\xbc\\x9f");
-			messagelist.put("PI006", "\\xe5\\x88\\x9d\\xe3\\x82\\x81\\xe3\\x81\\xa6\\xe6\\x97\\x85\\xe8\\xa1\\x8c\\xe3\\x81\\x97\\xe3\\x81\\x9f\\xe5\\xa0\\xb4\\xe6\\x89\\x80\\xe3\\x81\\xaf\\xef\\xbc\\x9f");
+			messagelist.put("PI001", "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f");
+			messagelist.put("PI002", "\u3042\u306a\u305f\u306e\u30da\u30c3\u30c8\u306e\u540d\u524d\u306f\uff1f");
+			messagelist.put("PI003", "\u3042\u306a\u305f\u306e\u6bcd\u89aa\u306e\u65e7\u59d3\u306f\uff1f");
+			messagelist.put("PI004", "\u3042\u306a\u305f\u306e\u51fa\u8eab\u5730\u306f\uff1f");
+			messagelist.put("PI005", "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u30b9\u30dd\u30fc\u30c4\u30c1\u30fc\u30e0\u306f\uff1f");
+			messagelist.put("PI006", "\u521d\u3081\u3066\u65c5\u884c\u3057\u305f\u5834\u6240\u306f\uff1f");
 		} else {
 			messagelist.put("PI001", "What's your favorite movie?");
 			messagelist.put("PI002", "What's your pet's name?");
