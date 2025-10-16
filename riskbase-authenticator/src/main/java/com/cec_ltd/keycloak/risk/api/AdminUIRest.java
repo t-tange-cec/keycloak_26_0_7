@@ -6,14 +6,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.keycloak.models.jpa.entities.RealmRiskBase;
+import org.keycloak.models.jpa.entities.RealmEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.cec_ltd.keycloak.risk.repository.RealmRepository;
+import com.cec_ltd.keycloak.risk.repository.RealmRiskBaseRepository;
+import com.cec_ltd.keycloak.risk.repository.RealmRepository;
+import com.cec_ltd.keycloak.risk.repository.RealmRiskBaseRepository;
 
+
+@RestController
 public class AdminUIRest {
+	
+	@Autowired
+	private RealmRepository realmRepository;
+	
+	@Autowired
+	private RealmRiskBaseRepository riskBaseRepository;
+	
 	@PostMapping("/admin/riskbase")
 	public ResponseEntity<?> saveRiskItems(@RequestBody List<RiskItemDto> items) {
 	    for (RiskItemDto dto : items) {
-	        Object realmRepository;
 			RealmEntity realm = realmRepository.findById(dto.getRealmId());
 	        RealmRiskBase entity = new RealmRiskBase();
 	        entity.setId(UUID.randomUUID().toString());
