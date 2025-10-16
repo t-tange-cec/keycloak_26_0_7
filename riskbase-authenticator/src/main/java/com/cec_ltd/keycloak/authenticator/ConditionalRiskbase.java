@@ -35,7 +35,7 @@ public class ConditionalRiskbase implements Authenticator {
 				logger.info("threshhold:" + strThreahhold);
 				// リスクベース認証を実行（例：IPチェック、時間帯など）
 				// ここでは単純に成功とする
-				CheckItemFactory factory = new CheckItemFactory();
+				CheckItemFactory factory = new CheckItemFactory(realm.getId());
 				Integer score = factory.getScore(context);
 				logger.info("score:" + Integer.toString(score));
 				String riskLevel = (score >= threashold) ? "high" : "low";
