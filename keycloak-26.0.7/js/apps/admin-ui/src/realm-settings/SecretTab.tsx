@@ -36,12 +36,12 @@ export const SecretTab = ({
 	  convertToFormValues(realm, setValue);
 	};
 	const questionData = [
-	  { id: 'PI001', jp: 'あなたの好きな映画は？', en: "What's your favorite movie?" },
-	  { id: 'PI002', jp: 'あなたのペットの名前は？', en: "What's your pet's name?" },
-	  { id: 'PI003', jp: 'あなたの母親の旧姓は？', en: "What's your mother's maiden name?" },
-	  { id: 'PI004', jp: 'あなたの出身地は？', en: "Where are you from?" },
-	  { id: 'PI005', jp: 'あなたの好きなスポーツチームは？', en: "What's your favorite sports team?" },
-	  { id: 'PI006', jp: '初めて旅行した場所は？', en: "Where was the first place you traveled to?" },
+	  { id: 'PI001', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f", en: "What's your favorite movie?" },
+	  { id: 'PI002', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f", en: "What's your pet's name?" },
+	  { id: 'PI003', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f", en: "What's your mother's maiden name?" },
+	  { id: 'PI004', jp: "\u3042\u306a\u305f\u306e\u51fa\u8eab\u5730\u306f\uff1f", en: "Where are you from?" },
+	  { id: 'PI005', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u30b9\u30dd\u30fc\u30c4\u30c1\u30fc\u30e0\u306f\uff1f", en: "What's your favorite sports team?" },
+	  { id: 'PI006', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u30b9\u30dd\u30fc\u30c4\u30c1\u30fc\u30e0\u306f\uff1f", en: "Where was the first place you traveled to?" },
 	];
 	
 	useEffect(setupForm, []);
@@ -59,8 +59,8 @@ export const SecretTab = ({
 		     <thead>
 		       <tr>
 		         <th>ID</th>
-		         <th>質問(日本語)</th>
-		         <th>Question (English)</th>
+		         <th>質問</th>
+		         <th>Question</th>
 		       </tr>
 		     </thead>
 		     <tbody>
