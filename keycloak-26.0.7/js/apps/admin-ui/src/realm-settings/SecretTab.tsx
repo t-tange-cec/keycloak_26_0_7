@@ -44,15 +44,23 @@ export const SecretTab = ({
 	  { id: 'PI006', jp: "\u521d\u3081\u3066\u65c5\u884c\u3057\u305f\u5834\u6240\u306f\uff1f", en: "Where was the first place you traveled to?" },
 	];
 	const [questions, setQuestions] = useState(questionData);
+	const onSubmit = (formData: RealmRepresentation) => {
+	  formData.attributes = {
+	    ...formData.attributes,
+	    secretQuestions: JSON.stringify(questions),
+	  };
+	  save(formData);
+	};
 	
 	useEffect(setupForm, []);
+	
 	return (
 		<PageSection variant="light">
 		<FormAccess
 		  isHorizontal
 		  role="manage-realm"
 		  className="pf-v5-u-mt-lg"
-		  onSubmit={handleSubmit(save)}
+		  onSubmit={handleSubmit(onSubmit)}
 		>
 		<div>
 		   <h2>”é–§‚ÌŽ¿–âˆê——</h2>
