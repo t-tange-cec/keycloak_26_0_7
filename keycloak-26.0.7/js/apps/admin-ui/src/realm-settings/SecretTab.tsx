@@ -43,7 +43,6 @@ export const SecretTab = ({
 	  { id: 'PI005', jp: 'あなたの好きなスポーツチームは？', en: "What's your favorite sports team?" },
 	  { id: 'PI006', jp: '初めて旅行した場所は？', en: "Where was the first place you traveled to?" },
 	];
-
 	
 	useEffect(setupForm, []);
 	return (
