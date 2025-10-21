@@ -62,11 +62,11 @@ export const SecretTab = ({
 		  className="pf-v5-u-mt-lg"
 		  onSubmit={handleSubmit(onSubmit)}
 		>
-		<Button onClick={() => setQuestions([...questions, { id: `PI${questions.length + 1}`, jp: "", en: "" }])}>
+		<Button onClick={() => setQuestions([...questions, { id: `PI${String(questions.length + 1).padStart(3, '0')}`, jp: "", en: "" }])}>
 		{t("add")}
 		</Button>
 		<div>
-		   <h2>%u79D8%u5BC6%u306E%u8CEA%u554F%u4E00%u89A7</h2>
+		   <h2>”é–§‚ÌŽ¿–âˆê——</h2>
 		   <table>
 		     <thead>
 		       <tr>
