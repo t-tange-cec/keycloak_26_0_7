@@ -63,7 +63,6 @@ public class QuestionMaster {
 	/*
 	 * レルムID
 	 */
-    @Id
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "REALM_ID")
     private RealmEntity realm;
@@ -71,9 +70,13 @@ public class QuestionMaster {
 	/*
 	 * 質問ID
 	 */
-    @Id
     @Column(name = "QID")
     private String qid;
+	/*
+	 * ローケール
+	 */
+    @Column(name = "LOCALE")
+    private String locale;
 
 	/*
 	 * 質問
@@ -112,6 +115,13 @@ public class QuestionMaster {
 
     public void setContent(String content) {
         this.content = content;
+    }
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 
 }
