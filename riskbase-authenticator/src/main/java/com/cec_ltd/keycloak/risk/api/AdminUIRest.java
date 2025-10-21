@@ -44,7 +44,7 @@ public class AdminUIRest {
 	@GetMapping("/admin/riskbase")
 	public ResponseEntity<List<RiskItemDto>> getRiskItems(@RequestParam String realmId) {
 	    RealmEntity realm = realmRepository.findById(realmId).orElseThrow();
-	    List<RealmRiskBase> entities = riskBaseRepository.findByRealm(realm);
+	    List<RealmRiskBase> entities = riskBaseRepository.findByRealm(realm.getId());
 
 	    List<RiskItemDto> dtos = entities.stream().map(entity -> {
 	        RiskItemDto dto = new RiskItemDto();
