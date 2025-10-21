@@ -41,7 +41,7 @@ export const SecretTab = ({
 	  { id: 'PI003', jp: "\u3042\u306a\u305f\u306e\u6bcd\u89aa\u306e\u65e7\u59d3\u306f\uff1f", en: "What's your mother's maiden name?" },
 	  { id: 'PI004', jp: "\u3042\u306a\u305f\u306e\u51fa\u8eab\u5730\u306f\uff1f", en: "Where are you from?" },
 	  { id: 'PI005', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u30b9\u30dd\u30fc\u30c4\u30c1\u30fc\u30e0\u306f\uff1f", en: "What's your favorite sports team?" },
-	  { id: 'PI006', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u30b9\u30dd\u30fc\u30c4\u30c1\u30fc\u30e0\u306f\uff1f", en: "Where was the first place you traveled to?" },
+	  { id: 'PI006', jp: "\u521d\u3081\u3066\u65c5\u884c\u3057\u305f\u5834\u6240\u306f\uff1f", en: "Where was the first place you traveled to?" },
 	];
 	
 	useEffect(setupForm, []);
