@@ -35,6 +35,7 @@ export const SecretTab = ({
 	const setupForm = () => {
 	  convertToFormValues(realm, setValue);
 	};
+	const [questions, setQuestions] = useState(questionData);
 	const questionData = [
 	  { id: 'PI001', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f", en: "What's your favorite movie?" },
 	  { id: 'PI002', jp: "\u3042\u306a\u305f\u306e\u30da\u30c3\u30c8\u306e\u540d\u524d\u306f\uff1f", en: "What's your pet's name?" },
@@ -63,16 +64,36 @@ export const SecretTab = ({
 		         <th>en</th>
 		       </tr>
 		     </thead>
-		     <tbody>
-		       {questionData.map((q) => (
-		         <tr key={q.id}>
-		           <td>{q.id}</td>
-		           <td>{q.jp}</td>
-		           <td>{q.en}</td>
-		         </tr>
-		       ))}
-		     </tbody>
-		   </table>
+			 <tbody>
+			   {questions.map((q, index) => (
+			     <tr key={q.id}>
+			       <td>{q.id}</td>
+			       <td>
+			         <input
+			           type="text"
+			           value={q.jp}
+			           onChange={(e) => {
+			             const updated = [...questions];
+			             updated[index].jp = e.target.value;
+			             setQuestions(updated);
+			           }}
+			         />
+			       </td>
+			       <td>
+			         <input
+			           type="text"
+			           value={q.en}
+			           onChange={(e) => {
+			             const updated = [...questions];
+			             updated[index].en = e.target.value;
+			             setQuestions(updated);
+			           }}
+			         />
+			       </td>
+			     </tr>
+			   ))}
+			 </tbody>
+			   </table>
 		 </div>
 		
 		<ActionGroup>
