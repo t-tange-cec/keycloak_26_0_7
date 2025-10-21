@@ -35,7 +35,6 @@ export const SecretTab = ({
 	const setupForm = () => {
 	  convertToFormValues(realm, setValue);
 	};
-	const [questions, setQuestions] = useState(questionData);
 	const questionData = [
 	  { id: 'PI001', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f", en: "What's your favorite movie?" },
 	  { id: 'PI002', jp: "\u3042\u306a\u305f\u306e\u30da\u30c3\u30c8\u306e\u540d\u524d\u306f\uff1f", en: "What's your pet's name?" },
@@ -44,6 +43,7 @@ export const SecretTab = ({
 	  { id: 'PI005', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u30b9\u30dd\u30fc\u30c4\u30c1\u30fc\u30e0\u306f\uff1f", en: "What's your favorite sports team?" },
 	  { id: 'PI006', jp: "\u521d\u3081\u3066\u65c5\u884c\u3057\u305f\u5834\u6240\u306f\uff1f", en: "Where was the first place you traveled to?" },
 	];
+	const [questions, setQuestions] = useState(questionData);
 	
 	useEffect(setupForm, []);
 	return (
