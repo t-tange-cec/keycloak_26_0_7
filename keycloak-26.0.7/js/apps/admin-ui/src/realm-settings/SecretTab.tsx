@@ -37,8 +37,8 @@ export const SecretTab = ({
 	};
 	const questionData = [
 	  { id: 'PI001', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f", en: "What's your favorite movie?" },
-	  { id: 'PI002', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f", en: "What's your pet's name?" },
-	  { id: 'PI003', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f", en: "What's your mother's maiden name?" },
+	  { id: 'PI002', jp: "\u3042\u306a\u305f\u306e\u30da\u30c3\u30c8\u306e\u540d\u524d\u306f\uff1f", en: "What's your pet's name?" },
+	  { id: 'PI003', jp: "\u3042\u306a\u305f\u306e\u6bcd\u89aa\u306e\u65e7\u59d3\u306f\uff1f", en: "What's your mother's maiden name?" },
 	  { id: 'PI004', jp: "\u3042\u306a\u305f\u306e\u51fa\u8eab\u5730\u306f\uff1f", en: "Where are you from?" },
 	  { id: 'PI005', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u30b9\u30dd\u30fc\u30c4\u30c1\u30fc\u30e0\u306f\uff1f", en: "What's your favorite sports team?" },
 	  { id: 'PI006', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u30b9\u30dd\u30fc\u30c4\u30c1\u30fc\u30e0\u306f\uff1f", en: "Where was the first place you traveled to?" },
@@ -59,8 +59,8 @@ export const SecretTab = ({
 		     <thead>
 		       <tr>
 		         <th>ID</th>
-		         <th>Ž¿–â</th>
-		         <th>Question</th>
+		         <th>jp</th>
+		         <th>en</th>
 		       </tr>
 		     </thead>
 		     <tbody>
