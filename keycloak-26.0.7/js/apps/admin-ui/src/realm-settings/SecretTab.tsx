@@ -60,7 +60,7 @@ export const SecretTab = ({
 		     <thead>
 		       <tr>
 		         <th>ID</th>
-		         <th>質問（日本語）</th>
+		         <th>質問(日本語)</th>
 		         <th>Question (English)</th>
 		       </tr>
 		     </thead>
