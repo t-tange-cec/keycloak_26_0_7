@@ -36,6 +36,10 @@ import org.keycloak.utils.StringUtil;
 
 import com.cec_ltd.keycloak.credential.SecretQuestionCredentialModel;
 import com.cec_ltd.keycloak.risk.CheckItemFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.jboss.logging.Logger;
 
@@ -50,6 +54,22 @@ public class ConfigurationSecretQuestion implements Authenticator {
 		options.clear();
 		String json = realm.getAttribute("secretQuestions");
 		logger.info(json);
+		ObjectMapper mapper = new ObjectMapper();
+		boolean loaded=false;
+		try {
+			List<Map<String, String>> questions = mapper.readValue(json, new TypeReference<List<Map<String, String>>>() {});
+			for (Map<String, String> q : questions) {
+				messagelist.put(q.get("id"),q.get() "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f");
+			}
+			loaded=true;
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(!loaded) {
 		if (locale.toString().equals("ja")) {
 			messagelist.put("PI001", "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f");
 			messagelist.put("PI002", "\u3042\u306a\u305f\u306e\u30da\u30c3\u30c8\u306e\u540d\u524d\u306f\uff1f");
@@ -64,6 +84,7 @@ public class ConfigurationSecretQuestion implements Authenticator {
 			messagelist.put("PI004", "Where are you from?");
 			messagelist.put("PI005", "What's your favorite sports team?");
 			messagelist.put("PI006", "Where was the first place you traveled to?");
+		}
 		}
 		for (Map.Entry<String, String> entry : messagelist.entrySet()) {
 			Map<String, String> message = new HashMap<>();
@@ -83,7 +104,7 @@ public class ConfigurationSecretQuestion implements Authenticator {
 			String qid = user.getFirstAttribute("qid");
 			logger.info("start");
 			if (StringUtil.isNullOrEmpty(qid)) {
-				getMessageList(realm,locale);
+				getMessageList(realm, locale);
 				logger.info("qid: null");
 				logger.info("locale: " + locale.toString());
 				LoginFormsProvider provider = context.form();
