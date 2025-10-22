@@ -49,19 +49,21 @@ public class ConfigurationSecretQuestion implements Authenticator {
 	private static Map<String, String> messagelist = new HashMap<>();
 	private static List<Map<String, String>> options = new ArrayList<>();
 
-	private void getMessageList(RealmModel realm,Locale locale) {
+	private void getMessageList(RealmModel realm, Locale locale) {
 		messagelist.clear();
 		options.clear();
 		String json = realm.getAttribute("secretQuestions");
 		logger.info(json);
 		ObjectMapper mapper = new ObjectMapper();
-		boolean loaded=false;
+		boolean loaded = false;
 		try {
-			List<Map<String, String>> questions = mapper.readValue(json, new TypeReference<List<Map<String, String>>>() {});
+			List<Map<String, String>> questions = mapper.readValue(json,
+					new TypeReference<List<Map<String, String>>>() {
+					});
 			for (Map<String, String> q : questions) {
-				messagelist.put(q.get("id"),q.get() "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f");
+				messagelist.put(q.get("id"), q.get(locale.toString()));
 			}
-			loaded=true;
+			loaded = true;
 		} catch (JsonMappingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,22 +71,23 @@ public class ConfigurationSecretQuestion implements Authenticator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(!loaded) {
-		if (locale.toString().equals("ja")) {
-			messagelist.put("PI001", "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f");
-			messagelist.put("PI002", "\u3042\u306a\u305f\u306e\u30da\u30c3\u30c8\u306e\u540d\u524d\u306f\uff1f");
-			messagelist.put("PI003", "\u3042\u306a\u305f\u306e\u6bcd\u89aa\u306e\u65e7\u59d3\u306f\uff1f");
-			messagelist.put("PI004", "\u3042\u306a\u305f\u306e\u51fa\u8eab\u5730\u306f\uff1f");
-			messagelist.put("PI005", "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u30b9\u30dd\u30fc\u30c4\u30c1\u30fc\u30e0\u306f\uff1f");
-			messagelist.put("PI006", "\u521d\u3081\u3066\u65c5\u884c\u3057\u305f\u5834\u6240\u306f\uff1f");
-		} else {
-			messagelist.put("PI001", "What's your favorite movie?");
-			messagelist.put("PI002", "What's your pet's name?");
-			messagelist.put("PI003", "What's your mother's maiden name?");
-			messagelist.put("PI004", "Where are you from?");
-			messagelist.put("PI005", "What's your favorite sports team?");
-			messagelist.put("PI006", "Where was the first place you traveled to?");
-		}
+		if (!loaded) {
+			if (locale.toString().equals("ja")) {
+				messagelist.put("PI001", "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f");
+				messagelist.put("PI002", "\u3042\u306a\u305f\u306e\u30da\u30c3\u30c8\u306e\u540d\u524d\u306f\uff1f");
+				messagelist.put("PI003", "\u3042\u306a\u305f\u306e\u6bcd\u89aa\u306e\u65e7\u59d3\u306f\uff1f");
+				messagelist.put("PI004", "\u3042\u306a\u305f\u306e\u51fa\u8eab\u5730\u306f\uff1f");
+				messagelist.put("PI005",
+						"\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u30b9\u30dd\u30fc\u30c4\u30c1\u30fc\u30e0\u306f\uff1f");
+				messagelist.put("PI006", "\u521d\u3081\u3066\u65c5\u884c\u3057\u305f\u5834\u6240\u306f\uff1f");
+			} else {
+				messagelist.put("PI001", "What's your favorite movie?");
+				messagelist.put("PI002", "What's your pet's name?");
+				messagelist.put("PI003", "What's your mother's maiden name?");
+				messagelist.put("PI004", "Where are you from?");
+				messagelist.put("PI005", "What's your favorite sports team?");
+				messagelist.put("PI006", "Where was the first place you traveled to?");
+			}
 		}
 		for (Map.Entry<String, String> entry : messagelist.entrySet()) {
 			Map<String, String> message = new HashMap<>();
