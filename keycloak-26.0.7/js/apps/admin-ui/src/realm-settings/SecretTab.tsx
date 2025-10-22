@@ -33,12 +33,12 @@ export const SecretTab = ({
 	const { t } = useTranslation();
 	const { control, handleSubmit, setValue } = useForm<RealmRepresentation>();
 	const questionData = [
-	  { id: 'PI001', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f", en: "What's your favorite movie?" },
-	  { id: 'PI002', jp: "\u3042\u306a\u305f\u306e\u30da\u30c3\u30c8\u306e\u540d\u524d\u306f\uff1f", en: "What's your pet's name?" },
-	  { id: 'PI003', jp: "\u3042\u306a\u305f\u306e\u6bcd\u89aa\u306e\u65e7\u59d3\u306f\uff1f", en: "What's your mother's maiden name?" },
-	  { id: 'PI004', jp: "\u3042\u306a\u305f\u306e\u51fa\u8eab\u5730\u306f\uff1f", en: "Where are you from?" },
-	  { id: 'PI005', jp: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u30b9\u30dd\u30fc\u30c4\u30c1\u30fc\u30e0\u306f\uff1f", en: "What's your favorite sports team?" },
-	  { id: 'PI006', jp: "\u521d\u3081\u3066\u65c5\u884c\u3057\u305f\u5834\u6240\u306f\uff1f", en: "Where was the first place you traveled to?" },
+	  { id: 'PI001', ja: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f", en: "What's your favorite movie?" },
+	  { id: 'PI002', ja: "\u3042\u306a\u305f\u306e\u30da\u30c3\u30c8\u306e\u540d\u524d\u306f\uff1f", en: "What's your pet's name?" },
+	  { id: 'PI003', ja: "\u3042\u306a\u305f\u306e\u6bcd\u89aa\u306e\u65e7\u59d3\u306f\uff1f", en: "What's your mother's maiden name?" },
+	  { id: 'PI004', ja: "\u3042\u306a\u305f\u306e\u51fa\u8eab\u5730\u306f\uff1f", en: "Where are you from?" },
+	  { id: 'PI005', ja: "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u30b9\u30dd\u30fc\u30c4\u30c1\u30fc\u30e0\u306f\uff1f", en: "What's your favorite sports team?" },
+	  { id: 'PI006', ja: "\u521d\u3081\u3066\u65c5\u884c\u3057\u305f\u5834\u6240\u306f\uff1f", en: "Where was the first place you traveled to?" },
 	];
 	const [questions, setQuestions] = useState(questionData);
 	const onSubmit = (formData: RealmRepresentation) => {
@@ -73,7 +73,7 @@ export const SecretTab = ({
 		  className="pf-v5-u-mt-lg"
 		  onSubmit={handleSubmit(onSubmit)}
 		>
-		<Button onClick={() => setQuestions([...questions, { id: `PI${String(questions.length + 1).padStart(3, '0')}`, jp: "", en: "" }])}>
+		<Button onClick={() => setQuestions([...questions, { id: `PI${String(questions.length + 1).padStart(3, '0')}`, ja: "", en: "" }])}>
 		{t("add")}
 		</Button>
 		<div>
@@ -82,7 +82,7 @@ export const SecretTab = ({
 		     <thead>
 		       <tr>
 		         <th>ID</th>
-		         <th>jp</th>
+		         <th>ja</th>
 		         <th>en</th>
 		       </tr>
 		     </thead>
@@ -93,10 +93,10 @@ export const SecretTab = ({
 			       <td>
 			         <input
 			           type="text"
-			           value={q.jp}
+			           value={q.ja}
 			           onChange={(e) => {
 			             const updated = [...questions];
-			             updated[index].jp = e.target.value;
+			             updated[index].ja = e.target.value;
 			             setQuestions(updated);
 			           }}
 			         />
