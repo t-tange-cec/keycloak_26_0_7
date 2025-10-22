@@ -48,6 +48,8 @@ public class ConfigurationSecretQuestion implements Authenticator {
 	private void getMessageList(RealmModel realm,Locale locale) {
 		messagelist.clear();
 		options.clear();
+		String json = realm.getAttribute("secretQuestions");
+		logger.info(json);
 		if (locale.toString().equals("ja")) {
 			messagelist.put("PI001", "\u3042\u306a\u305f\u306e\u597d\u304d\u306a\u6620\u753b\u306f\uff1f");
 			messagelist.put("PI002", "\u3042\u306a\u305f\u306e\u30da\u30c3\u30c8\u306e\u540d\u524d\u306f\uff1f");
