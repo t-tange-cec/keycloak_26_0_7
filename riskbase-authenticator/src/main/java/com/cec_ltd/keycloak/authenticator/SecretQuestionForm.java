@@ -39,7 +39,7 @@ public class SecretQuestionForm implements Authenticator {
 
 	private static Map<String, String> messagelist = new HashMap<>();
 
-	private void getMessageList(Locale locale){
+	private void getMessageList(RealmModel realm,Locale locale){
 		messagelist.clear();
 		String json = realm.getAttribute("secretQuestions");
 		logger.info(json);
@@ -101,7 +101,7 @@ public class SecretQuestionForm implements Authenticator {
 			return;
 		}
 		logger.info("locale: "+locale.toString());
-		getMessageList(locale);
+		getMessageList(realm,locale);
 		UserModel user = context.getUser();
 		String qid = user.getFirstAttribute("qid");
 		String message = messagelist.get(qid);
